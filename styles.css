@@ -16,7 +16,9 @@
     
     --yellow: #f0c014;
     --yellow-hover: #d4a912;
-    --pink: #e891a0;
+    --pink: #e8a0b0;
+    --pink-hover: #d88a9a;
+    --pink-muted: #c4848f;
     
     --font-main: 'Instrument Sans', -apple-system, sans-serif;
     --font-serif: 'Newsreader', Georgia, serif;
@@ -148,7 +150,7 @@ img {
 }
 
 .nav-social:hover {
-    color: var(--yellow);
+    color: var(--pink);
 }
 
 .nav-cart {
@@ -220,12 +222,12 @@ img {
 .btn-outline {
     background: transparent;
     color: var(--white);
-    border: 1px solid var(--gray-600);
+    border: 1px solid var(--pink-muted);
 }
 
 .btn-outline:hover {
-    border-color: var(--yellow);
-    color: var(--yellow);
+    border-color: var(--pink);
+    color: var(--pink);
 }
 
 /* ========================================
@@ -335,7 +337,7 @@ img {
 
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-sm);
 }
 
@@ -512,6 +514,10 @@ img {
     gap: var(--space-xs);
 }
 
+.reviews .section-title {
+    color: var(--pink);
+}
+
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -530,7 +536,7 @@ img {
 }
 
 .review-card:hover {
-    border-color: var(--yellow);
+    border-color: var(--pink);
     background: var(--gray-800);
 }
 
@@ -555,7 +561,7 @@ img {
 }
 
 .review-arrow {
-    color: var(--yellow);
+    color: var(--pink);
     opacity: 0;
     transform: translateX(-5px);
     transition: all var(--transition);
@@ -614,7 +620,8 @@ img {
 ======================================== */
 .newsletter {
     padding: var(--space-xl) 0;
-    background: var(--gray-900);
+    background: var(--pink);
+    color: var(--black);
 }
 
 .newsletter-content {
@@ -630,7 +637,8 @@ img {
 }
 
 .newsletter-content p {
-    color: var(--gray-400);
+    color: var(--black);
+    opacity: 0.8;
     margin-bottom: var(--space-lg);
 }
 
@@ -642,10 +650,10 @@ img {
 .newsletter-form input {
     flex: 1;
     padding: var(--space-sm);
-    background: var(--gray-800);
-    border: 1px solid var(--gray-600);
+    background: var(--white);
+    border: 1px solid transparent;
     border-radius: var(--radius-sm);
-    color: var(--white);
+    color: var(--black);
     font-size: 0.9rem;
 }
 
@@ -655,7 +663,16 @@ img {
 
 .newsletter-form input:focus {
     outline: none;
-    border-color: var(--yellow);
+    border-color: var(--black);
+}
+
+.newsletter-form .btn-primary {
+    background: var(--black);
+    color: var(--pink);
+}
+
+.newsletter-form .btn-primary:hover {
+    background: var(--gray-900);
 }
 
 /* ========================================
