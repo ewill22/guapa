@@ -78,7 +78,7 @@ img {
    ANNOUNCEMENT BAR
 ======================================== */
 .announcement-bar {
-    background: var(--yellow);
+    background: var(--pink);
     color: var(--black);
     text-align: center;
     padding: var(--space-xs) var(--space-sm);
@@ -154,7 +154,7 @@ img {
 }
 
 .nav-cart {
-    background: var(--yellow);
+    background: var(--pink);
     color: var(--black);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
@@ -164,7 +164,7 @@ img {
 }
 
 .nav-cart:hover {
-    background: var(--yellow-hover);
+    background: var(--pink-hover);
 }
 
 .nav-toggle {
