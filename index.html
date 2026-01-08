@@ -7,21 +7,38 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="noise"></div>
-    
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <p>A creative collective for friends who make things ✦ Skate • Wood • Photo • Data</p>
+    </div>
+
+    <!-- Navigation -->
     <nav class="nav">
         <a href="#" class="nav-logo">
-            <img src="guapa_logo_dark.png" alt="Guapa Skate" class="logo-img">
+            <img src="lockup_light.png" alt="Guapa Skate" class="logo-img">
         </a>
+        
         <div class="nav-links">
+            <a href="#shop">Shop</a>
             <a href="#projects">Projects</a>
             <a href="#reviews">Reviews</a>
             <a href="#about">About</a>
-            <a href="#shop" class="nav-shop">Shop</a>
         </div>
+
+        <div class="nav-actions">
+            <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener" class="nav-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="#shop" class="nav-cart">Shop →</a>
+        </div>
+
         <button class="nav-toggle" aria-label="Toggle menu">
             <span></span>
             <span></span>
@@ -29,101 +46,254 @@
     </nav>
 
     <main>
+        <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="hero-line">GUAPA</span>
-                    <span class="hero-line hero-line--accent">SKATE</span>
-                </h1>
-                <p class="hero-tagline">A creative collective for friends who make things</p>
-                <div class="hero-categories">
-                    <span>Woodworking</span>
-                    <span class="separator">•</span>
-                    <span>Photography</span>
-                    <span class="separator">•</span>
-                    <span>Data</span>
-                    <span class="separator">•</span>
-                    <span>& more</span>
+            <div class="hero-image">
+                <div class="hero-placeholder">
+                    <img src="guapa_logo_dark.png" alt="" class="hero-logo-img">
                 </div>
             </div>
-            <div class="hero-logo">
-                <img src="guapa_logo_dark.png" alt="" class="hero-logo-img">
+            <div class="hero-content">
+                <h1>Your crew.<br>Your craft.</h1>
+                <p>Boards, prints, and goods from the Guapa collective.</p>
+                <a href="#shop" class="btn btn-primary">Shop All</a>
             </div>
         </section>
 
-        <section id="projects" class="section projects">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <a href="#" class="project-card">
-                    <div class="project-card-inner">
-                        <span class="project-number">01</span>
-                        <h3>Woodworking</h3>
-                        <p>Handmade boards, furniture & objects</p>
+        <!-- Categories Grid -->
+        <section id="shop" class="categories">
+            <div class="container">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="categories-grid">
+                    <a href="#" class="category-card category-card--large">
+                        <div class="category-image">
+                            <div class="category-placeholder">
+                                <span>🛹</span>
+                            </div>
+                        </div>
+                        <div class="category-info">
+                            <h3>Skate</h3>
+                            <span class="category-link">Shop Now →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="category-card">
+                        <div class="category-image">
+                            <div class="category-placeholder">
+                                <span>🪵</span>
+                            </div>
+                        </div>
+                        <div class="category-info">
+                            <h3>Woodworking</h3>
+                            <span class="category-link">Shop Now →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="category-card">
+                        <div class="category-image">
+                            <div class="category-placeholder">
+                                <span>📷</span>
+                            </div>
+                        </div>
+                        <div class="category-info">
+                            <h3>Photography</h3>
+                            <span class="category-link">Shop Now →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="category-card">
+                        <div class="category-image">
+                            <div class="category-placeholder">
+                                <span>📊</span>
+                            </div>
+                        </div>
+                        <div class="category-info">
+                            <h3>Data Projects</h3>
+                            <span class="category-link">View Projects →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="category-card">
+                        <div class="category-image">
+                            <div class="category-placeholder">
+                                <span>👕</span>
+                            </div>
+                        </div>
+                        <div class="category-info">
+                            <h3>Apparel</h3>
+                            <span class="category-link">Shop Now →</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Banner -->
+        <section class="featured-banner">
+            <div class="featured-content">
+                <span class="featured-tag">The Collective</span>
+                <h2>Made by friends,<br>for friends.</h2>
+                <p>Every piece comes from someone in the crew. No factories, no middlemen—just people making things they care about.</p>
+                <a href="#about" class="btn btn-secondary">Meet the Crew</a>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section id="projects" class="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Latest Drops</h2>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+                <div class="products-grid">
+                    <a href="#" class="product-card">
+                        <div class="product-image">
+                            <div class="product-placeholder"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Product Name</h3>
+                            <p class="product-price">$XX.00</p>
+                        </div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="product-image">
+                            <div class="product-placeholder"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Product Name</h3>
+                            <p class="product-price">$XX.00</p>
+                        </div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="product-image">
+                            <div class="product-placeholder"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Product Name</h3>
+                            <p class="product-price">$XX.00</p>
+                        </div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="product-image">
+                            <div class="product-placeholder"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Product Name</h3>
+                            <p class="product-price">$XX.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="reviews">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What We're Into</h2>
+                    <p class="section-subtitle">Stuff the crew is feeling right now</p>
+                </div>
+                <div class="reviews-grid">
+                    <a href="#" class="review-card">
+                        <div class="review-icon">♫</div>
+                        <div class="review-content">
+                            <h3>Music</h3>
+                            <p>What's on rotation</p>
+                        </div>
+                        <span class="review-arrow">→</span>
+                    </a>
+                    <a href="#" class="review-card">
+                        <div class="review-icon">☕</div>
+                        <div class="review-content">
+                            <h3>Coffee</h3>
+                            <p>Beans we're brewing</p>
+                        </div>
+                        <span class="review-arrow">→</span>
+                    </a>
+                    <a href="#" class="review-card">
+                        <div class="review-icon">🍷</div>
+                        <div class="review-content">
+                            <h3>Natural Wine</h3>
+                            <p>Bottles worth opening</p>
+                        </div>
+                        <span class="review-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="guapa_logo_dark.png" alt="Guapa Skate" class="about-logo">
                     </div>
-                </a>
-                <a href="#" class="project-card">
-                    <div class="project-card-inner">
-                        <span class="project-number">02</span>
-                        <h3>Photography</h3>
-                        <p>Prints & zines from the collective</p>
+                    <div class="about-content">
+                        <h2>About Guapa</h2>
+                        <p>Guapa Skate is a creative collective based in [your city]. We're a group of friends who skate, make things, and share what we love.</p>
+                        <p>This is a space for our creative projects—woodworking, photography, data visualization, and whatever else we get into. No pressure, just making stuff.</p>
+                        <div class="about-links">
+                            <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener" class="btn btn-outline">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                @guapa_skate
+                            </a>
+                        </div>
                     </div>
-                </a>
-                <a href="#" class="project-card">
-                    <div class="project-card-inner">
-                        <span class="project-number">03</span>
-                        <h3>Data Projects</h3>
-                        <p>Visualizations, analyses & experiments</p>
-                    </div>
-                </a>
+                </div>
             </div>
         </section>
 
-        <section id="reviews" class="section reviews">
-            <h2 class="section-title">Reviews</h2>
-            <p class="section-intro">Stuff we're into right now</p>
-            <div class="reviews-grid">
-                <a href="#" class="review-card">
-                    <span class="review-icon">♫</span>
-                    <h3>Music</h3>
-                </a>
-                <a href="#" class="review-card">
-                    <span class="review-icon">☕</span>
-                    <h3>Coffee</h3>
-                </a>
-                <a href="#" class="review-card">
-                    <span class="review-icon">🍷</span>
-                    <h3>Natural Wine</h3>
-                </a>
-            </div>
-        </section>
-
-        <section id="about" class="section about">
-            <h2 class="section-title">About</h2>
-            <div class="about-content">
-                <p>Guapa Skate is a creative collective based in [your city]. We're a group of friends who skate, make things, and share what we love.</p>
-                <p>This is a space for our creative projects—woodworking, photography, data visualization, and whatever else we get into. No pressure, just making stuff.</p>
-                <a href="https://instagram.com/guapa_skate" class="about-link" target="_blank" rel="noopener">@guapa_skate</a>
-            </div>
-        </section>
-
-        <section id="shop" class="section shop">
-            <div class="shop-content">
-                <h2 class="shop-title">Shop</h2>
-                <p>Boards, prints, and goods from the collective</p>
-                <a href="#" class="shop-button">Visit Shop →</a>
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Stay in the loop</h2>
+                    <p>Get updates on new drops and collective projects.</p>
+                    <form class="newsletter-form" onsubmit="return false;">
+                        <input type="email" placeholder="your@email.com" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <img src="guapa_logo_dark.png" alt="Guapa Skate" class="footer-logo">
-            <p>© 2025 Guapa Skate Collective</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="lockup_light.png" alt="Guapa Skate" class="footer-logo">
+                    <p>A creative collective for friends who make things.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <a href="#">All Products</a>
+                    <a href="#">Skate</a>
+                    <a href="#">Woodworking</a>
+                    <a href="#">Photography</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Follow</h4>
+                    <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Guapa Skate Collective</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Simple mobile nav toggle
+        // Mobile nav toggle
         const navToggle = document.querySelector('.nav-toggle');
         const navLinks = document.querySelector('.nav-links');
         
@@ -132,7 +302,7 @@
             navToggle.classList.toggle('nav-toggle--open');
         });
 
-        // Smooth scroll for anchor links
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
