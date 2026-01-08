@@ -399,7 +399,7 @@ img {
 .featured-banner {
     background: var(--yellow);
     color: var(--black);
-    padding: var(--space-2xl) var(--space-md);
+    padding: var(--space-xl) var(--space-md);
 }
 
 .featured-content {
