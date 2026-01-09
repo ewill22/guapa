@@ -414,6 +414,11 @@ img {
     padding: var(--space-xl) var(--space-md);
 }
 
+.featured-banner ::selection {
+    background: var(--black);
+    color: var(--yellow);
+}
+
 .featured-content {
     max-width: 600px;
     margin: 0 auto;
