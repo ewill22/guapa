@@ -9,21 +9,63 @@
 
 /* Header */
 .music-header {
-    padding: var(--space-xl) var(--space-md) var(--space-lg);
-    text-align: center;
+    padding: var(--space-lg) var(--space-md);
     border-bottom: 1px solid var(--gray-800);
 }
 
-.music-header h1 {
+.music-header-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-lg);
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.music-header-text h1 {
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
     margin-bottom: var(--space-xs);
     color: var(--pink);
 }
 
-.music-header p {
+.music-header-text p {
     color: var(--gray-400);
     font-size: 1.1rem;
+}
+
+.music-header-embeds {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.embed-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.embed-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-400);
+}
+
+.mtv-embed,
+.radio-embed {
+    aspect-ratio: 4/3;
+    background: var(--gray-900);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--gray-800);
+}
+
+.mtv-embed iframe,
+.radio-embed iframe {
+    width: 100%;
+    height: 100%;
 }
 
 /* Main Layout */
@@ -93,44 +135,6 @@
 /* Main Content Area */
 .music-main {
     min-width: 0;
-}
-
-/* Top Section */
-.music-top {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-    margin-bottom: var(--space-xl);
-}
-
-.music-featured {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.music-featured h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: var(--space-xs);
-}
-
-.featured-description {
-    color: var(--gray-400);
-    font-size: 1rem;
-}
-
-.mtv-embed {
-    aspect-ratio: 4/3;
-    background: var(--gray-900);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--gray-800);
-}
-
-.mtv-embed iframe {
-    width: 100%;
-    height: 100%;
 }
 
 /* Posts Section */
@@ -225,17 +229,13 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .music-top {
+    .music-header-layout {
         grid-template-columns: 1fr;
-    }
-    
-    .music-featured {
         text-align: center;
-        margin-bottom: var(--space-sm);
     }
     
-    .mtv-embed {
-        max-width: 500px;
+    .music-header-embeds {
+        max-width: 600px;
         margin: 0 auto;
     }
 }
@@ -273,7 +273,7 @@
         grid-template-columns: 1fr;
     }
     
-    .mtv-embed {
-        max-width: 100%;
+    .music-header-embeds {
+        grid-template-columns: 1fr;
     }
 }
