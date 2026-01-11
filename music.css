@@ -32,14 +32,14 @@
 .music-embeds-section {
     padding: var(--space-lg) var(--space-md);
     border-bottom: 1px solid var(--gray-800);
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .music-embeds-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
-    max-width: 1000px;
-    margin: 0 auto;
 }
 
 .embed-wrapper {
@@ -57,7 +57,7 @@
 
 .mtv-embed,
 .radio-embed {
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     background: var(--gray-900);
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -76,7 +76,7 @@
 }
 
 .spotify-box {
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     background: var(--gray-900);
     border-radius: var(--radius-md);
     border: 1px solid var(--gray-800);
@@ -262,7 +262,7 @@
 /* Responsive */
 @media (max-width: 1024px) {
     .music-embeds-grid {
-        max-width: 800px;
+        gap: var(--space-sm);
     }
 }
 
@@ -301,7 +301,5 @@
     
     .music-embeds-grid {
         grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 0 auto;
     }
 }
