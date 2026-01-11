@@ -9,8 +9,11 @@
 
 /* Header */
 .music-header {
-    padding: var(--space-xl) var(--space-md) var(--space-lg);
-    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
     border-bottom: 1px solid var(--gray-800);
     max-width: 1400px;
     margin: 0 auto;
@@ -19,27 +22,17 @@
 .music-header h1 {
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
-    margin-bottom: var(--space-xs);
     color: var(--pink);
+    flex-shrink: 0;
 }
 
-.music-header p {
-    color: var(--gray-400);
-    font-size: 1.1rem;
-}
-
-/* Embeds Section */
-.music-embeds-section {
-    padding: var(--space-lg) var(--space-md);
-    border-bottom: 1px solid var(--gray-800);
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
+/* Embeds Grid */
 .music-embeds-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
+    flex: 1;
+    max-width: 800px;
 }
 
 .embed-wrapper {
@@ -261,8 +254,13 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
+    .music-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
     .music-embeds-grid {
-        gap: var(--space-sm);
+        max-width: 100%;
     }
 }
 
