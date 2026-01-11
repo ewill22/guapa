@@ -36,7 +36,7 @@
 
 .music-header-embeds {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
 }
 
@@ -66,6 +66,36 @@
 .radio-embed iframe {
     width: 100%;
     height: 100%;
+}
+
+.spotify-link {
+    display: block;
+    text-decoration: none;
+}
+
+.spotify-box {
+    aspect-ratio: 4/3;
+    background: var(--gray-900);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-800);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    color: #1DB954;
+    transition: all var(--transition);
+}
+
+.spotify-box:hover {
+    border-color: #1DB954;
+    background: var(--gray-800);
+}
+
+.spotify-box span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
 }
 
 /* Main Layout */
@@ -235,7 +265,8 @@
     }
     
     .music-header-embeds {
-        max-width: 600px;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 800px;
         margin: 0 auto;
     }
 }
@@ -275,5 +306,6 @@
     
     .music-header-embeds {
         grid-template-columns: 1fr;
+        max-width: 400px;
     }
 }
