@@ -419,7 +419,7 @@ img {
 .featured-banner {
     background: var(--yellow);
     color: var(--black);
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-md) var(--space-md);
 }
 
 .featured-banner ::selection {
@@ -447,16 +447,16 @@ img {
 
 .featured-content h2 {
     font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
     font-weight: 400;
     font-style: italic;
     line-height: 1.2;
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
 }
 
 .featured-content p {
-    font-size: 1rem;
-    margin-bottom: var(--space-lg);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-sm);
     opacity: 0.8;
 }
 
@@ -628,6 +628,24 @@ img {
 
 .about-links {
     margin-top: var(--space-lg);
+}
+
+.about-sub-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    padding-left: var(--space-md);
+}
+
+.about-sub-links a {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+    transition: color var(--transition);
+}
+
+.about-sub-links a:hover {
+    color: var(--pink);
 }
 
 /* ========================================
