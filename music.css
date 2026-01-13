@@ -276,6 +276,11 @@
 }
 
 @media (max-width: 768px) {
+    .music-header-text {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    
     .music-layout {
         grid-template-columns: 1fr;
     }
