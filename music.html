@@ -464,15 +464,6 @@
                         <li><a href="#" class="genre-link" data-filter="blues">Blues</a></li>
                     </ul>
                 </div>
-                <div class="sidebar-section">
-                    <h3>Playlists</h3>
-                    <ul class="genre-list">
-                        <li><a href="#" class="genre-link">Skate Vibes</a></li>
-                        <li><a href="#" class="genre-link">Workshop Hours</a></li>
-                        <li><a href="#" class="genre-link">Late Night</a></li>
-                        <li><a href="#" class="genre-link">Sunday Morning</a></li>
-                    </ul>
-                </div>
             </aside>
 
             <!-- Main Content -->
@@ -1060,7 +1051,7 @@
             
             document.getElementById('artistIcon').textContent = genre.icon;
             document.getElementById('artistName').textContent = genre.name;
-            document.getElementById('artistSubgenre').textContent = `${currentYear} · ALL SUBGENRES`;
+            document.getElementById('artistSubgenre').textContent = '';
             
             const albumGrid = document.getElementById('albumGrid');
             albumGrid.innerHTML = '';
@@ -1079,7 +1070,7 @@
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 1.2rem;">${subgenre.icon}</span>
                         <span style="font-size: 0.85rem; font-weight: 600; color: var(--pink);">${subgenre.name}</span>
-                        <span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status}</span>
+                        <span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status} · ${currentYear}</span>
                     </div>
                 `;
                 albumGrid.appendChild(subgenreHeader);
