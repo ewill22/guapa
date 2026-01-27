@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee | Guapa</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="music.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Coffee Journey Styles */
+        .journey-section {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .journey-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 8px;
+        }
+
+        .year-display h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--yellow);
+            letter-spacing: -0.02em;
+            line-height: 1;
+            min-width: 80px;
+        }
+
+        .album-bars {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 50px;
+        }
+
+        .album-bar {
+            flex: 1;
+            background: var(--pink);
+            opacity: 0.3;
+            border-radius: 2px 2px 0 0;
+            transition: all 0.2s;
+            min-height: 4px;
+            cursor: pointer;
+        }
+
+        .album-bar.active {
+            opacity: 1;
+            background: var(--yellow);
+        }
+
+        .album-bar:hover {
+            opacity: 0.7;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .slider-spacer {
+            min-width: 80px;
+        }
+
+        .slider-wrapper {
+            flex: 1;
+        }
+
+        .year-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 3px;
+            background: var(--gray-800);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .year-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .timeline-markers span {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+        }
+
+        .genre-groups {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .genre-group {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .genre-group.hidden {
+            display: none;
+        }
+
+        .genre-bracket {
+            width: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bracket-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gray-800);
+            border-radius: 1px;
+        }
+
+        .bracket-icon {
+            font-size: 1.1rem;
+            padding: 6px 0;
+        }
+
+        .genre-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            padding: 6px 0;
+        }
+
+        .subgenres-grid {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-content: flex-start;
+        }
+
+        .subgenre-item {
+            background: transparent;
+            border: 2px solid var(--gray-800);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 10px 12px;
+        }
+
+        .subgenre-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subgenre-item:hover {
+            border-color: var(--pink);
+            background: rgba(232, 160, 176, 0.05);
+        }
+
+        .subgenre-item.active {
+            border-color: var(--pink);
+            background: rgba(232, 160, 176, 0.1);
+        }
+
+        .subgenre-item.rising { border-color: var(--blue, #88a8d4); }
+        .subgenre-item.peak { border-color: var(--pink); }
+        .subgenre-item.fading { border-color: var(--gray-800); opacity: 0.5; }
+        .subgenre-item.emerging { border-color: var(--yellow); border-style: dashed; }
+
+        .subgenre-item .icon {
+            font-size: 1rem;
+        }
+
+        .subgenre-item .name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-400);
+        }
+
+        .subgenre-item.rising .name { color: var(--blue, #88a8d4); }
+        .subgenre-item.peak .name { color: var(--pink); }
+        .subgenre-item.emerging .name { color: var(--yellow); }
+
+        .artist-list {
+            font-size: 0.65rem;
+            color: var(--gray-600);
+            padding-left: 2px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .artist-list span::before {
+            content: "• ";
+        }
+
+        /* Producer Panel */
+        .artist-panel {
+            display: none;
+            background: var(--gray-900);
+            border: 2px solid var(--pink);
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .artist-panel.visible {
+            display: block;
+        }
+
+        .artist-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .artist-panel-header .icon {
+            font-size: 2rem;
+        }
+
+        .artist-panel-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--yellow);
+        }
+
+        .artist-panel-header .subgenre-tag {
+            font-size: 0.75rem;
+            color: var(--blue, #88a8d4);
+            margin-top: 2px;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .album-card {
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: 6px;
+            padding: 16px 16px 20px 16px;
+            transition: all 0.2s;
+        }
+
+        .album-card:hover {
+            border-color: var(--pink);
+        }
+
+        .album-links {
+            display: flex;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+
+        .album-link {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 5px 7px;
+            background: transparent;
+            border: 1px solid;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .album-link.roaster {
+            color: #c4a77d;
+            border-color: #c4a77d;
+        }
+
+        .album-link.wiki {
+            color: var(--blue, #88a8d4);
+            border-color: var(--blue, #88a8d4);
+        }
+
+        .album-link.buy {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .album-link:hover {
+            background: currentColor;
+            color: var(--black);
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            color: var(--gray-600);
+            width: 28px;
+            height: 28px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-panel:hover {
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        /* Decade nav */
+        .decade-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .decade-btn {
+            background: transparent;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .decade-btn:hover {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .decade-btn.active {
+            background: var(--yellow);
+            color: var(--black);
+            border-color: var(--yellow);
+        }
+
+        .decade-btn.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Active region highlight in sidebar */
+        .genre-link.filter-active {
+            color: var(--yellow) !important;
+            background: rgba(240, 192, 20, 0.1);
+        }
+
+        .genre-link.filter-active::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--yellow);
+            border-radius: 50%;
+            margin-right: var(--space-xs);
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="guapa_logo_dark.png" alt="Guapa" class="logo-img">
+            <span class="logo-text" style="font-size: 1.8rem;">GUAPA <span style="font-size: 0.6rem; font-weight: 400; vertical-align: middle;">inc</span></span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="music.html">Music</a>
+            <a href="index.html#shop">Data</a>
+            <a href="index.html#shop">Photography</a>
+            <a href="index.html#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener" class="nav-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="shop.html" class="nav-cart">Shop →</a>
+        </div>
+
+        <button class="nav-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <main class="music-page">
+        <!-- Page Header -->
+        <header class="music-header" style="padding: var(--space-md); border-bottom: 1px solid var(--gray-800);">
+            <div class="music-header-text">
+                <h1>Coffee</h1>
+                <p>Origins, producers, and roasts from around the world</p>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="music-layout">
+            <!-- Sidebar -->
+            <aside class="music-sidebar">
+                <div class="sidebar-section">
+                    <h3>Regions</h3>
+                    <ul class="genre-list">
+                        <li><a href="#" class="genre-link filter-active" data-filter="all">All</a></li>
+                        <li><a href="#" class="genre-link" data-filter="africa">Africa</a></li>
+                        <li><a href="#" class="genre-link" data-filter="central_america">Central America</a></li>
+                        <li><a href="#" class="genre-link" data-filter="south_america">South America</a></li>
+                        <li><a href="#" class="genre-link" data-filter="asia_pacific">Asia Pacific</a></li>
+                        <li><a href="#" class="genre-link" data-filter="middle_east">Middle East</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="music-main">
+                <!-- Coffee Journey Section -->
+                <section class="journey-section">
+                    <nav class="decade-nav">
+                        <button class="decade-btn" data-decade="2000s">2000s</button>
+                        <button class="decade-btn" data-decade="2010s">2010s</button>
+                        <button class="decade-btn active" data-decade="2020s">2020s</button>
+                    </nav>
+
+                    <div class="journey-header">
+                        <div class="year-display">
+                            <h2 id="currentYear">2024</h2>
+                        </div>
+                        <div class="album-bars" id="albumBars"></div>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-spacer"></div>
+                        <div class="slider-wrapper">
+                            <input type="range" class="year-slider" id="yearSlider" min="2020" max="2025" value="2024">
+                            <div class="timeline-markers">
+                                <span>2020</span>
+                                <span>2022</span>
+                                <span>2024</span>
+                                <span>2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="genre-groups" id="genreGroups"></div>
+
+                    <div class="artist-panel" id="artistPanel">
+                        <button class="close-panel" onclick="closeArtistPanel()">✕</button>
+                        <div class="artist-panel-header">
+                            <span class="icon" id="artistIcon">☕</span>
+                            <div>
+                                <h3 id="artistName">COUNTRY NAME</h3>
+                                <p class="subgenre-tag" id="artistSubgenre">REGION</p>
+                            </div>
+                        </div>
+                        <div class="album-grid" id="albumGrid"></div>
+                    </div>
+                </section>
+
+                <!-- Posts / Notes Section -->
+                <section class="music-posts">
+                    <div class="posts-header">
+                        <h2>Tasting Notes</h2>
+                    </div>
+                    
+                    <div class="posts-grid">
+                        <article class="post-card">
+                            <div class="post-image">
+                                <div class="post-placeholder"></div>
+                            </div>
+                            <div class="post-content">
+                                <span class="post-tag">Origin Spotlight</span>
+                                <h3>Ethiopian Naturals</h3>
+                                <p>Why natural processed Ethiopian coffees are having a moment right now...</p>
+                                <span class="post-date">Jan 15, 2025</span>
+                            </div>
+                        </article>
+
+                        <article class="post-card">
+                            <div class="post-image">
+                                <div class="post-placeholder"></div>
+                            </div>
+                            <div class="post-content">
+                                <span class="post-tag">Brew Guide</span>
+                                <h3>Dialing In Light Roasts</h3>
+                                <p>Tips for getting the most out of your light roast single origins...</p>
+                                <span class="post-date">Jan 10, 2025</span>
+                            </div>
+                        </article>
+
+                        <article class="post-card">
+                            <div class="post-image">
+                                <div class="post-placeholder"></div>
+                            </div>
+                            <div class="post-content">
+                                <span class="post-tag">Producer Visit</span>
+                                <h3>Finca El Injerto</h3>
+                                <p>Notes from visiting one of Guatemala's most celebrated farms...</p>
+                                <span class="post-date">Jan 5, 2025</span>
+                            </div>
+                        </article>
+
+                        <article class="post-card">
+                            <div class="post-image">
+                                <div class="post-placeholder"></div>
+                            </div>
+                            <div class="post-content">
+                                <span class="post-tag">What We're Drinking</span>
+                                <h3>January Rotation</h3>
+                                <p>The beans that have been in heavy rotation this month...</p>
+                                <span class="post-date">Jan 2, 2025</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="lockup_light.png" alt="Guapa" class="footer-logo">
+                    <p>A creative collective for friends who make things.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <a href="#">All Products</a>
+                    <a href="#">Photography</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Follow</h4>
+                    <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Guapa Collective</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Coffee Data - Regions > Countries > Producers > Roasts
+        const coffeeData = {
+            africa: {
+                name: "AFRICA",
+                icon: "🌍",
+                status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                subgenres: {
+                    ethiopia: {
+                        name: "ETHIOPIA",
+                        icon: "🇪🇹",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            yirgacheffe: { 
+                                name: "Yirgacheffe Cooperatives", 
+                                icon: "🫐", 
+                                description: "Birthplace of coffee. Bright, floral, blueberry notes. The benchmark.", 
+                                albums: [
+                                    { title: "Kochere Natural", year: 2024, notes: "Blueberry, jasmine, wine" },
+                                    { title: "Gedeb Washed", year: 2023, notes: "Bergamot, peach, tea-like" },
+                                    { title: "Aricha Honey", year: 2022, notes: "Strawberry, honey, floral" }
+                                ] 
+                            },
+                            sidamo: { 
+                                name: "Sidamo Region", 
+                                icon: "🍋", 
+                                description: "Complex citrus and stone fruit. Balanced with sweet finish.", 
+                                albums: [
+                                    { title: "Bensa Natural", year: 2024, notes: "Tropical fruit, citrus, cocoa" },
+                                    { title: "Shantawene Washed", year: 2023, notes: "Lemon, apricot, black tea" }
+                                ] 
+                            },
+                            guji: { 
+                                name: "Guji Zone", 
+                                icon: "🍑", 
+                                description: "Intense fruit-forward naturals. Rising star.", 
+                                albums: [
+                                    { title: "Hambela Natural", year: 2024, notes: "Peach, mango, fermented fruit" },
+                                    { title: "Uraga Washed", year: 2023, notes: "Floral, citrus, clean" }
+                                ] 
+                            }
+                        }
+                    },
+                    kenya: {
+                        name: "KENYA",
+                        icon: "🇰🇪",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            nyeri: { 
+                                name: "Nyeri County", 
+                                icon: "🍇", 
+                                description: "SL-28 and SL-34 varietals. Intense blackcurrant, tomato-like acidity.", 
+                                albums: [
+                                    { title: "Othaya AA", year: 2024, notes: "Blackcurrant, grapefruit, brown sugar" },
+                                    { title: "Karatina Peaberry", year: 2023, notes: "Raspberry, lime, molasses" }
+                                ] 
+                            },
+                            kirinyaga: { 
+                                name: "Kirinyaga County", 
+                                icon: "🫒", 
+                                description: "Mount Kenya slopes. Bright, complex, wine-like.", 
+                                albums: [
+                                    { title: "Kamwangi AB", year: 2024, notes: "Plum, orange, black tea" }
+                                ] 
+                            }
+                        }
+                    },
+                    rwanda: {
+                        name: "RWANDA",
+                        icon: "🇷🇼",
+                        status: { 2020: "rising", 2021: "rising", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            huye: { 
+                                name: "Huye Mountain", 
+                                icon: "🍊", 
+                                description: "High altitude, exceptional clarity. Orange and floral notes.", 
+                                albums: [
+                                    { title: "Red Bourbon Washed", year: 2024, notes: "Orange blossom, caramel, silky" }
+                                ] 
+                            },
+                            buf: { 
+                                name: "Buf Coffee", 
+                                icon: "🍯", 
+                                description: "Women-owned washing station. Meticulous processing.", 
+                                albums: [
+                                    { title: "Buf Fully Washed", year: 2023, notes: "Honey, lemon, brown sugar" }
+                                ] 
+                            }
+                        }
+                    },
+                    burundi: {
+                        name: "BURUNDI",
+                        icon: "🇧🇮",
+                        status: { 2020: "emerging", 2021: "rising", 2022: "rising", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            kayanza: { 
+                                name: "Kayanza Province", 
+                                icon: "🍏", 
+                                description: "Similar terroir to Rwanda. Sweet, balanced, underrated.", 
+                                albums: [
+                                    { title: "Long Miles Coffee", year: 2024, notes: "Green apple, caramel, juicy" }
+                                ] 
+                            }
+                        }
+                    }
+                }
+            },
+            central_america: {
+                name: "CENTRAL AMERICA",
+                icon: "🌎",
+                status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                subgenres: {
+                    guatemala: {
+                        name: "GUATEMALA",
+                        icon: "🇬🇹",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            huehuetenango: { 
+                                name: "Huehuetenango", 
+                                icon: "🍫", 
+                                description: "Remote highlands. Complex, fruity, chocolate undertones.", 
+                                albums: [
+                                    { title: "El Injerto Bourbon", year: 2024, notes: "Chocolate, orange, toffee" },
+                                    { title: "La Libertad Pacamara", year: 2023, notes: "Floral, citrus, creamy" }
+                                ] 
+                            },
+                            antigua: { 
+                                name: "Antigua Valley", 
+                                icon: "🌋", 
+                                description: "Volcanic soil. Spicy, smoky, full-bodied.", 
+                                albums: [
+                                    { title: "Finca Filadelfia", year: 2024, notes: "Cocoa, spice, brown sugar" }
+                                ] 
+                            }
+                        }
+                    },
+                    costa_rica: {
+                        name: "COSTA RICA",
+                        icon: "🇨🇷",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            tarrazu: { 
+                                name: "Tarrazú", 
+                                icon: "🍎", 
+                                description: "Most famous region. Bright, clean, apple-like.", 
+                                albums: [
+                                    { title: "La Minita", year: 2024, notes: "Apple, honey, citrus" },
+                                    { title: "Herbazú Black Honey", year: 2023, notes: "Stone fruit, molasses, complex" }
+                                ] 
+                            },
+                            west_valley: { 
+                                name: "West Valley", 
+                                icon: "🥭", 
+                                description: "Experimental processing. Innovative honeys and naturals.", 
+                                albums: [
+                                    { title: "Finca Sumava", year: 2024, notes: "Mango, papaya, brown sugar" }
+                                ] 
+                            }
+                        }
+                    },
+                    panama: {
+                        name: "PANAMA",
+                        icon: "🇵🇦",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            boquete: { 
+                                name: "Boquete Highlands", 
+                                icon: "🌸", 
+                                description: "Home of legendary Gesha. Floral, tea-like, expensive.", 
+                                albums: [
+                                    { title: "Hacienda La Esmeralda Gesha", year: 2024, notes: "Jasmine, bergamot, honey" },
+                                    { title: "Finca Deborah Gesha", year: 2023, notes: "Rose, lychee, tropical" }
+                                ] 
+                            }
+                        }
+                    },
+                    honduras: {
+                        name: "HONDURAS",
+                        icon: "🇭🇳",
+                        status: { 2020: "rising", 2021: "rising", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            copan: { 
+                                name: "Copán Region", 
+                                icon: "🍬", 
+                                description: "Improving quality rapidly. Sweet, balanced, great value.", 
+                                albums: [
+                                    { title: "Finca El Puente", year: 2024, notes: "Caramel, red apple, clean" }
+                                ] 
+                            }
+                        }
+                    }
+                }
+            },
+            south_america: {
+                name: "SOUTH AMERICA",
+                icon: "🌎",
+                status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                subgenres: {
+                    colombia: {
+                        name: "COLOMBIA",
+                        icon: "🇨🇴",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            huila: { 
+                                name: "Huila Department", 
+                                icon: "🍒", 
+                                description: "Colombia's specialty heartland. Caramel, cherry, balanced.", 
+                                albums: [
+                                    { title: "La Plata Pink Bourbon", year: 2024, notes: "Cherry, florals, wine" },
+                                    { title: "Pitalito Caturra", year: 2023, notes: "Caramel, citrus, nutty" }
+                                ] 
+                            },
+                            narino: { 
+                                name: "Nariño", 
+                                icon: "🍋", 
+                                description: "Extreme altitude near Ecuador. Bright, complex acidity.", 
+                                albums: [
+                                    { title: "La Union Washed", year: 2024, notes: "Lemon, panela, silky" }
+                                ] 
+                            },
+                            tolima: { 
+                                name: "Tolima", 
+                                icon: "🥜", 
+                                description: "Emerging region. Nutty, chocolate, approachable.", 
+                                albums: [
+                                    { title: "Planadas Community Lot", year: 2023, notes: "Hazelnut, milk chocolate, orange" }
+                                ] 
+                            }
+                        }
+                    },
+                    brazil: {
+                        name: "BRAZIL",
+                        icon: "🇧🇷",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            minas: { 
+                                name: "Minas Gerais", 
+                                icon: "🥜", 
+                                description: "World's largest producer. Nutty, chocolate, low acidity.", 
+                                albums: [
+                                    { title: "Fazenda Sertão Natural", year: 2024, notes: "Peanut, chocolate, smooth" },
+                                    { title: "Daterra Reserve", year: 2023, notes: "Caramel, nuts, creamy" }
+                                ] 
+                            },
+                            mogiana: { 
+                                name: "Mogiana", 
+                                icon: "🍫", 
+                                description: "São Paulo state. Specialty micro-lots emerging.", 
+                                albums: [
+                                    { title: "Fazenda Ambiental Fortaleza", year: 2024, notes: "Dark chocolate, cherry, spice" }
+                                ] 
+                            }
+                        }
+                    },
+                    peru: {
+                        name: "PERU",
+                        icon: "🇵🇪",
+                        status: { 2020: "rising", 2021: "rising", 2022: "rising", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            cajamarca: { 
+                                name: "Cajamarca", 
+                                icon: "🍯", 
+                                description: "Northern highlands. Sweet, mild, increasingly specialty.", 
+                                albums: [
+                                    { title: "Cenfrocafe Organic", year: 2024, notes: "Honey, cocoa, mild fruit" }
+                                ] 
+                            }
+                        }
+                    }
+                }
+            },
+            asia_pacific: {
+                name: "ASIA PACIFIC",
+                icon: "🌏",
+                status: { 2020: "rising", 2021: "rising", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                subgenres: {
+                    indonesia: {
+                        name: "INDONESIA",
+                        icon: "🇮🇩",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            sumatra: { 
+                                name: "Sumatra", 
+                                icon: "🌿", 
+                                description: "Wet-hulled processing. Earthy, herbal, full body.", 
+                                albums: [
+                                    { title: "Gayo Highland Mandheling", year: 2024, notes: "Earth, herbs, tobacco, heavy" },
+                                    { title: "Lake Toba Triple Pick", year: 2023, notes: "Cedar, dark chocolate, moss" }
+                                ] 
+                            },
+                            java: { 
+                                name: "Java", 
+                                icon: "🌾", 
+                                description: "Historic Dutch estates. Clean, malty, balanced.", 
+                                albums: [
+                                    { title: "Java Estate Washed", year: 2024, notes: "Malt, brown sugar, herbal" }
+                                ] 
+                            },
+                            sulawesi: { 
+                                name: "Sulawesi Toraja", 
+                                icon: "🍂", 
+                                description: "Unique microclimate. Spicy, earthy, complex.", 
+                                albums: [
+                                    { title: "Toraja Sapan", year: 2023, notes: "Spice, dark fruit, earthy" }
+                                ] 
+                            }
+                        }
+                    },
+                    vietnam: {
+                        name: "VIETNAM",
+                        icon: "🇻🇳",
+                        status: { 2020: "emerging", 2021: "emerging", 2022: "rising", 2023: "rising", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            dalat: { 
+                                name: "Da Lat Highlands", 
+                                icon: "🌺", 
+                                description: "Beyond robusta. Arabica specialty emerging.", 
+                                albums: [
+                                    { title: "Cầu Đất Arabica", year: 2024, notes: "Floral, tea-like, delicate" }
+                                ] 
+                            }
+                        }
+                    },
+                    png: {
+                        name: "PAPUA NEW GUINEA",
+                        icon: "🇵🇬",
+                        status: { 2020: "rising", 2021: "rising", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            highlands: { 
+                                name: "Eastern Highlands", 
+                                icon: "🌴", 
+                                description: "Wild, funky, unique. Tropical fruit and earth.", 
+                                albums: [
+                                    { title: "Kimel Estate", year: 2024, notes: "Tropical fruit, herbs, brown sugar" }
+                                ] 
+                            }
+                        }
+                    }
+                }
+            },
+            middle_east: {
+                name: "MIDDLE EAST",
+                icon: "☕",
+                status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                subgenres: {
+                    yemen: {
+                        name: "YEMEN",
+                        icon: "🇾🇪",
+                        status: { 2020: "peak", 2021: "peak", 2022: "peak", 2023: "peak", 2024: "peak", 2025: "peak" },
+                        artists: {
+                            haraz: { 
+                                name: "Haraaz Mountains", 
+                                icon: "🫐", 
+                                description: "Ancient terraces. Wild, winey, dried fruit. The OG origin.", 
+                                albums: [
+                                    { title: "Haraaz Natural", year: 2024, notes: "Blueberry, wine, chocolate, wild" },
+                                    { title: "Bani Matar", year: 2023, notes: "Dried fruit, spice, complex" }
+                                ] 
+                            },
+                            matari: { 
+                                name: "Mattari Region", 
+                                icon: "🍇", 
+                                description: "Historic mocha port coffee. Intense, fruity, rare.", 
+                                albums: [
+                                    { title: "Port of Mokha Selection", year: 2024, notes: "Raisin, cocoa, port wine" }
+                                ] 
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        let currentYear = 2024;
+        let selectedSubgenre = null;
+        let selectedGenre = null;
+        let activeFilter = 'all';
+
+        const yearSlider = document.getElementById('yearSlider');
+        const currentYearDisplay = document.getElementById('currentYear');
+        const genreGroups = document.getElementById('genreGroups');
+        const albumBars = document.getElementById('albumBars');
+        const artistPanel = document.getElementById('artistPanel');
+
+        // Sidebar filter clicks
+        document.querySelectorAll('.genre-link[data-filter]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.genre-link[data-filter]').forEach(l => l.classList.remove('filter-active'));
+                link.classList.add('filter-active');
+                activeFilter = link.dataset.filter;
+                
+                if (activeFilter === 'all') {
+                    closeArtistPanel();
+                } else {
+                    selectedGenre = activeFilter;
+                    selectedSubgenre = null;
+                    showGenrePanel(activeFilter);
+                }
+                renderGenreGroups();
+            });
+        });
+
+        // Decade nav clicks
+        document.querySelectorAll('.decade-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const decade = btn.dataset.decade;
+                document.querySelectorAll('.decade-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (decade === '2000s') {
+                    yearSlider.min = 2000;
+                    yearSlider.max = 2009;
+                    yearSlider.value = 2005;
+                    updateYear(2005);
+                    document.querySelector('.timeline-markers').innerHTML = '<span>2000</span><span>2003</span><span>2006</span><span>2009</span>';
+                } else if (decade === '2010s') {
+                    yearSlider.min = 2010;
+                    yearSlider.max = 2019;
+                    yearSlider.value = 2015;
+                    updateYear(2015);
+                    document.querySelector('.timeline-markers').innerHTML = '<span>2010</span><span>2013</span><span>2016</span><span>2019</span>';
+                } else {
+                    yearSlider.min = 2020;
+                    yearSlider.max = 2025;
+                    yearSlider.value = 2024;
+                    updateYear(2024);
+                    document.querySelector('.timeline-markers').innerHTML = '<span>2020</span><span>2022</span><span>2024</span><span>2025</span>';
+                }
+            });
+        });
+
+        function getRoastCounts() {
+            const counts = {};
+            for (let y = parseInt(yearSlider.min); y <= parseInt(yearSlider.max); y++) counts[y] = 0;
+            
+            Object.values(coffeeData).forEach(region => {
+                Object.values(region.subgenres).forEach(country => {
+                    Object.values(country.artists).forEach(producer => {
+                        producer.albums.forEach(roast => {
+                            if (roast.year >= parseInt(yearSlider.min) && roast.year <= parseInt(yearSlider.max)) {
+                                counts[roast.year] = (counts[roast.year] || 0) + 1;
+                            }
+                        });
+                    });
+                });
+            });
+            return counts;
+        }
+
+        function renderAlbumBars() {
+            const counts = getRoastCounts();
+            const maxCount = Math.max(...Object.values(counts), 1);
+            albumBars.innerHTML = '';
+            
+            for (let y = parseInt(yearSlider.min); y <= parseInt(yearSlider.max); y++) {
+                const bar = document.createElement('div');
+                bar.className = `album-bar${y === currentYear ? ' active' : ''}`;
+                const height = maxCount > 0 ? ((counts[y] || 0) / maxCount) * 100 : 0;
+                bar.style.height = `${Math.max(height, 8)}%`;
+                bar.title = `${y}: ${counts[y] || 0} roasts`;
+                bar.onclick = () => { yearSlider.value = y; updateYear(y); };
+                albumBars.appendChild(bar);
+            }
+        }
+
+        function updateYear(year) {
+            currentYear = parseInt(year);
+            currentYearDisplay.textContent = currentYear;
+            renderAlbumBars();
+            renderGenreGroups();
+            
+            if (selectedGenre && selectedSubgenre) {
+                const country = coffeeData[selectedGenre]?.subgenres[selectedSubgenre];
+                if (country && country.status[currentYear] !== 'hidden') {
+                    showArtistsPanel(selectedGenre, selectedSubgenre);
+                } else {
+                    selectedGenre = null;
+                    selectedSubgenre = null;
+                    artistPanel.classList.remove('visible');
+                    renderGenreGroups();
+                }
+            } else if (selectedGenre && !selectedSubgenre) {
+                showGenrePanel(selectedGenre);
+            }
+        }
+
+        function renderGenreGroups() {
+            genreGroups.innerHTML = '';
+            
+            Object.entries(coffeeData).forEach(([regionId, region]) => {
+                if (activeFilter !== 'all' && regionId !== activeFilter) return;
+                
+                const visibleCountries = Object.entries(region.subgenres).filter(([id, country]) => {
+                    return country.status[currentYear] !== 'hidden';
+                });
+                
+                if (visibleCountries.length === 0) return;
+                
+                const group = document.createElement('div');
+                group.className = 'genre-group';
+                
+                const bracket = document.createElement('div');
+                bracket.className = 'genre-bracket';
+                bracket.innerHTML = `
+                    <div class="bracket-line"></div>
+                    <span class="bracket-icon">${region.icon}</span>
+                    <span class="genre-label">${region.name}</span>
+                    <div class="bracket-line"></div>
+                `;
+                
+                const subgenresGrid = document.createElement('div');
+                subgenresGrid.className = 'subgenres-grid';
+                
+                visibleCountries.forEach(([countryId, country]) => {
+                    const status = country.status[currentYear] || 'peak';
+                    const isSelected = selectedGenre === regionId && selectedSubgenre === countryId;
+                    const producerNames = Object.values(country.artists).map(a => a.name);
+                    
+                    const item = document.createElement('div');
+                    item.className = `subgenre-item ${status}${isSelected ? ' active' : ''}`;
+                    item.onclick = () => selectSubgenre(regionId, countryId);
+                    item.innerHTML = `
+                        <div class="subgenre-header">
+                            <span class="icon">${country.icon}</span>
+                            <span class="name">${country.name}</span>
+                        </div>
+                        <div class="artist-list">
+                            ${producerNames.map(name => `<span>${name}</span>`).join('')}
+                        </div>
+                    `;
+                    subgenresGrid.appendChild(item);
+                });
+                
+                group.appendChild(bracket);
+                group.appendChild(subgenresGrid);
+                genreGroups.appendChild(group);
+            });
+        }
+
+        function selectSubgenre(regionId, countryId) {
+            if (selectedGenre === regionId && selectedSubgenre === countryId) {
+                selectedGenre = null;
+                selectedSubgenre = null;
+                closeArtistPanel();
+            } else {
+                selectedGenre = regionId;
+                selectedSubgenre = countryId;
+                showArtistsPanel(regionId, countryId);
+            }
+            renderGenreGroups();
+        }
+
+        function showArtistsPanel(regionId, countryId) {
+            const region = coffeeData[regionId];
+            const country = region.subgenres[countryId];
+            const status = country.status[currentYear] || 'peak';
+            
+            document.getElementById('artistIcon').textContent = country.icon;
+            document.getElementById('artistName').textContent = country.name;
+            document.getElementById('artistSubgenre').textContent = `${region.name} · ${status.toUpperCase()} · ${currentYear}`;
+            
+            const albumGrid = document.getElementById('albumGrid');
+            albumGrid.innerHTML = '';
+            
+            Object.entries(country.artists).forEach(([producerId, producer]) => {
+                const hasCurrentYearRoast = producer.albums.some(a => a.year === currentYear);
+                
+                const card = document.createElement('div');
+                card.className = 'album-card';
+                if (hasCurrentYearRoast) card.style.borderColor = 'var(--yellow)';
+                
+                let roastsHtml = producer.albums.map((a, index) => {
+                    const isCurrentYear = a.year === currentYear;
+                    const isLast = index === producer.albums.length - 1;
+                    return `
+                        <div style="padding: 8px 0; ${isCurrentYear ? 'background: rgba(240, 192, 20, 0.08); margin: 0 -10px; padding-left: 10px; padding-right: 10px;' : ''} ${!isLast ? 'border-bottom: 1px solid var(--gray-800);' : ''}">
+                            <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 0.85rem; color: ${isCurrentYear ? 'var(--yellow)' : 'var(--gray-400)'};">${a.title}</span>
+                                <span style="font-size: 0.7rem; color: var(--gray-600);">${a.year}</span>
+                                ${isCurrentYear ? '<span style="font-size: 0.6rem; color: var(--yellow); font-weight: 600;">★</span>' : ''}
+                            </div>
+                            <div style="font-size: 0.7rem; color: var(--gray-600); margin-bottom: 6px; font-style: italic;">${a.notes}</div>
+                            <div class="album-links">
+                                <a href="#" class="album-link roaster">ROASTER</a>
+                                <a href="#" class="album-link wiki">INFO</a>
+                                <a href="#" class="album-link buy">BUY BEANS</a>
+                            </div>
+                        </div>`;
+                }).join('');
+                
+                card.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1.5rem;">${producer.icon}</span>
+                        <div>
+                            <h4 style="margin: 0; font-size: 0.9rem; color: var(--yellow);">${producer.name}</h4>
+                            <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-400); line-height: 1.4;">${producer.description}</p>
+                        </div>
+                    </div>
+                    <div class="albums-list">${roastsHtml}</div>
+                `;
+                albumGrid.appendChild(card);
+            });
+            
+            artistPanel.classList.add('visible');
+        }
+
+        function showGenrePanel(regionId) {
+            const region = coffeeData[regionId];
+            if (!region) return;
+            
+            document.getElementById('artistIcon').textContent = region.icon;
+            document.getElementById('artistName').textContent = region.name;
+            document.getElementById('artistSubgenre').textContent = '';
+            
+            const albumGrid = document.getElementById('albumGrid');
+            albumGrid.innerHTML = '';
+            
+            Object.entries(region.subgenres).forEach(([countryId, country]) => {
+                if (country.status[currentYear] === 'hidden') return;
+                
+                const status = country.status[currentYear] || 'peak';
+                
+                const countryHeader = document.createElement('div');
+                countryHeader.style.cssText = 'grid-column: 1 / -1; padding: 12px 0 8px 0; border-bottom: 1px solid var(--gray-800); margin-bottom: 8px;';
+                countryHeader.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">${country.icon}</span>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--pink);">${country.name}</span>
+                        <span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status} · ${currentYear}</span>
+                    </div>
+                `;
+                albumGrid.appendChild(countryHeader);
+                
+                Object.entries(country.artists).forEach(([producerId, producer]) => {
+                    const hasCurrentYearRoast = producer.albums.some(a => a.year === currentYear);
+                    
+                    const card = document.createElement('div');
+                    card.className = 'album-card';
+                    if (hasCurrentYearRoast) card.style.borderColor = 'var(--yellow)';
+                    
+                    let roastsHtml = producer.albums.map((a, index) => {
+                        const isCurrentYear = a.year === currentYear;
+                        const isLast = index === producer.albums.length - 1;
+                        return `
+                            <div style="padding: 8px 0; ${isCurrentYear ? 'background: rgba(240, 192, 20, 0.08); margin: 0 -10px; padding-left: 10px; padding-right: 10px;' : ''} ${!isLast ? 'border-bottom: 1px solid var(--gray-800);' : ''}">
+                                <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;">
+                                    <span style="font-size: 0.85rem; color: ${isCurrentYear ? 'var(--yellow)' : 'var(--gray-400)'};">${a.title}</span>
+                                    <span style="font-size: 0.7rem; color: var(--gray-600);">${a.year}</span>
+                                    ${isCurrentYear ? '<span style="font-size: 0.6rem; color: var(--yellow); font-weight: 600;">★</span>' : ''}
+                                </div>
+                                <div style="font-size: 0.7rem; color: var(--gray-600); margin-bottom: 6px; font-style: italic;">${a.notes}</div>
+                                <div class="album-links">
+                                    <a href="#" class="album-link roaster">ROASTER</a>
+                                    <a href="#" class="album-link wiki">INFO</a>
+                                    <a href="#" class="album-link buy">BUY BEANS</a>
+                                </div>
+                            </div>`;
+                    }).join('');
+                    
+                    card.innerHTML = `
+                        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 1.5rem;">${producer.icon}</span>
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9rem; color: var(--yellow);">${producer.name}</h4>
+                                <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-400); line-height: 1.4;">${producer.description}</p>
+                            </div>
+                        </div>
+                        <div class="albums-list">${roastsHtml}</div>
+                    `;
+                    albumGrid.appendChild(card);
+                });
+            });
+            
+            artistPanel.classList.add('visible');
+        }
+
+        function closeArtistPanel() {
+            artistPanel.classList.remove('visible');
+            selectedGenre = null;
+            selectedSubgenre = null;
+            renderGenreGroups();
+        }
+
+        yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
+
+        document.addEventListener('keydown', (e) => {
+            const min = parseInt(yearSlider.min);
+            const max = parseInt(yearSlider.max);
+            if (e.key === 'ArrowLeft' && currentYear > min) {
+                yearSlider.value = currentYear - 1;
+                updateYear(currentYear - 1);
+            }
+            if (e.key === 'ArrowRight' && currentYear < max) {
+                yearSlider.value = currentYear + 1;
+                updateYear(currentYear + 1);
+            }
+            if (e.key === 'Escape') closeArtistPanel();
+        });
+
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-links--open');
+            navToggle.classList.toggle('nav-toggle--open');
+        });
+
+        // Initial render
+        renderAlbumBars();
+        renderGenreGroups();
+    </script>
+</body>
+</html>
