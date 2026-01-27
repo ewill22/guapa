@@ -866,7 +866,15 @@
                 document.querySelectorAll('.genre-link[data-filter]').forEach(l => l.classList.remove('filter-active'));
                 link.classList.add('filter-active');
                 activeFilter = link.dataset.filter;
-                closeArtistPanel();
+                
+                if (activeFilter === 'all') {
+                    closeArtistPanel();
+                } else {
+                    // Show all artists from this genre
+                    selectedGenre = activeFilter;
+                    selectedSubgenre = null; // null means all subgenres
+                    showGenrePanel(activeFilter);
+                }
                 renderGenreGroups();
             });
         });
@@ -909,6 +917,7 @@
             renderAlbumBars();
             renderGenreGroups();
             
+            // Refresh panel if open
             if (selectedGenre && selectedSubgenre) {
                 const subgenre = musicData[selectedGenre]?.subgenres[selectedSubgenre];
                 if (subgenre && subgenre.status[currentYear] !== 'hidden') {
@@ -919,6 +928,9 @@
                     artistPanel.classList.remove('visible');
                     renderGenreGroups();
                 }
+            } else if (selectedGenre && !selectedSubgenre) {
+                // Genre-level view (all subgenres)
+                showGenrePanel(selectedGenre);
             }
         }
 
@@ -1037,6 +1049,79 @@
                     <div class="albums-list">${albumsHtml}</div>
                 `;
                 albumGrid.appendChild(card);
+            });
+            
+            artistPanel.classList.add('visible');
+        }
+
+        function showGenrePanel(genreId) {
+            const genre = musicData[genreId];
+            if (!genre) return;
+            
+            document.getElementById('artistIcon').textContent = genre.icon;
+            document.getElementById('artistName').textContent = genre.name;
+            document.getElementById('artistSubgenre').textContent = `${currentYear} · ALL SUBGENRES`;
+            
+            const albumGrid = document.getElementById('albumGrid');
+            albumGrid.innerHTML = '';
+            
+            // Loop through all subgenres
+            Object.entries(genre.subgenres).forEach(([subId, subgenre]) => {
+                // Skip hidden subgenres
+                if (subgenre.status[currentYear] === 'hidden') return;
+                
+                const status = subgenre.status[currentYear];
+                
+                // Add subgenre header card
+                const subgenreHeader = document.createElement('div');
+                subgenreHeader.style.cssText = 'grid-column: 1 / -1; padding: 12px 0 8px 0; border-bottom: 1px solid var(--gray-800); margin-bottom: 8px;';
+                subgenreHeader.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">${subgenre.icon}</span>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--pink);">${subgenre.name}</span>
+                        <span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status}</span>
+                    </div>
+                `;
+                albumGrid.appendChild(subgenreHeader);
+                
+                // Add artist cards for this subgenre
+                Object.entries(subgenre.artists).forEach(([artistId, artist]) => {
+                    const hasCurrentYearAlbum = artist.albums.some(a => a.year === currentYear);
+                    
+                    const card = document.createElement('div');
+                    card.className = 'album-card';
+                    if (hasCurrentYearAlbum) card.style.borderColor = 'var(--yellow)';
+                    
+                    let albumsHtml = artist.albums.map((a, index) => {
+                        const isCurrentYear = a.year === currentYear;
+                        const isLast = index === artist.albums.length - 1;
+                        return `
+                            <div style="padding: 8px 0; ${isCurrentYear ? 'background: rgba(240, 192, 20, 0.08); margin: 0 -10px; padding-left: 10px; padding-right: 10px;' : ''} ${!isLast ? 'border-bottom: 1px solid var(--gray-800);' : ''}">
+                                <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 5px;">
+                                    <span style="font-size: 0.85rem; color: ${isCurrentYear ? 'var(--yellow)' : 'var(--gray-400)'};">${a.title}</span>
+                                    <span style="font-size: 0.7rem; color: var(--gray-600);">${a.year}</span>
+                                    ${isCurrentYear ? '<span style="font-size: 0.6rem; color: var(--yellow); font-weight: 600;">★</span>' : ''}
+                                </div>
+                                <div class="album-links">
+                                    <a href="#" class="album-link spotify">SPOTIFY</a>
+                                    <a href="#" class="album-link wiki">WIKI</a>
+                                    <a href="#" class="album-link buy">FIND CD</a>
+                                </div>
+                            </div>`;
+                    }).join('');
+                    
+                    card.innerHTML = `
+                        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 1.5rem;">${artist.icon}</span>
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9rem; color: var(--yellow);">${artist.name}</h4>
+                                <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-400); line-height: 1.4;">${artist.description}</p>
+                            </div>
+                        </div>
+                        <div class="albums-list">${albumsHtml}</div>
+                    `;
+                    albumGrid.appendChild(card);
+                });
             });
             
             artistPanel.classList.add('visible');
