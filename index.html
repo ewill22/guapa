@@ -9,6 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        @media (max-width: 900px) {
+            .reviews-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 500px) {
+            .reviews-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -44,84 +52,50 @@
 
     <main>
         <!-- Featured Banner -->
-        <section class="featured-banner">
+        <section class="featured-banner" style="padding: var(--space-sm) var(--space-md);">
             <div class="featured-content">
-                <span class="featured-tag">The Collective</span>
-                <h2>Made by friends,<br>for friends.</h2>
-                <p>Every piece comes from someone in the crew. No factories, no middlemen—just people making things they care about.</p>
-                <a href="#about" class="btn btn-secondary">Meet the Crew</a>
+                <h2 style="font-size: 1.2rem; margin-bottom: 0;">Made by friends, for friends.</h2>
             </div>
         </section>
 
-        <!-- Reviews Section -->
-        <section id="reviews" class="reviews">
+        <!-- Shop Categories as Cards -->
+        <section id="shop" class="reviews">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">What We're Into</h2>
-                    <p class="section-subtitle">Stuff the crew is feeling right now</p>
+                    <h2 class="section-title">Shop by Category</h2>
                 </div>
-                <div class="reviews-grid">
+                <div class="reviews-grid" style="grid-template-columns: repeat(4, 1fr);">
                     <a href="music.html" class="review-card">
                         <div class="review-icon">♫</div>
                         <div class="review-content">
                             <h3>Music</h3>
-                            <p>What's on rotation</p>
+                            <p>Explore the journey</p>
                         </div>
                         <span class="review-arrow">→</span>
                     </a>
                     <a href="#" class="review-card">
-                        <div class="review-icon">☕</div>
+                        <div class="review-icon">📊</div>
                         <div class="review-content">
-                            <h3>Coffee</h3>
-                            <p>Beans we're brewing</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                    <a href="#" class="review-card">
-                        <div class="review-icon">🍷</div>
-                        <div class="review-content">
-                            <h3>Natural Wine</h3>
-                            <p>Bottles worth opening</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Categories Grid -->
-        <section id="shop" class="categories">
-            <div class="container">
-                <h2 class="section-title">Shop by Category</h2>
-                <div class="categories-grid" style="grid-template-columns: repeat(3, 1fr);">
-                    <a href="#" class="category-card">
-                        <div class="category-image">
-                            <img src="data-thumb.jpg" alt="Data Projects" class="category-img">
-                        </div>
-                        <div class="category-info">
                             <h3>Data Projects</h3>
-                            <span class="category-link">View Projects →</span>
+                            <p>Visualizations & tools</p>
                         </div>
+                        <span class="review-arrow">→</span>
                     </a>
-                    <a href="#" class="category-card">
-                        <div class="category-image">
-                            <img src="photos-thumb.jpg" alt="Photography" class="category-img">
-                        </div>
-                        <div class="category-info">
+                    <a href="#" class="review-card">
+                        <div class="review-icon">📷</div>
+                        <div class="review-content">
                             <h3>Photography</h3>
-                            <span class="category-link">Shop Now →</span>
+                            <p>Prints & downloads</p>
                         </div>
+                        <span class="review-arrow">→</span>
                     </a>
-                    <a href="#" class="category-card">
-                        <div class="category-image">
-                            <div class="category-placeholder">
-                                <span>👕</span>
-                            </div>
-                        </div>
-                        <div class="category-info">
+                    <a href="shop.html" class="review-card">
+                        <div class="review-icon">👕</div>
+                        <div class="review-content">
                             <h3>Apparel</h3>
-                            <span class="category-link">Shop Now →</span>
+                            <p>Tees & merch</p>
                         </div>
+                        <span class="review-arrow">→</span>
                     </a>
                 </div>
             </div>
