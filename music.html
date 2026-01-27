@@ -10,6 +10,400 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Music Journey Styles */
+        .journey-section {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .journey-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 8px;
+        }
+
+        .year-display h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--yellow);
+            letter-spacing: -0.02em;
+            line-height: 1;
+            min-width: 80px;
+        }
+
+        .album-bars {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 50px;
+        }
+
+        .album-bar {
+            flex: 1;
+            background: var(--pink);
+            opacity: 0.3;
+            border-radius: 2px 2px 0 0;
+            transition: all 0.2s;
+            min-height: 4px;
+            cursor: pointer;
+        }
+
+        .album-bar.active {
+            opacity: 1;
+            background: var(--yellow);
+        }
+
+        .album-bar:hover {
+            opacity: 0.7;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .slider-spacer {
+            min-width: 80px;
+        }
+
+        .slider-wrapper {
+            flex: 1;
+        }
+
+        .year-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 3px;
+            background: var(--gray-800);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .year-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .timeline-markers span {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+        }
+
+        .genre-groups {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .genre-group {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .genre-group.hidden {
+            display: none;
+        }
+
+        .genre-bracket {
+            width: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bracket-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gray-800);
+            border-radius: 1px;
+        }
+
+        .bracket-icon {
+            font-size: 1.1rem;
+            padding: 6px 0;
+        }
+
+        .genre-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            padding: 6px 0;
+        }
+
+        .subgenres-grid {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-content: flex-start;
+        }
+
+        .subgenre-item {
+            background: transparent;
+            border: 2px solid var(--gray-800);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 10px 12px;
+        }
+
+        .subgenre-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subgenre-item:hover {
+            border-color: var(--pink);
+            background: rgba(232, 160, 176, 0.05);
+        }
+
+        .subgenre-item.active {
+            border-color: var(--pink);
+            background: rgba(232, 160, 176, 0.1);
+        }
+
+        .subgenre-item.rising { border-color: var(--blue, #88a8d4); }
+        .subgenre-item.peak { border-color: var(--pink); }
+        .subgenre-item.fading { border-color: var(--gray-800); opacity: 0.5; }
+        .subgenre-item.emerging { border-color: var(--yellow); border-style: dashed; }
+
+        .subgenre-item .icon {
+            font-size: 1rem;
+        }
+
+        .subgenre-item .name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-400);
+        }
+
+        .subgenre-item.rising .name { color: var(--blue, #88a8d4); }
+        .subgenre-item.peak .name { color: var(--pink); }
+        .subgenre-item.emerging .name { color: var(--yellow); }
+
+        .artist-list {
+            font-size: 0.65rem;
+            color: var(--gray-600);
+            padding-left: 2px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .artist-list span::before {
+            content: "• ";
+        }
+
+        /* Artist Panel */
+        .artist-panel {
+            display: none;
+            background: var(--gray-900);
+            border: 2px solid var(--pink);
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .artist-panel.visible {
+            display: block;
+        }
+
+        .artist-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .artist-panel-header .icon {
+            font-size: 2rem;
+        }
+
+        .artist-panel-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--yellow);
+        }
+
+        .artist-panel-header .subgenre-tag {
+            font-size: 0.75rem;
+            color: var(--blue, #88a8d4);
+            margin-top: 2px;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .album-card {
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: 6px;
+            padding: 16px 16px 20px 16px;
+            transition: all 0.2s;
+        }
+
+        .album-card:hover {
+            border-color: var(--pink);
+        }
+
+        .album-links {
+            display: flex;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+
+        .album-link {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 5px 7px;
+            background: transparent;
+            border: 1px solid;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .album-link.spotify {
+            color: #1db954;
+            border-color: #1db954;
+        }
+
+        .album-link.wiki {
+            color: var(--blue, #88a8d4);
+            border-color: var(--blue, #88a8d4);
+        }
+
+        .album-link.buy {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .album-link:hover {
+            background: currentColor;
+            color: var(--black);
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            color: var(--gray-600);
+            width: 28px;
+            height: 28px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-panel:hover {
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        /* Decade nav */
+        .decade-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .decade-btn {
+            background: transparent;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .decade-btn:hover {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .decade-btn.active {
+            background: var(--yellow);
+            color: var(--black);
+            border-color: var(--yellow);
+        }
+
+        .decade-btn.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Active genre highlight in sidebar */
+        .genre-link.filter-active {
+            color: var(--yellow) !important;
+            background: rgba(240, 192, 20, 0.1);
+        }
+
+        .genre-link.filter-active::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--yellow);
+            border-radius: 50%;
+            margin-right: var(--space-xs);
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -97,16 +491,14 @@
                 <div class="sidebar-section">
                     <h3>Genres</h3>
                     <ul class="genre-list">
-                        <li><a href="#" class="genre-link active">All</a></li>
-                        <li><a href="#" class="genre-link">80s</a></li>
-                        <li><a href="#" class="genre-link">90s</a></li>
-                        <li><a href="#" class="genre-link">2000s</a></li>
-                        <li><a href="#" class="genre-link">Hip-Hop</a></li>
-                        <li><a href="#" class="genre-link">Rock</a></li>
-                        <li><a href="#" class="genre-link">Indie</a></li>
-                        <li><a href="#" class="genre-link">Electronic</a></li>
-                        <li><a href="#" class="genre-link">Soul / R&B</a></li>
-                        <li><a href="#" class="genre-link">Punk</a></li>
+                        <li><a href="#" class="genre-link filter-active" data-filter="all">All</a></li>
+                        <li><a href="#" class="genre-link" data-filter="pop">Pop</a></li>
+                        <li><a href="#" class="genre-link" data-filter="rock">Rock</a></li>
+                        <li><a href="#" class="genre-link" data-filter="soul">Soul / R&B</a></li>
+                        <li><a href="#" class="genre-link" data-filter="country">Country</a></li>
+                        <li><a href="#" class="genre-link" data-filter="folk">Folk</a></li>
+                        <li><a href="#" class="genre-link" data-filter="jazz">Jazz</a></li>
+                        <li><a href="#" class="genre-link" data-filter="blues">Blues</a></li>
                     </ul>
                 </div>
                 <div class="sidebar-section">
@@ -122,6 +514,53 @@
 
             <!-- Main Content -->
             <div class="music-main">
+                <!-- Music Journey Section -->
+                <section class="journey-section">
+                    <nav class="decade-nav">
+                        <button class="decade-btn active" data-decade="60s">60s</button>
+                        <button class="decade-btn locked" data-decade="70s">70s</button>
+                        <button class="decade-btn locked" data-decade="80s">80s</button>
+                        <button class="decade-btn locked" data-decade="90s">90s</button>
+                        <button class="decade-btn locked" data-decade="00s">00s</button>
+                        <button class="decade-btn locked" data-decade="10s">10s</button>
+                        <button class="decade-btn locked" data-decade="now">NOW</button>
+                    </nav>
+
+                    <div class="journey-header">
+                        <div class="year-display">
+                            <h2 id="currentYear">1960</h2>
+                        </div>
+                        <div class="album-bars" id="albumBars"></div>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-spacer"></div>
+                        <div class="slider-wrapper">
+                            <input type="range" class="year-slider" id="yearSlider" min="1960" max="1969" value="1960">
+                            <div class="timeline-markers">
+                                <span>1960</span>
+                                <span>1963</span>
+                                <span>1966</span>
+                                <span>1969</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="genre-groups" id="genreGroups"></div>
+
+                    <div class="artist-panel" id="artistPanel">
+                        <button class="close-panel" onclick="closeArtistPanel()">✕</button>
+                        <div class="artist-panel-header">
+                            <span class="icon" id="artistIcon">🎸</span>
+                            <div>
+                                <h3 id="artistName">SUBGENRE NAME</h3>
+                                <p class="subgenre-tag" id="artistSubgenre">GENRE</p>
+                            </div>
+                        </div>
+                        <div class="album-grid" id="albumGrid"></div>
+                    </div>
+                </section>
+
                 <!-- Posts / Reviews Section -->
                 <section class="music-posts">
                     <div class="posts-header">
@@ -129,7 +568,6 @@
                     </div>
                     
                     <div class="posts-grid">
-                        <!-- Post Card 1 -->
                         <article class="post-card">
                             <div class="post-image">
                                 <div class="post-placeholder"></div>
@@ -142,7 +580,6 @@
                             </div>
                         </article>
 
-                        <!-- Post Card 2 -->
                         <article class="post-card">
                             <div class="post-image">
                                 <div class="post-placeholder"></div>
@@ -155,7 +592,6 @@
                             </div>
                         </article>
 
-                        <!-- Post Card 3 -->
                         <article class="post-card">
                             <div class="post-image">
                                 <div class="post-placeholder"></div>
@@ -168,7 +604,6 @@
                             </div>
                         </article>
 
-                        <!-- Post Card 4 -->
                         <article class="post-card">
                             <div class="post-image">
                                 <div class="post-placeholder"></div>
@@ -217,14 +652,465 @@
     </footer>
 
     <script>
+        // Music Data
+        const musicData = {
+            pop: {
+                name: "POP",
+                icon: "🎀",
+                status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                subgenres: {
+                    girl_groups: {
+                        name: "GIRL GROUPS",
+                        icon: "💋",
+                        status: { 1960: "rising", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            ronettes: { name: "The Ronettes", icon: "💄", description: "Be My Baby. Phil Spector's wall of sound, Ronnie's voice cutting through.", albums: [{ title: "Presenting the Fabulous Ronettes", year: 1964 }] },
+                            shirelles: { name: "The Shirelles", icon: "💝", description: "Will You Love Me Tomorrow. First girl group to hit #1.", albums: [{ title: "Tonight's the Night", year: 1961 }] },
+                            crystals: { name: "The Crystals", icon: "💎", description: "Da Doo Ron Ron. Spector's first hitmakers.", albums: [{ title: "He's a Rebel", year: 1963 }] }
+                        }
+                    },
+                    wall_of_sound: {
+                        name: "WALL OF SOUND",
+                        icon: "🧱",
+                        status: { 1960: "emerging", 1961: "rising", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            phil_spector: { name: "Phil Spector", icon: "🎛️", description: "Producer as artist. Layered everything until it became one massive sound.", albums: [{ title: "A Christmas Gift for You", year: 1963 }] },
+                            righteous_brothers: { name: "Righteous Brothers", icon: "🙌", description: "Blue-eyed soul. You've Lost That Lovin' Feelin' - the most played song ever.", albums: [{ title: "You've Lost That Lovin' Feelin'", year: 1965 }] }
+                        }
+                    },
+                    bubblegum: {
+                        name: "BUBBLEGUM POP",
+                        icon: "🍬",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "hidden", 1964: "hidden", 1965: "hidden", 1966: "emerging", 1967: "rising", 1968: "peak", 1969: "peak" },
+                        artists: {
+                            archies: { name: "The Archies", icon: "🎪", description: "Sugar Sugar. A cartoon band that outsold the Beatles in 1969.", albums: [{ title: "Everything's Archie", year: 1969 }] },
+                            monkees: { name: "The Monkees", icon: "🐒", description: "Manufactured for TV, became real. Hey Hey We're the Monkees.", albums: [{ title: "The Monkees", year: 1966 }, { title: "Headquarters", year: 1967 }] }
+                        }
+                    }
+                }
+            },
+            rock: {
+                name: "ROCK",
+                icon: "🎸",
+                status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                subgenres: {
+                    rock_and_roll: {
+                        name: "ROCK & ROLL",
+                        icon: "🎹",
+                        status: { 1960: "peak", 1961: "peak", 1962: "fading", 1963: "fading", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            elvis: { name: "Elvis Presley", icon: "👑", description: "The King. Took blues and country, made it dangerous, then safe, then strange again.", albums: [{ title: "Elvis Is Back!", year: 1960 }, { title: "From Elvis in Memphis", year: 1969 }] },
+                            chuck_berry: { name: "Chuck Berry", icon: "🦆", description: "Invented the rock guitar solo. Every riff traces back here.", albums: [{ title: "Chuck Berry Is on Top", year: 1959 }, { title: "St. Louis to Liverpool", year: 1964 }] }
+                        }
+                    },
+                    british_invasion: {
+                        name: "BRITISH INVASION",
+                        icon: "🇬🇧",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "emerging", 1963: "rising", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            beatles: { name: "The Beatles", icon: "🍏", description: "Liverpool four-piece that rewrote the rules. Again. And again.", albums: [{ title: "A Hard Day's Night", year: 1964 }, { title: "Rubber Soul", year: 1965 }, { title: "Revolver", year: 1966 }, { title: "Abbey Road", year: 1969 }] },
+                            rolling_stones: { name: "Rolling Stones", icon: "👅", description: "The anti-Beatles. Blues, swagger, menace.", albums: [{ title: "Out of Our Heads", year: 1965 }, { title: "Aftermath", year: 1966 }, { title: "Let It Bleed", year: 1969 }] },
+                            the_who: { name: "The Who", icon: "💥", description: "Maximum R&B. Townshend's windmill, Moon's chaos, Daltrey's scream.", albums: [{ title: "My Generation", year: 1965 }, { title: "Tommy", year: 1969 }] }
+                        }
+                    },
+                    psychedelic: {
+                        name: "PSYCHEDELIC",
+                        icon: "🌀",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "hidden", 1964: "hidden", 1965: "emerging", 1966: "rising", 1967: "peak", 1968: "peak", 1969: "fading" },
+                        artists: {
+                            hendrix: { name: "Jimi Hendrix", icon: "🔥", description: "Rewired the electric guitar. Seattle via London via another dimension.", albums: [{ title: "Are You Experienced", year: 1967 }, { title: "Electric Ladyland", year: 1968 }] },
+                            doors: { name: "The Doors", icon: "🚪", description: "Morrison's poetry, Manzarek's keys. LA noir meets Dionysus.", albums: [{ title: "The Doors", year: 1967 }, { title: "Strange Days", year: 1967 }] },
+                            jefferson_airplane: { name: "Jefferson Airplane", icon: "✈️", description: "San Francisco's flagship. Grace Slick's voice cut through the haze.", albums: [{ title: "Surrealistic Pillow", year: 1967 }, { title: "Crown of Creation", year: 1968 }] }
+                        }
+                    },
+                    surf: {
+                        name: "SURF ROCK",
+                        icon: "🏄",
+                        status: { 1960: "rising", 1961: "rising", 1962: "peak", 1963: "peak", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            beach_boys: { name: "The Beach Boys", icon: "☀️", description: "California myth-makers. Brian Wilson's genius took them far beyond surfing.", albums: [{ title: "Surfin' USA", year: 1963 }, { title: "Pet Sounds", year: 1966 }] },
+                            dick_dale: { name: "Dick Dale", icon: "🌊", description: "King of the Surf Guitar. Misirlou. That reverb.", albums: [{ title: "Surfers' Choice", year: 1962 }] }
+                        }
+                    }
+                }
+            },
+            soul: {
+                name: "SOUL / R&B",
+                icon: "💫",
+                status: { 1960: "rising", 1961: "rising", 1962: "rising", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                subgenres: {
+                    motown: {
+                        name: "MOTOWN",
+                        icon: "🏭",
+                        status: { 1960: "rising", 1961: "rising", 1962: "rising", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                        artists: {
+                            supremes: { name: "The Supremes", icon: "💎", description: "Diana Ross and Motown's crown jewels. Hit after hit after hit.", albums: [{ title: "Where Did Our Love Go", year: 1964 }, { title: "I Hear a Symphony", year: 1966 }] },
+                            temptations: { name: "The Temptations", icon: "🕺", description: "My Girl. Five voices, perfect choreography, unstoppable hits.", albums: [{ title: "The Temptations Sing Smokey", year: 1965 }, { title: "Cloud Nine", year: 1969 }] },
+                            stevie_wonder: { name: "Stevie Wonder", icon: "🎹", description: "Little Stevie, already a force. The 70s genius was being born.", albums: [{ title: "Uptight", year: 1966 }] },
+                            marvin_gaye: { name: "Marvin Gaye", icon: "🎤", description: "Smooth operator. The socially conscious masterwork was still coming.", albums: [{ title: "How Sweet It Is to Be Loved by You", year: 1965 }] }
+                        }
+                    },
+                    southern_soul: {
+                        name: "SOUTHERN SOUL",
+                        icon: "🌙",
+                        status: { 1960: "emerging", 1961: "rising", 1962: "rising", 1963: "rising", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "fading" },
+                        artists: {
+                            otis: { name: "Otis Redding", icon: "💙", description: "Stax's greatest voice. Raw, urgent, gone too soon.", albums: [{ title: "Otis Blue", year: 1965 }, { title: "Dictionary of Soul", year: 1966 }] },
+                            aretha: { name: "Aretha Franklin", icon: "👑", description: "The Queen. Respect. That's it. That's the description.", albums: [{ title: "I Never Loved a Man the Way I Love You", year: 1967 }, { title: "Lady Soul", year: 1968 }] },
+                            sam_cooke: { name: "Sam Cooke", icon: "✨", description: "Gospel smoothness turned secular. A Change Is Gonna Come.", albums: [{ title: "Night Beat", year: 1963 }, { title: "Ain't That Good News", year: 1964 }] }
+                        }
+                    },
+                    funk: {
+                        name: "FUNK",
+                        icon: "🔊",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "hidden", 1964: "hidden", 1965: "emerging", 1966: "emerging", 1967: "rising", 1968: "rising", 1969: "peak" },
+                        artists: {
+                            james_brown: { name: "James Brown", icon: "🦶", description: "The Godfather. Invented funk. The one.", albums: [{ title: "Live at the Apollo", year: 1963 }, { title: "I Got You (I Feel Good)", year: 1966 }] },
+                            sly_stone: { name: "Sly & The Family Stone", icon: "🌈", description: "Integrated band, integrated sound. Everyday People.", albums: [{ title: "Stand!", year: 1969 }] }
+                        }
+                    }
+                }
+            },
+            country: {
+                name: "COUNTRY",
+                icon: "🤠",
+                status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                subgenres: {
+                    nashville_sound: {
+                        name: "NASHVILLE SOUND",
+                        icon: "🎻",
+                        status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            patsy_cline: { name: "Patsy Cline", icon: "🌹", description: "Crazy. I Fall to Pieces. Country's greatest voice, gone too soon.", albums: [{ title: "Patsy Cline Showcase", year: 1961 }, { title: "Sentimentally Yours", year: 1962 }] },
+                            jim_reeves: { name: "Jim Reeves", icon: "🎙️", description: "Gentleman Jim. Velvet voice, countrypolitan smooth.", albums: [{ title: "He'll Have to Go", year: 1960 }] }
+                        }
+                    },
+                    outlaw_country: {
+                        name: "OUTLAW COUNTRY",
+                        icon: "🏴‍☠️",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "hidden", 1964: "hidden", 1965: "hidden", 1966: "emerging", 1967: "emerging", 1968: "rising", 1969: "rising" },
+                        artists: {
+                            johnny_cash: { name: "Johnny Cash", icon: "🖤", description: "The Man in Black. Folsom Prison. American legend.", albums: [{ title: "Ring of Fire", year: 1963 }, { title: "At Folsom Prison", year: 1968 }] },
+                            waylon_jennings: { name: "Waylon Jennings", icon: "🎸", description: "Refused Nashville's polish. Did it his way.", albums: [{ title: "Folk-Country", year: 1966 }] }
+                        }
+                    }
+                }
+            },
+            folk: {
+                name: "FOLK",
+                icon: "🍃",
+                status: { 1960: "rising", 1961: "rising", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                subgenres: {
+                    traditional_folk: {
+                        name: "TRADITIONAL FOLK",
+                        icon: "🪕",
+                        status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            joan_baez: { name: "Joan Baez", icon: "🕊️", description: "The voice of the movement. Pure, clear, committed.", albums: [{ title: "Joan Baez", year: 1960 }, { title: "Joan Baez in Concert", year: 1962 }] },
+                            pete_seeger: { name: "Pete Seeger", icon: "🪘", description: "The link to Woody Guthrie. Keeper of the flame.", albums: [{ title: "We Shall Overcome", year: 1963 }] }
+                        }
+                    },
+                    folk_rock: {
+                        name: "FOLK ROCK",
+                        icon: "⚡",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "hidden", 1964: "emerging", 1965: "peak", 1966: "peak", 1967: "peak", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            dylan: { name: "Bob Dylan", icon: "🌬️", description: "Went electric at Newport. They booed. He didn't care.", albums: [{ title: "The Freewheelin' Bob Dylan", year: 1963 }, { title: "Highway 61 Revisited", year: 1965 }, { title: "Blonde on Blonde", year: 1966 }] },
+                            byrds: { name: "The Byrds", icon: "🦅", description: "Jangle and shimmer. Dylan through a Rickenbacker.", albums: [{ title: "Mr. Tambourine Man", year: 1965 }, { title: "Younger Than Yesterday", year: 1967 }] },
+                            simon_garfunkel: { name: "Simon & Garfunkel", icon: "🌉", description: "The Sound of Silence. Poetry and harmony from Queens.", albums: [{ title: "Sounds of Silence", year: 1966 }, { title: "Bookends", year: 1968 }] }
+                        }
+                    }
+                }
+            },
+            jazz: {
+                name: "JAZZ",
+                icon: "🎷",
+                status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "peak", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "rising", 1969: "rising" },
+                subgenres: {
+                    hard_bop: {
+                        name: "HARD BOP",
+                        icon: "🔨",
+                        status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "fading", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            coltrane: { name: "John Coltrane", icon: "🙏", description: "From hard bop through sheets of sound to spiritual transcendence.", albums: [{ title: "My Favorite Things", year: 1961 }, { title: "A Love Supreme", year: 1965 }] },
+                            miles: { name: "Miles Davis", icon: "🎺", description: "Cool incarnate. Reinvented jazz every decade.", albums: [{ title: "Sketches of Spain", year: 1960 }, { title: "Miles Smiles", year: 1967 }] },
+                            mingus: { name: "Charles Mingus", icon: "🎻", description: "Composer, bandleader, force of nature. The bass as orchestra.", albums: [{ title: "The Black Saint and the Sinner Lady", year: 1963 }] }
+                        }
+                    },
+                    free_jazz: {
+                        name: "FREE JAZZ",
+                        icon: "🌌",
+                        status: { 1960: "emerging", 1961: "rising", 1962: "rising", 1963: "peak", 1964: "peak", 1965: "peak", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            ornette: { name: "Ornette Coleman", icon: "🔮", description: "Threw out the rulebook. Free Jazz wasn't a genre, it was a declaration.", albums: [{ title: "Free Jazz", year: 1961 }, { title: "The Shape of Jazz to Come", year: 1959 }] },
+                            sun_ra: { name: "Sun Ra", icon: "🪐", description: "From Saturn. Arkestra. Space is the place.", albums: [{ title: "The Futuristic Sounds of Sun Ra", year: 1961 }] }
+                        }
+                    },
+                    bossa_nova: {
+                        name: "BOSSA NOVA",
+                        icon: "🇧🇷",
+                        status: { 1960: "emerging", 1961: "rising", 1962: "peak", 1963: "peak", 1964: "peak", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            jobim: { name: "Antonio Carlos Jobim", icon: "🌴", description: "The Girl from Ipanema. Brazilian genius who changed jazz.", albums: [{ title: "Getz/Gilberto", year: 1964 }] },
+                            stan_getz: { name: "Stan Getz", icon: "🎷", description: "The Sound. Brought bossa nova to America.", albums: [{ title: "Jazz Samba", year: 1962 }] }
+                        }
+                    }
+                }
+            },
+            blues: {
+                name: "BLUES",
+                icon: "🔵",
+                status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "fading", 1964: "fading", 1965: "fading", 1966: "rising", 1967: "rising", 1968: "peak", 1969: "peak" },
+                subgenres: {
+                    chicago_blues: {
+                        name: "CHICAGO BLUES",
+                        icon: "🌃",
+                        status: { 1960: "peak", 1961: "peak", 1962: "peak", 1963: "fading", 1964: "fading", 1965: "fading", 1966: "fading", 1967: "fading", 1968: "fading", 1969: "fading" },
+                        artists: {
+                            muddy: { name: "Muddy Waters", icon: "🌊", description: "Electrified the Delta. Every British kid wanted to be him.", albums: [{ title: "Muddy Waters at Newport", year: 1960 }] },
+                            howlin: { name: "Howlin' Wolf", icon: "🐺", description: "That voice. Huge, terrifying, elemental.", albums: [{ title: "Howlin' Wolf", year: 1962 }] },
+                            bb_king: { name: "B.B. King", icon: "👑", description: "Lucille. The thrill is gone. King of the Blues.", albums: [{ title: "Live at the Regal", year: 1965 }] }
+                        }
+                    },
+                    british_blues: {
+                        name: "BRITISH BLUES",
+                        icon: "🇬🇧",
+                        status: { 1960: "hidden", 1961: "hidden", 1962: "hidden", 1963: "emerging", 1964: "rising", 1965: "rising", 1966: "peak", 1967: "peak", 1968: "peak", 1969: "peak" },
+                        artists: {
+                            mayall: { name: "John Mayall", icon: "🎓", description: "The schoolmaster. Clapton, Peter Green, Mick Taylor all came through.", albums: [{ title: "Blues Breakers with Eric Clapton", year: 1966 }] },
+                            fleetwood: { name: "Fleetwood Mac", icon: "🐦", description: "Before Rumours, they were a blues band. Peter Green's otherworldly tone.", albums: [{ title: "Fleetwood Mac", year: 1968 }, { title: "Then Play On", year: 1969 }] }
+                        }
+                    }
+                }
+            }
+        };
+
+        let currentYear = 1960;
+        let selectedSubgenre = null;
+        let selectedGenre = null;
+        let activeFilter = 'all';
+
+        const yearSlider = document.getElementById('yearSlider');
+        const currentYearDisplay = document.getElementById('currentYear');
+        const genreGroups = document.getElementById('genreGroups');
+        const albumBars = document.getElementById('albumBars');
+        const artistPanel = document.getElementById('artistPanel');
+
+        // Sidebar filter clicks
+        document.querySelectorAll('.genre-link[data-filter]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.genre-link[data-filter]').forEach(l => l.classList.remove('filter-active'));
+                link.classList.add('filter-active');
+                activeFilter = link.dataset.filter;
+                closeArtistPanel();
+                renderGenreGroups();
+            });
+        });
+
+        function getAlbumCounts() {
+            const counts = {};
+            for (let y = 1960; y <= 1969; y++) counts[y] = 0;
+            
+            Object.values(musicData).forEach(genre => {
+                Object.values(genre.subgenres).forEach(subgenre => {
+                    Object.values(subgenre.artists).forEach(artist => {
+                        artist.albums.forEach(album => {
+                            if (album.year >= 1960 && album.year <= 1969) counts[album.year]++;
+                        });
+                    });
+                });
+            });
+            return counts;
+        }
+
+        function renderAlbumBars() {
+            const counts = getAlbumCounts();
+            const maxCount = Math.max(...Object.values(counts));
+            albumBars.innerHTML = '';
+            
+            for (let y = 1960; y <= 1969; y++) {
+                const bar = document.createElement('div');
+                bar.className = `album-bar${y === currentYear ? ' active' : ''}`;
+                const height = maxCount > 0 ? (counts[y] / maxCount) * 100 : 0;
+                bar.style.height = `${Math.max(height, 8)}%`;
+                bar.title = `${y}: ${counts[y]} albums`;
+                bar.onclick = () => { yearSlider.value = y; updateYear(y); };
+                albumBars.appendChild(bar);
+            }
+        }
+
+        function updateYear(year) {
+            currentYear = parseInt(year);
+            currentYearDisplay.textContent = currentYear;
+            renderAlbumBars();
+            renderGenreGroups();
+            
+            if (selectedGenre && selectedSubgenre) {
+                const subgenre = musicData[selectedGenre]?.subgenres[selectedSubgenre];
+                if (subgenre && subgenre.status[currentYear] !== 'hidden') {
+                    showArtistsPanel(selectedGenre, selectedSubgenre);
+                } else {
+                    selectedGenre = null;
+                    selectedSubgenre = null;
+                    artistPanel.classList.remove('visible');
+                    renderGenreGroups();
+                }
+            }
+        }
+
+        function renderGenreGroups() {
+            genreGroups.innerHTML = '';
+            
+            Object.entries(musicData).forEach(([genreId, genre]) => {
+                // Filter check
+                if (activeFilter !== 'all' && genreId !== activeFilter) return;
+                
+                const visibleSubgenres = Object.entries(genre.subgenres).filter(([id, sub]) => {
+                    return sub.status[currentYear] !== 'hidden';
+                });
+                
+                if (visibleSubgenres.length === 0) return;
+                
+                const group = document.createElement('div');
+                group.className = 'genre-group';
+                
+                const bracket = document.createElement('div');
+                bracket.className = 'genre-bracket';
+                bracket.innerHTML = `
+                    <div class="bracket-line"></div>
+                    <span class="bracket-icon">${genre.icon}</span>
+                    <span class="genre-label">${genre.name}</span>
+                    <div class="bracket-line"></div>
+                `;
+                
+                const subgenresGrid = document.createElement('div');
+                subgenresGrid.className = 'subgenres-grid';
+                
+                visibleSubgenres.forEach(([subId, subgenre]) => {
+                    const status = subgenre.status[currentYear];
+                    const isSelected = selectedGenre === genreId && selectedSubgenre === subId;
+                    const artistNames = Object.values(subgenre.artists).map(a => a.name);
+                    
+                    const item = document.createElement('div');
+                    item.className = `subgenre-item ${status}${isSelected ? ' active' : ''}`;
+                    item.onclick = () => selectSubgenre(genreId, subId);
+                    item.innerHTML = `
+                        <div class="subgenre-header">
+                            <span class="icon">${subgenre.icon}</span>
+                            <span class="name">${subgenre.name}</span>
+                        </div>
+                        <div class="artist-list">
+                            ${artistNames.map(name => `<span>${name}</span>`).join('')}
+                        </div>
+                    `;
+                    subgenresGrid.appendChild(item);
+                });
+                
+                group.appendChild(bracket);
+                group.appendChild(subgenresGrid);
+                genreGroups.appendChild(group);
+            });
+        }
+
+        function selectSubgenre(genreId, subgenreId) {
+            if (selectedGenre === genreId && selectedSubgenre === subgenreId) {
+                selectedGenre = null;
+                selectedSubgenre = null;
+                closeArtistPanel();
+            } else {
+                selectedGenre = genreId;
+                selectedSubgenre = subgenreId;
+                showArtistsPanel(genreId, subgenreId);
+            }
+            renderGenreGroups();
+        }
+
+        function showArtistsPanel(genreId, subgenreId) {
+            const genre = musicData[genreId];
+            const subgenre = genre.subgenres[subgenreId];
+            const status = subgenre.status[currentYear];
+            
+            document.getElementById('artistIcon').textContent = subgenre.icon;
+            document.getElementById('artistName').textContent = subgenre.name;
+            document.getElementById('artistSubgenre').textContent = `${genre.name} · ${currentYear} · ${status.toUpperCase()}`;
+            
+            const albumGrid = document.getElementById('albumGrid');
+            albumGrid.innerHTML = '';
+            
+            Object.entries(subgenre.artists).forEach(([artistId, artist]) => {
+                const hasCurrentYearAlbum = artist.albums.some(a => a.year === currentYear);
+                
+                const card = document.createElement('div');
+                card.className = 'album-card';
+                if (hasCurrentYearAlbum) card.style.borderColor = 'var(--yellow)';
+                
+                let albumsHtml = artist.albums.map((a, index) => {
+                    const isCurrentYear = a.year === currentYear;
+                    const isLast = index === artist.albums.length - 1;
+                    return `
+                        <div style="padding: 8px 0; ${isCurrentYear ? 'background: rgba(240, 192, 20, 0.08); margin: 0 -10px; padding-left: 10px; padding-right: 10px;' : ''} ${!isLast ? 'border-bottom: 1px solid var(--gray-800);' : ''}">
+                            <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 5px;">
+                                <span style="font-size: 0.85rem; color: ${isCurrentYear ? 'var(--yellow)' : 'var(--gray-400)'};">${a.title}</span>
+                                <span style="font-size: 0.7rem; color: var(--gray-600);">${a.year}</span>
+                                ${isCurrentYear ? '<span style="font-size: 0.6rem; color: var(--yellow); font-weight: 600;">★</span>' : ''}
+                            </div>
+                            <div class="album-links">
+                                <a href="#" class="album-link spotify">SPOTIFY</a>
+                                <a href="#" class="album-link wiki">WIKI</a>
+                                <a href="#" class="album-link buy">FIND CD</a>
+                            </div>
+                        </div>`;
+                }).join('');
+                
+                card.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1.5rem;">${artist.icon}</span>
+                        <div>
+                            <h4 style="margin: 0; font-size: 0.9rem; color: var(--yellow);">${artist.name}</h4>
+                            <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-400); line-height: 1.4;">${artist.description}</p>
+                        </div>
+                    </div>
+                    <div class="albums-list">${albumsHtml}</div>
+                `;
+                albumGrid.appendChild(card);
+            });
+            
+            artistPanel.classList.add('visible');
+        }
+
+        function closeArtistPanel() {
+            artistPanel.classList.remove('visible');
+            selectedGenre = null;
+            selectedSubgenre = null;
+            renderGenreGroups();
+        }
+
+        yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentYear > 1960) {
+                yearSlider.value = currentYear - 1;
+                updateYear(currentYear - 1);
+            }
+            if (e.key === 'ArrowRight' && currentYear < 1969) {
+                yearSlider.value = currentYear + 1;
+                updateYear(currentYear + 1);
+            }
+            if (e.key === 'Escape') closeArtistPanel();
+        });
+
         // Mobile nav toggle
         const navToggle = document.querySelector('.nav-toggle');
         const navLinks = document.querySelector('.nav-links');
-        
         navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('nav-links--open');
             navToggle.classList.toggle('nav-toggle--open');
         });
+
+        // Initial render
+        renderAlbumBars();
+        renderGenreGroups();
     </script>
 </body>
 </html>
