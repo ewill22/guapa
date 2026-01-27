@@ -48,13 +48,13 @@
         }
 
         .map-arrow:hover {
-            border-color: var(--yellow);
-            color: var(--yellow);
+            border-color: var(--gray-400);
+            color: var(--white);
+            background: var(--gray-800);
         }
 
         .map-arrow:active {
-            background: var(--yellow);
-            color: var(--black);
+            transform: scale(0.95);
         }
 
         .region-display {
@@ -76,9 +76,9 @@
 
         .world-map {
             width: 100%;
-            height: 280px;
+            height: 320px;
             position: relative;
-            background: var(--gray-900);
+            background: var(--black);
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--gray-800);
@@ -98,17 +98,28 @@
         }
 
         .map-region:hover {
-            fill: var(--gray-700);
-        }
-
-        .map-region.active {
-            fill: var(--pink);
-            stroke: var(--pink);
+            filter: brightness(1.2);
         }
 
         .map-region.highlight {
-            fill: var(--yellow);
-            stroke: var(--yellow);
+            filter: brightness(1.2) drop-shadow(0 0 12px currentColor);
+            stroke: #fff;
+            stroke-width: 1.5;
+        }
+
+        .map-label {
+            fill: var(--gray-500);
+            font-size: 11px;
+            font-weight: 600;
+            text-anchor: middle;
+            pointer-events: none;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .map-label.highlight {
+            fill: #fff;
+            opacity: 1;
         }
 
         .region-dots {
@@ -159,13 +170,13 @@
         }
 
         .country-chip:hover {
-            border-color: var(--pink);
-            background: rgba(232, 160, 176, 0.05);
+            border-color: var(--region-color, var(--pink));
+            background: rgba(255,255,255,0.05);
         }
 
         .country-chip.active {
-            border-color: var(--pink);
-            background: rgba(232, 160, 176, 0.1);
+            border-color: var(--region-color, var(--pink));
+            background: rgba(255,255,255,0.08);
         }
 
         .country-chip .flag {
@@ -178,11 +189,12 @@
             color: var(--gray-400);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            transition: color 0.2s;
         }
 
         .country-chip:hover .name,
         .country-chip.active .name {
-            color: var(--pink);
+            color: var(--white);
         }
 
         /* Producer Panel */
@@ -194,6 +206,7 @@
             padding: 24px;
             margin-top: 24px;
             position: relative;
+            transition: border-color 0.3s;
         }
 
         .producer-panel.visible {
@@ -240,7 +253,8 @@
         }
 
         .producer-card:hover {
-            border-color: var(--pink);
+            border-color: var(--gray-600);
+            background: rgba(255,255,255,0.02);
         }
 
         .roast-links {
@@ -404,35 +418,71 @@
                         </div>
 
                         <div class="world-map" id="worldMap">
-                            <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
-                                <!-- Simplified world map regions -->
-                                <!-- North America (not coffee region, just for context) -->
-                                <path class="map-region" data-region="na" d="M120,80 L220,60 L250,100 L240,160 L180,180 L140,160 L100,120 Z" style="fill: var(--gray-900);"/>
+                            <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+                                <!-- World map with Guapa colors -->
                                 
-                                <!-- Central America -->
-                                <path class="map-region" data-region="central_america" d="M150,180 L190,170 L210,190 L200,220 L170,230 L150,210 Z"/>
+                                <!-- North America (non-coffee, dark) -->
+                                <path class="map-region" d="M50,50 L80,35 L150,30 L200,40 L240,70 L250,110 L240,145 L200,160 L170,155 L140,165 L120,155 L90,130 L60,100 L45,70 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
                                 
-                                <!-- South America -->
-                                <path class="map-region" data-region="south_america" d="M200,230 L260,220 L280,280 L270,360 L220,380 L180,340 L190,280 Z"/>
+                                <!-- Greenland (non-coffee) -->
+                                <path class="map-region" d="M280,25 L320,20 L350,35 L355,70 L330,85 L295,75 L280,50 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
                                 
-                                <!-- Europe (context) -->
-                                <path class="map-region" data-region="eu" d="M380,80 L450,70 L470,120 L440,140 L390,130 Z" style="fill: var(--gray-900);"/>
+                                <!-- Central America & Mexico - Pink -->
+                                <path class="map-region" data-region="central_america" d="M120,165 L145,160 L170,165 L185,175 L180,195 L165,215 L145,230 L125,225 L115,205 L110,185 L115,170 Z" style="fill: #e8a0b0;"/>
                                 
-                                <!-- Africa -->
-                                <path class="map-region" data-region="africa" d="M380,150 L450,140 L500,180 L510,280 L460,340 L400,320 L370,260 L360,200 Z"/>
+                                <!-- Caribbean dots -->
+                                <circle class="map-region" data-region="central_america" cx="195" cy="195" r="5" style="fill: #e8a0b0;"/>
+                                <circle class="map-region" data-region="central_america" cx="210" cy="200" r="4" style="fill: #e8a0b0;"/>
+                                <circle class="map-region" data-region="central_america" cx="220" cy="195" r="4" style="fill: #e8a0b0;"/>
                                 
-                                <!-- Middle East -->
-                                <path class="map-region" data-region="middle_east" d="M480,130 L540,120 L560,160 L530,190 L490,180 Z"/>
+                                <!-- South America - Darker Pink -->
+                                <path class="map-region" data-region="south_america" d="M165,235 L195,230 L230,235 L255,260 L265,300 L260,360 L240,410 L200,435 L170,410 L155,360 L150,300 L155,260 Z" style="fill: #d88a9a;"/>
                                 
-                                <!-- Asia Pacific -->
-                                <path class="map-region" data-region="asia_pacific" d="M560,140 L680,100 L750,160 L740,260 L680,300 L600,280 L560,220 L580,180 Z"/>
+                                <!-- Europe (non-coffee) -->
+                                <path class="map-region" d="M420,45 L470,40 L510,50 L540,70 L550,100 L540,130 L500,140 L460,135 L430,115 L415,85 L415,60 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
+                                
+                                <!-- Africa - Yellow -->
+                                <path class="map-region" data-region="africa" d="M430,155 L475,145 L520,155 L555,175 L575,210 L580,270 L565,330 L530,380 L480,400 L435,385 L410,340 L400,280 L405,220 L415,180 Z" style="fill: #f0c014;"/>
+                                
+                                <!-- Middle East / Arabia - Darker Yellow -->
+                                <path class="map-region" data-region="middle_east" d="M555,130 L590,120 L620,135 L630,165 L615,195 L580,210 L555,190 L550,160 Z" style="fill: #d4a912;"/>
+                                
+                                <!-- India - Muted Pink -->
+                                <path class="map-region" data-region="asia_pacific" d="M635,155 L680,140 L710,160 L715,200 L695,250 L660,270 L635,245 L630,200 Z" style="fill: #c4848f;"/>
+                                
+                                <!-- Southeast Asia mainland - Muted Pink -->
+                                <path class="map-region" data-region="asia_pacific" d="M710,160 L750,145 L780,160 L790,200 L775,240 L740,255 L715,240 L715,200 Z" style="fill: #c4848f;"/>
+                                
+                                <!-- Indonesia archipelago - Muted Pink -->
+                                <path class="map-region" data-region="asia_pacific" d="M720,265 L760,260 L800,270 L840,280 L860,300 L840,320 L790,325 L740,315 L710,295 Z" style="fill: #c4848f;"/>
+                                
+                                <!-- Philippines hint -->
+                                <circle class="map-region" data-region="asia_pacific" cx="800" cy="210" r="8" style="fill: #c4848f;"/>
+                                
+                                <!-- Papua New Guinea -->
+                                <path class="map-region" data-region="asia_pacific" d="M870,295 L910,285 L940,305 L935,335 L900,345 L870,330 Z" style="fill: #c4848f;"/>
+                                
+                                <!-- Australia (non-coffee) -->
+                                <path class="map-region" d="M810,360 L870,350 L920,370 L945,420 L920,460 L860,470 L800,445 L785,400 L795,370 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
+                                
+                                <!-- East Asia (non-coffee) -->
+                                <path class="map-region" d="M720,60 L780,50 L840,65 L880,100 L870,140 L820,155 L770,145 L740,115 L720,85 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
+                                
+                                <!-- Russia/Northern Asia (non-coffee) -->
+                                <path class="map-region" d="M550,30 L650,20 L750,30 L850,50 L900,70 L880,90 L800,85 L700,70 L600,65 L550,55 Z" style="fill: #1a1a1a; stroke: #2a2a2a;"/>
+                                
+                                <!-- Coffee Belt lines -->
+                                <line x1="20" y1="180" x2="980" y2="180" stroke="var(--yellow)" stroke-width="1" stroke-dasharray="6,4" opacity="0.15"/>
+                                <line x1="20" y1="320" x2="980" y2="320" stroke="var(--yellow)" stroke-width="1" stroke-dasharray="6,4" opacity="0.15"/>
                                 
                                 <!-- Region Labels -->
-                                <text x="180" y="205" fill="var(--gray-600)" font-size="8" text-anchor="middle" class="map-label" data-region="central_america">C. AMERICA</text>
-                                <text x="230" y="300" fill="var(--gray-600)" font-size="8" text-anchor="middle" class="map-label" data-region="south_america">S. AMERICA</text>
-                                <text x="430" y="240" fill="var(--gray-600)" font-size="10" text-anchor="middle" class="map-label" data-region="africa">AFRICA</text>
-                                <text x="520" y="160" fill="var(--gray-600)" font-size="8" text-anchor="middle" class="map-label" data-region="middle_east">YEMEN</text>
-                                <text x="660" y="200" fill="var(--gray-600)" font-size="9" text-anchor="middle" class="map-label" data-region="asia_pacific">ASIA PACIFIC</text>
+                                <text x="155" y="255" class="map-label" data-region="central_america">Central</text>
+                                <text x="155" y="268" class="map-label" data-region="central_america">America</text>
+                                <text x="210" y="340" class="map-label" data-region="south_america">South</text>
+                                <text x="210" y="353" class="map-label" data-region="south_america">America</text>
+                                <text x="485" y="280" class="map-label" data-region="africa">Africa</text>
+                                <text x="590" y="175" class="map-label" data-region="middle_east">Yemen</text>
+                                <text x="790" y="340" class="map-label" data-region="asia_pacific">Asia Pacific</text>
                             </svg>
                         </div>
 
@@ -557,6 +607,7 @@
                 name: 'AFRICA',
                 desc: 'The birthplace of coffee',
                 icon: '🌍',
+                color: '#f0c014',
                 countries: {
                     ethiopia: {
                         name: 'Ethiopia',
@@ -658,6 +709,7 @@
                 name: 'CENTRAL AMERICA',
                 desc: 'Volcanic highlands & honey processes',
                 icon: '🌎',
+                color: '#e8a0b0',
                 countries: {
                     guatemala: {
                         name: 'Guatemala',
@@ -741,6 +793,7 @@
                 name: 'SOUTH AMERICA',
                 desc: 'The world\'s largest producers',
                 icon: '🌎',
+                color: '#d88a9a',
                 countries: {
                     colombia: {
                         name: 'Colombia',
@@ -817,6 +870,7 @@
                 name: 'ASIA PACIFIC',
                 desc: 'Earthy, herbal, unique processes',
                 icon: '🌏',
+                color: '#c4848f',
                 countries: {
                     indonesia: {
                         name: 'Indonesia',
@@ -884,6 +938,7 @@
                 name: 'MIDDLE EAST',
                 desc: 'Ancient origins, rare & wild',
                 icon: '☕',
+                color: '#d4a912',
                 countries: {
                     yemen: {
                         name: 'Yemen',
@@ -961,8 +1016,9 @@
         function updateDisplay() {
             const region = regions[currentRegionIndex];
             
-            // Update header
+            // Update header with region color
             document.getElementById('regionName').textContent = region.name;
+            document.getElementById('regionName').style.color = region.color;
             document.getElementById('regionDesc').textContent = region.desc;
 
             // Update sidebar
@@ -970,27 +1026,34 @@
                 link.classList.toggle('filter-active', i === currentRegionIndex);
             });
 
-            // Update dots
+            // Update dots with region color
             regionDots.querySelectorAll('.region-dot').forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentRegionIndex);
+                if (i === currentRegionIndex) {
+                    dot.style.background = region.color;
+                } else {
+                    dot.style.background = '';
+                }
             });
 
             // Update map
             document.querySelectorAll('.map-region').forEach(path => {
-                path.classList.remove('active', 'highlight');
+                path.classList.remove('highlight');
                 if (path.dataset.region === region.id) {
                     path.classList.add('highlight');
                 }
             });
 
             document.querySelectorAll('.map-label').forEach(label => {
-                label.style.fill = label.dataset.region === region.id ? 'var(--yellow)' : 'var(--gray-600)';
-                label.style.fontWeight = label.dataset.region === region.id ? '600' : '400';
+                label.classList.remove('highlight');
+                if (label.dataset.region === region.id) {
+                    label.classList.add('highlight');
+                }
             });
 
-            // Update countries grid
+            // Update countries grid with region-colored borders
             countriesGrid.innerHTML = Object.entries(region.countries).map(([id, country]) => `
-                <div class="country-chip${selectedCountry === id ? ' active' : ''}" data-country="${id}">
+                <div class="country-chip${selectedCountry === id ? ' active' : ''}" data-country="${id}" style="--region-color: ${region.color}">
                     <span class="flag">${country.icon}</span>
                     <span class="name">${country.name}</span>
                 </div>
@@ -1015,8 +1078,12 @@
             const region = regions[currentRegionIndex];
             const country = region.countries[countryId];
 
+            // Set panel border color to match region
+            producerPanel.style.borderColor = region.color;
+
             document.getElementById('countryIcon').textContent = country.icon;
             document.getElementById('countryName').textContent = country.name.toUpperCase();
+            document.getElementById('countryName').style.color = region.color;
             document.getElementById('countryRegion').textContent = region.name;
 
             const producerGrid = document.getElementById('producerGrid');
@@ -1025,7 +1092,7 @@
                     <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
                         <span style="font-size: 1.5rem;">${producer.icon}</span>
                         <div>
-                            <h4 style="margin: 0; font-size: 0.95rem; color: var(--yellow);">${producer.name}</h4>
+                            <h4 style="margin: 0; font-size: 0.95rem; color: ${region.color};">${producer.name}</h4>
                             <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-400); line-height: 1.4;">${producer.desc}</p>
                         </div>
                     </div>
