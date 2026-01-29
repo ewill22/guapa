@@ -6,263 +6,255 @@
     <title>Coffee | Guapa</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="music.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
-        .coffee-page {
-            min-height: 100vh;
-            padding-bottom: var(--space-xl);
-        }
-
-        /* Header with map */
-        .coffee-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: var(--space-lg);
-            padding: var(--space-lg) var(--space-md);
+        /* Coffee Timeline Styles */
+        .journey-section {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
             border-bottom: 1px solid var(--gray-800);
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
-        .coffee-header-text h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+        .journey-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 8px;
+        }
+
+        .year-display h2 {
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--pink);
-            margin-bottom: var(--space-xs);
+            color: var(--yellow);
+            letter-spacing: -0.02em;
+            line-height: 1;
+            min-width: 80px;
         }
 
-        .coffee-header-text p {
-            color: var(--gray-400);
-            font-size: 1rem;
-            max-width: 280px;
+        .roaster-bars {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 50px;
         }
 
-        /* Mini Map */
-        .mini-map {
-            width: 320px;
-            height: 180px;
-            flex-shrink: 0;
-            background: var(--gray-900);
-            border-radius: 8px;
-            border: 1px solid var(--gray-800);
-            overflow: hidden;
-        }
-
-        .mini-map svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .map-region {
-            fill: var(--gray-800);
-            stroke: var(--gray-700);
-            stroke-width: 0.5;
-            transition: all 0.2s ease;
+        .roaster-bar {
+            flex: 1;
+            background: var(--pink);
+            opacity: 0.3;
+            border-radius: 2px 2px 0 0;
+            transition: all 0.2s;
+            min-height: 4px;
             cursor: pointer;
         }
 
-        .map-region:hover {
-            fill: var(--gray-700);
+        .roaster-bar.active {
+            opacity: 1;
+            background: var(--yellow);
         }
 
-        .map-region.highlight {
-            fill: var(--yellow);
-            stroke: var(--yellow);
+        .roaster-bar:hover {
+            opacity: 0.7;
         }
 
-        /* Main content */
-        .coffee-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--space-lg) var(--space-md);
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 20px;
         }
 
-        /* Region tabs */
-        .region-tabs {
+        .slider-spacer {
+            min-width: 80px;
+        }
+
+        .slider-wrapper {
+            flex: 1;
+        }
+
+        .year-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 3px;
+            background: var(--gray-800);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .year-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
+            cursor: pointer;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .timeline-markers span {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+        }
+
+        /* Decade nav */
+        .decade-nav {
             display: flex;
             gap: 4px;
-            margin-bottom: var(--space-lg);
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
-        .region-tab {
+        .decade-btn {
             background: transparent;
-            color: var(--gray-500);
+            color: var(--gray-600);
             border: 1px solid var(--gray-800);
             border-radius: 4px;
-            padding: 8px 16px;
+            padding: 6px 12px;
             font-family: var(--font-main);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
-        .region-tab:hover {
+        .decade-btn:hover {
             color: var(--yellow);
             border-color: var(--yellow);
         }
 
-        .region-tab.active {
+        .decade-btn.active {
             background: var(--yellow);
             color: var(--black);
             border-color: var(--yellow);
         }
 
-        /* Countries grid */
-        .countries-list {
+        /* Compact Roaster Cards */
+        .roasters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: var(--space-lg);
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
         }
 
-        /* Country card */
-        .country-card {
-            background: var(--gray-900);
-            border: 1px solid var(--gray-800);
-            border-radius: 8px;
-            padding: var(--space-md);
-        }
-
-        .country-header {
+        .roaster-card {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: var(--space-md);
-            padding-bottom: var(--space-sm);
-            border-bottom: 1px solid var(--gray-800);
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            padding: 8px 10px;
+            transition: all 0.2s;
         }
 
-        .country-header .flag {
-            font-size: 1.5rem;
+        .roaster-card:hover {
+            border-color: var(--pink);
         }
 
-        .country-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--yellow);
+        .roaster-card.founded-this-year {
+            border-color: var(--yellow);
+            background: rgba(240, 192, 20, 0.05);
         }
 
-        /* Roaster list */
-        .roaster-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .roaster-item {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-800);
-        }
-
-        .roaster-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .roaster-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .roaster-name .icon {
+        .roaster-icon {
             font-size: 1rem;
+            flex-shrink: 0;
         }
 
-        .roaster-name span {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--white);
-        }
-
-        .roaster-desc {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-            line-height: 1.4;
-            padding-left: 26px;
-        }
-
-        .roaster-roasts {
-            padding-left: 26px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 4px;
-        }
-
-        .roast-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .roast-info {
+        .roaster-info {
             flex: 1;
             min-width: 0;
         }
 
-        .roast-name {
-            font-size: 0.8rem;
-            color: var(--gray-300);
+        .roaster-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .roast-notes {
-            font-size: 0.7rem;
-            color: var(--gray-600);
-            font-style: italic;
+        .roaster-meta {
+            font-size: 0.6rem;
+            color: var(--gray-500);
         }
 
-        .roast-links {
-            display: flex;
-            gap: 4px;
+        .roaster-year {
+            font-size: 0.65rem;
+            color: var(--yellow);
+            font-weight: 600;
             flex-shrink: 0;
         }
 
-        .roast-link {
-            font-size: 0.55rem;
+        /* Region groups */
+        .region-section {
+            margin-bottom: 20px;
+        }
+
+        .region-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .region-header .icon {
+            font-size: 1rem;
+        }
+
+        .region-header h3 {
+            font-size: 0.75rem;
             font-weight: 600;
-            padding: 3px 5px;
-            background: transparent;
-            border: 1px solid;
-            border-radius: 2px;
-            text-decoration: none;
-            transition: all 0.2s;
+            color: var(--pink);
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
         }
 
-        .roast-link.roaster { color: #c4a77d; border-color: #c4a77d; }
-        .roast-link.buy { color: var(--yellow); border-color: var(--yellow); }
-
-        .roast-link:hover {
-            background: currentColor;
-            color: var(--black);
+        .region-header .count {
+            font-size: 0.65rem;
+            color: var(--gray-600);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .coffee-header {
-                flex-direction: column;
-            }
+        /* Active region in sidebar */
+        .genre-link.filter-active {
+            color: var(--yellow) !important;
+            background: rgba(240, 192, 20, 0.1);
+        }
 
-            .mini-map {
-                width: 100%;
-                height: 150px;
-            }
+        .genre-link.filter-active::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--yellow);
+            border-radius: 50%;
+            margin-right: var(--space-xs);
+            vertical-align: middle;
+        }
 
-            .countries-list {
-                grid-template-columns: 1fr;
-            }
+        .no-roasters {
+            color: var(--gray-600);
+            font-size: 0.85rem;
+            padding: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -299,75 +291,69 @@
         </button>
     </nav>
 
-    <main class="coffee-page">
-        <!-- Header with Map -->
-        <header class="coffee-header">
-            <div class="coffee-header-text">
+    <main class="music-page">
+        <!-- Page Header - Title and subtitle side by side -->
+        <header class="music-header">
+            <div class="music-header-text">
                 <h1>Coffee</h1>
                 <p>Origins, producers, and roasts from around the world</p>
             </div>
-
-            <div class="mini-map" id="worldMap">
-                <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
-                    <!-- North America -->
-                    <path class="map-region" d="M45,125 L55,95 L75,70 L110,50 L150,40 L190,45 L220,55 L245,75 L255,100 L250,130 L235,155 L210,170 L185,175 L165,172 L145,178 L125,172 L105,155 L80,140 L55,135 Z"/>
-                    
-                    <!-- Greenland -->
-                    <path class="map-region" d="M285,30 L310,22 L340,28 L360,50 L355,80 L335,95 L305,90 L285,65 L280,45 Z"/>
-                    
-                    <!-- Central America & Mexico -->
-                    <path class="map-region" data-region="central_america" d="M125,178 L145,175 L162,180 L168,195 L160,212 L148,228 L135,238 L120,235 L112,218 L115,198 Z"/>
-                    
-                    <!-- Caribbean Islands -->
-                    <ellipse class="map-region" data-region="central_america" cx="185" cy="205" rx="6" ry="4"/>
-                    <ellipse class="map-region" data-region="central_america" cx="198" cy="212" rx="5" ry="3"/>
-                    
-                    <!-- South America -->
-                    <path class="map-region" data-region="south_america" d="M148,242 L175,238 L205,245 L228,258 L248,285 L260,325 L258,375 L245,415 L218,445 L185,455 L158,438 L148,400 L142,355 L145,305 L150,268 Z"/>
-                    
-                    <!-- Europe -->
-                    <path class="map-region" d="M420,50 L445,42 L475,45 L510,55 L535,72 L545,98 L540,125 L520,142 L490,148 L460,145 L435,132 L420,110 L415,82 L418,60 Z"/>
-                    
-                    <!-- Africa -->
-                    <path class="map-region" data-region="africa" d="M435,158 L465,152 L500,155 L535,168 L560,192 L575,230 L582,280 L578,335 L560,378 L528,410 L485,425 L445,415 L418,385 L402,340 L395,285 L398,235 L410,195 L425,170 Z"/>
-                    
-                    <!-- Middle East -->
-                    <path class="map-region" data-region="middle_east" d="M555,135 L585,125 L615,138 L635,165 L628,200 L605,225 L575,235 L555,215 L548,175 L550,150 Z"/>
-                    
-                    <!-- Russia -->
-                    <path class="map-region" d="M545,35 L620,25 L700,30 L780,42 L850,58 L910,78 L895,98 L850,95 L780,85 L700,78 L620,72 L560,68 L545,52 Z"/>
-                    
-                    <!-- India -->
-                    <path class="map-region" data-region="asia_pacific" d="M638,168 L670,155 L702,165 L718,195 L715,235 L698,275 L668,295 L642,275 L635,235 L632,198 Z"/>
-                    
-                    <!-- China -->
-                    <path class="map-region" d="M700,75 L760,65 L820,78 L865,105 L875,145 L858,180 L820,195 L770,188 L735,168 L718,135 L710,100 Z"/>
-                    
-                    <!-- Southeast Asia -->
-                    <path class="map-region" data-region="asia_pacific" d="M720,195 L755,185 L785,198 L798,235 L788,275 L760,295 L732,285 L718,250 L715,218 Z"/>
-                    
-                    <!-- Indonesia -->
-                    <path class="map-region" data-region="asia_pacific" d="M738,305 L775,298 L815,305 L855,318 L885,335 L878,358 L840,365 L795,362 L755,352 L735,335 Z"/>
-                    
-                    <!-- Papua New Guinea -->
-                    <path class="map-region" data-region="asia_pacific" d="M895,318 L928,308 L955,328 L948,362 L918,375 L892,358 Z"/>
-                    
-                    <!-- Australia -->
-                    <path class="map-region" d="M815,388 L868,375 L920,392 L955,435 L942,478 L895,495 L838,485 L798,455 L788,415 L795,392 Z"/>
-                    
-                    <!-- Japan -->
-                    <path class="map-region" d="M868,95 L882,88 L895,102 L892,135 L878,155 L865,145 L862,118 Z"/>
-                </svg>
-            </div>
         </header>
 
-        <!-- Main Content -->
-        <div class="coffee-content">
-            <!-- Region tabs -->
-            <div class="region-tabs" id="regionTabs"></div>
+        <!-- Main Layout -->
+        <div class="music-layout">
+            <!-- Sidebar -->
+            <aside class="music-sidebar">
+                <div class="sidebar-section">
+                    <h3>Regions</h3>
+                    <ul class="genre-list">
+                        <li><a href="#" class="genre-link filter-active" data-filter="all">All</a></li>
+                        <li><a href="#" class="genre-link" data-filter="usa">USA</a></li>
+                        <li><a href="#" class="genre-link" data-filter="europe">Europe</a></li>
+                        <li><a href="#" class="genre-link" data-filter="nordic">Nordic</a></li>
+                        <li><a href="#" class="genre-link" data-filter="asia">Asia Pacific</a></li>
+                    </ul>
+                </div>
+            </aside>
 
-            <!-- Countries with roasters -->
-            <div class="countries-list" id="countriesList"></div>
+            <!-- Main Content -->
+            <div class="music-main">
+                <!-- Coffee Timeline Section -->
+                <section class="journey-section">
+                    <nav class="decade-nav">
+                        <button class="decade-btn" data-decade="60s" data-start="1960" data-end="1969">60s</button>
+                        <button class="decade-btn" data-decade="70s" data-start="1970" data-end="1979">70s</button>
+                        <button class="decade-btn" data-decade="80s" data-start="1980" data-end="1989">80s</button>
+                        <button class="decade-btn active" data-decade="90s" data-start="1990" data-end="1999">90s</button>
+                        <button class="decade-btn" data-decade="00s" data-start="2000" data-end="2009">00s</button>
+                        <button class="decade-btn" data-decade="10s" data-start="2010" data-end="2019">10s</button>
+                        <button class="decade-btn" data-decade="20s" data-start="2020" data-end="2025">20s</button>
+                    </nav>
+
+                    <div class="journey-header">
+                        <div class="year-display">
+                            <h2 id="currentYear">1995</h2>
+                        </div>
+                        <div class="roaster-bars" id="roasterBars"></div>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-spacer"></div>
+                        <div class="slider-wrapper">
+                            <input type="range" class="year-slider" id="yearSlider" min="1990" max="1999" value="1995">
+                            <div class="timeline-markers" id="timelineMarkers">
+                                <span>1990</span>
+                                <span>1993</span>
+                                <span>1996</span>
+                                <span>1999</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Roasters Display -->
+                    <div id="roastersDisplay"></div>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -401,265 +387,247 @@
     </footer>
 
     <script>
-        // Coffee Data
-        const regions = [
-            {
-                id: 'africa',
-                name: 'Africa',
-                countries: {
-                    ethiopia: {
-                        name: 'Ethiopia',
-                        icon: '🇪🇹',
-                        producers: [
-                            { name: 'Yirgacheffe', icon: '🫐', desc: 'Birthplace of coffee. Bright, floral, blueberry.',
-                              roasts: [{ name: 'Kochere Natural', notes: 'Blueberry, jasmine, wine' }, { name: 'Gedeb Washed', notes: 'Bergamot, peach, tea-like' }] },
-                            { name: 'Sidamo', icon: '🍋', desc: 'Complex citrus and stone fruit.',
-                              roasts: [{ name: 'Bensa Natural', notes: 'Tropical fruit, citrus, cocoa' }] },
-                            { name: 'Guji', icon: '🍑', desc: 'Intense fruit-forward naturals.',
-                              roasts: [{ name: 'Hambela Natural', notes: 'Peach, mango, fermented fruit' }] }
-                        ]
-                    },
-                    kenya: {
-                        name: 'Kenya',
-                        icon: '🇰🇪',
-                        producers: [
-                            { name: 'Nyeri', icon: '🍇', desc: 'SL-28 varietals. Blackcurrant acidity.',
-                              roasts: [{ name: 'Othaya AA', notes: 'Blackcurrant, grapefruit, brown sugar' }] },
-                            { name: 'Kirinyaga', icon: '🫒', desc: 'Mount Kenya slopes. Wine-like.',
-                              roasts: [{ name: 'Kamwangi AB', notes: 'Plum, orange, black tea' }] }
-                        ]
-                    },
-                    rwanda: {
-                        name: 'Rwanda',
-                        icon: '🇷🇼',
-                        producers: [
-                            { name: 'Huye Mountain', icon: '🍊', desc: 'High altitude, exceptional clarity.',
-                              roasts: [{ name: 'Red Bourbon', notes: 'Orange blossom, caramel' }] }
-                        ]
-                    }
-                }
-            },
-            {
-                id: 'central_america',
-                name: 'Central America',
-                countries: {
-                    guatemala: {
-                        name: 'Guatemala',
-                        icon: '🇬🇹',
-                        producers: [
-                            { name: 'Huehuetenango', icon: '🍫', desc: 'High altitude, chocolate forward.',
-                              roasts: [{ name: 'El Injerto', notes: 'Dark chocolate, orange, spice' }] },
-                            { name: 'Antigua', icon: '🌋', desc: 'Volcanic soil. Rich and smoky.',
-                              roasts: [{ name: 'Finca Filadelfia', notes: 'Cocoa, caramel, subtle smoke' }] }
-                        ]
-                    },
-                    costa_rica: {
-                        name: 'Costa Rica',
-                        icon: '🇨🇷',
-                        producers: [
-                            { name: 'Tarrazú', icon: '🍯', desc: 'Honey process pioneers.',
-                              roasts: [{ name: 'La Minita', notes: 'Honey, citrus, clean finish' }] }
-                        ]
-                    },
-                    panama: {
-                        name: 'Panama',
-                        icon: '🇵🇦',
-                        producers: [
-                            { name: 'Boquete', icon: '🌸', desc: 'Home of legendary Geisha.',
-                              roasts: [{ name: 'Hacienda La Esmeralda', notes: 'Jasmine, bergamot, tropical' }] }
-                        ]
-                    }
-                }
-            },
-            {
-                id: 'south_america',
-                name: 'South America',
-                countries: {
-                    colombia: {
-                        name: 'Colombia',
-                        icon: '🇨🇴',
-                        producers: [
-                            { name: 'Huila', icon: '🍒', desc: 'Sweet, fruity, balanced.',
-                              roasts: [{ name: 'San Agustín', notes: 'Cherry, caramel, milk chocolate' }] },
-                            { name: 'Nariño', icon: '🍬', desc: 'High altitude sweetness.',
-                              roasts: [{ name: 'La Union', notes: 'Panela, citrus, floral' }] }
-                        ]
-                    },
-                    brazil: {
-                        name: 'Brazil',
-                        icon: '🇧🇷',
-                        producers: [
-                            { name: 'Cerrado', icon: '🥜', desc: 'Nutty, chocolate, low acidity.',
-                              roasts: [{ name: 'Fazenda Santa Inês', notes: 'Peanut, chocolate, caramel' }] },
-                            { name: 'Sul de Minas', icon: '🍫', desc: 'Classic Brazilian profile.',
-                              roasts: [{ name: 'Yellow Bourbon', notes: 'Chocolate, nuts, smooth' }] }
-                        ]
-                    },
-                    peru: {
-                        name: 'Peru',
-                        icon: '🇵🇪',
-                        producers: [
-                            { name: 'Cajamarca', icon: '🌰', desc: 'Organic, shade-grown.',
-                              roasts: [{ name: 'Cenfrocafé Co-op', notes: 'Hazelnut, brown sugar, mild' }] }
-                        ]
-                    }
-                }
-            },
-            {
-                id: 'asia_pacific',
-                name: 'Asia Pacific',
-                countries: {
-                    indonesia: {
-                        name: 'Indonesia',
-                        icon: '🇮🇩',
-                        producers: [
-                            { name: 'Sumatra', icon: '🌿', desc: 'Earthy, herbal, full body.',
-                              roasts: [{ name: 'Mandheling', notes: 'Cedar, dark chocolate, earthy' }] },
-                            { name: 'Java', icon: '🍂', desc: 'Clean, spicy, balanced.',
-                              roasts: [{ name: 'West Java', notes: 'Tobacco, spice, brown sugar' }] }
-                        ]
-                    },
-                    vietnam: {
-                        name: 'Vietnam',
-                        icon: '🇻🇳',
-                        producers: [
-                            { name: 'Da Lat', icon: '☕', desc: 'Robusta country exploring arabica.',
-                              roasts: [{ name: 'Cầu Đất', notes: 'Chocolate, nuts, heavy body' }] }
-                        ]
-                    },
-                    png: {
-                        name: 'Papua New Guinea',
-                        icon: '🇵🇬',
-                        producers: [
-                            { name: 'Eastern Highlands', icon: '🍇', desc: 'Wild, complex, fruity.',
-                              roasts: [{ name: 'Sigri Estate', notes: 'Grape, mango, bright acidity' }] }
-                        ]
-                    }
-                }
-            },
-            {
-                id: 'middle_east',
-                name: 'Middle East',
-                countries: {
-                    yemen: {
-                        name: 'Yemen',
-                        icon: '🇾🇪',
-                        producers: [
-                            { name: 'Haraz Mountains', icon: '🍷', desc: 'Ancient varietals. Wine-like complexity.',
-                              roasts: [{ name: 'Haraaz Red', notes: 'Wine, dried fruit, spice' }] },
-                            { name: 'Mattari', icon: '🫒', desc: 'Traditional dry process.',
-                              roasts: [{ name: 'Ismaili', notes: 'Raisin, tobacco, chocolate' }] }
-                        ]
-                    }
-                }
-            }
+        // Roasters data with founding years
+        const roasters = [
+            // 1960s
+            { name: "Peet's Coffee", year: 1966, region: "usa", location: "Berkeley, CA", icon: "☕" },
+            
+            // 1970s
+            { name: "Starbucks", year: 1971, region: "usa", location: "Seattle, WA", icon: "⭐" },
+            { name: "Coffee Connection", year: 1975, region: "usa", location: "Boston, MA", icon: "🔗" },
+            { name: "Allegro Coffee", year: 1977, region: "usa", location: "Boulder, CO", icon: "🏔️" },
+            { name: "Monmouth Coffee", year: 1978, region: "europe", location: "London, UK", icon: "🇬🇧" },
+            
+            // 1980s
+            { name: "Peerless Coffee", year: 1924, region: "usa", location: "Oakland, CA", icon: "🏆" },
+            { name: "Equator Coffees", year: 1995, region: "usa", location: "San Rafael, CA", icon: "🌍" },
+            
+            // 1990s
+            { name: "Counter Culture", year: 1995, region: "usa", location: "Durham, NC", icon: "🔄" },
+            { name: "Intelligentsia", year: 1995, region: "usa", location: "Chicago, IL", icon: "💡" },
+            { name: "Stumptown", year: 1999, region: "usa", location: "Portland, OR", icon: "🌲" },
+            { name: "Square Mile", year: 1999, region: "europe", location: "London, UK", icon: "📐" },
+            { name: "Tim Wendelboe", year: 1999, region: "nordic", location: "Oslo, Norway", icon: "🇳🇴" },
+            { name: "Café Imports", year: 1997, region: "usa", location: "Minneapolis, MN", icon: "📦" },
+            
+            // 2000s
+            { name: "Blue Bottle", year: 2002, region: "usa", location: "Oakland, CA", icon: "🫐" },
+            { name: "Single O", year: 2003, region: "asia", location: "Sydney, AU", icon: "🇦🇺" },
+            { name: "Ritual Coffee", year: 2005, region: "usa", location: "San Francisco, CA", icon: "✨" },
+            { name: "Koppi", year: 2007, region: "nordic", location: "Helsingborg, SE", icon: "🇸🇪" },
+            { name: "Verve Coffee", year: 2007, region: "usa", location: "Santa Cruz, CA", icon: "🌊" },
+            { name: "Heart Coffee", year: 2009, region: "usa", location: "Portland, OR", icon: "❤️" },
+            { name: "Drop Coffee", year: 2009, region: "nordic", location: "Stockholm, SE", icon: "💧" },
+            { name: "Proud Mary", year: 2009, region: "asia", location: "Melbourne, AU", icon: "🦘" },
+            { name: "Market Lane", year: 2009, region: "asia", location: "Melbourne, AU", icon: "🛒" },
+            
+            // 2010s
+            { name: "The Barn", year: 2010, region: "europe", location: "Berlin, DE", icon: "🏠" },
+            { name: "Five Elephant", year: 2010, region: "europe", location: "Berlin, DE", icon: "🐘" },
+            { name: "Workshop Coffee", year: 2011, region: "europe", location: "London, UK", icon: "🔧" },
+            { name: "La Cabra", year: 2012, region: "nordic", location: "Aarhus, DK", icon: "🐐" },
+            { name: "Fuglen", year: 2012, region: "nordic", location: "Oslo/Tokyo", icon: "🦅" },
+            { name: "Onyx Coffee Lab", year: 2012, region: "usa", location: "Rogers, AR", icon: "⬛" },
+            { name: "% Arabica", year: 2014, region: "asia", location: "Kyoto, JP", icon: "🇯🇵" },
+            { name: "Nomad Coffee", year: 2014, region: "europe", location: "Barcelona, ES", icon: "🏜️" },
+            { name: "Passenger Coffee", year: 2014, region: "usa", location: "Lancaster, PA", icon: "🚂" },
+            { name: "Brandywine Coffee", year: 2015, region: "usa", location: "Wilmington, DE", icon: "🌿" },
+            { name: "April Coffee", year: 2016, region: "nordic", location: "Copenhagen, DK", icon: "🌸" },
+            { name: "Gardelli", year: 2016, region: "europe", location: "Forlì, IT", icon: "🏆" },
+            { name: "Little Wolf", year: 2016, region: "usa", location: "Ipswich, MA", icon: "🐺" },
+            { name: "Sey Coffee", year: 2017, region: "usa", location: "Brooklyn, NY", icon: "🗽" },
+            { name: "Mañana", year: 2018, region: "usa", location: "Brooklyn, NY", icon: "🌅" },
+            { name: "Manhattan Coffee", year: 2018, region: "europe", location: "Rotterdam, NL", icon: "🏙️" },
+            { name: "Commonplace Coffee", year: 2018, region: "usa", location: "Pittsburgh, PA", icon: "🏭" },
+            
+            // 2020s
+            { name: "Dak Coffee", year: 2020, region: "europe", location: "Amsterdam, NL", icon: "🦆" },
+            { name: "Detour Coffee", year: 2009, region: "usa", location: "Burlington, ON", icon: "🔀" },
+            { name: "Coffee Bros", year: 2019, region: "usa", location: "Queens, NY", icon: "👬" },
+            { name: "Black & White", year: 2015, region: "usa", location: "Wake Forest, NC", icon: "◐" },
+            { name: "Methodical Coffee", year: 2015, region: "usa", location: "Greenville, SC", icon: "📊" },
         ];
 
-        let currentRegionIndex = 0;
+        let currentYear = 1995;
+        let currentDecade = { start: 1990, end: 1999 };
+        let activeFilter = 'all';
 
-        // Render region tabs
-        function renderTabs() {
-            const tabsContainer = document.getElementById('regionTabs');
-            tabsContainer.innerHTML = regions.map((region, i) => `
-                <button class="region-tab${i === currentRegionIndex ? ' active' : ''}" data-index="${i}">
-                    ${region.name}
-                </button>
-            `).join('');
+        const yearSlider = document.getElementById('yearSlider');
+        const currentYearDisplay = document.getElementById('currentYear');
+        const roasterBars = document.getElementById('roasterBars');
+        const roastersDisplay = document.getElementById('roastersDisplay');
 
-            // Add click handlers
-            tabsContainer.querySelectorAll('.region-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    currentRegionIndex = parseInt(tab.dataset.index);
-                    updateDisplay();
-                });
+        // Filter sidebar clicks
+        document.querySelectorAll('.genre-link[data-filter]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.genre-link[data-filter]').forEach(l => l.classList.remove('filter-active'));
+                link.classList.add('filter-active');
+                activeFilter = link.dataset.filter;
+                updateDisplay();
             });
-        }
+        });
 
-        // Render countries list
-        function renderCountries() {
-            const region = regions[currentRegionIndex];
-            const container = document.getElementById('countriesList');
-
-            container.innerHTML = Object.entries(region.countries).map(([id, country]) => `
-                <div class="country-card">
-                    <div class="country-header">
-                        <span class="flag">${country.icon}</span>
-                        <h3>${country.name}</h3>
-                    </div>
-                    <div class="roaster-list">
-                        ${country.producers.map(producer => `
-                            <div class="roaster-item">
-                                <div class="roaster-name">
-                                    <span class="icon">${producer.icon}</span>
-                                    <span>${producer.name}</span>
-                                </div>
-                                <div class="roaster-desc">${producer.desc}</div>
-                                <div class="roaster-roasts">
-                                    ${producer.roasts.map(roast => `
-                                        <div class="roast-row">
-                                            <div class="roast-info">
-                                                <div class="roast-name">${roast.name}</div>
-                                                <div class="roast-notes">${roast.notes}</div>
-                                            </div>
-                                            <div class="roast-links">
-                                                <a href="#" class="roast-link roaster">ROASTER</a>
-                                                <a href="#" class="roast-link buy">BUY</a>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Update map highlighting
-        function updateMap() {
-            const region = regions[currentRegionIndex];
-            document.querySelectorAll('.map-region').forEach(path => {
-                path.classList.toggle('highlight', path.dataset.region === region.id);
+        // Decade button clicks
+        document.querySelectorAll('.decade-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.decade-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentDecade = {
+                    start: parseInt(btn.dataset.start),
+                    end: parseInt(btn.dataset.end)
+                };
+                
+                yearSlider.min = currentDecade.start;
+                yearSlider.max = currentDecade.end;
+                currentYear = currentDecade.start;
+                yearSlider.value = currentYear;
+                
+                updateTimelineMarkers();
+                updateDisplay();
             });
+        });
+
+        function updateTimelineMarkers() {
+            const markers = document.getElementById('timelineMarkers');
+            const range = currentDecade.end - currentDecade.start;
+            const step = Math.floor(range / 3);
+            markers.innerHTML = `
+                <span>${currentDecade.start}</span>
+                <span>${currentDecade.start + step}</span>
+                <span>${currentDecade.start + step * 2}</span>
+                <span>${currentDecade.end}</span>
+            `;
         }
 
-        // Update tabs
-        function updateTabs() {
-            document.querySelectorAll('.region-tab').forEach((tab, i) => {
-                tab.classList.toggle('active', i === currentRegionIndex);
-            });
-        }
-
-        // Full update
-        function updateDisplay() {
-            updateTabs();
-            updateMap();
-            renderCountries();
-        }
-
-        // Map click handler
-        document.getElementById('worldMap').addEventListener('click', (e) => {
-            const region = e.target.dataset.region;
-            if (region) {
-                const index = regions.findIndex(r => r.id === region);
-                if (index !== -1) {
-                    currentRegionIndex = index;
-                    updateDisplay();
+        function getRoasterCounts() {
+            const counts = {};
+            for (let y = currentDecade.start; y <= currentDecade.end; y++) counts[y] = 0;
+            
+            roasters.forEach(r => {
+                if (r.year >= currentDecade.start && r.year <= currentDecade.end) {
+                    if (activeFilter === 'all' || r.region === activeFilter) {
+                        counts[r.year]++;
+                    }
                 }
+            });
+            return counts;
+        }
+
+        function renderRoasterBars() {
+            const counts = getRoasterCounts();
+            const maxCount = Math.max(...Object.values(counts), 1);
+            roasterBars.innerHTML = '';
+            
+            for (let y = currentDecade.start; y <= currentDecade.end; y++) {
+                const bar = document.createElement('div');
+                bar.className = `roaster-bar${y === currentYear ? ' active' : ''}`;
+                const height = (counts[y] / maxCount) * 100;
+                bar.style.height = `${Math.max(height, 8)}%`;
+                bar.title = `${y}: ${counts[y]} roasters founded`;
+                bar.onclick = () => { yearSlider.value = y; updateYear(y); };
+                roasterBars.appendChild(bar);
+            }
+        }
+
+        function getFilteredRoasters() {
+            return roasters.filter(r => {
+                if (activeFilter !== 'all' && r.region !== activeFilter) return false;
+                return r.year <= currentYear;
+            });
+        }
+
+        function renderRoasters() {
+            const filtered = getFilteredRoasters();
+            
+            if (filtered.length === 0) {
+                roastersDisplay.innerHTML = '<div class="no-roasters">No roasters found for this period.</div>';
+                return;
+            }
+
+            // Group by region
+            const byRegion = {};
+            filtered.forEach(r => {
+                if (!byRegion[r.region]) byRegion[r.region] = [];
+                byRegion[r.region].push(r);
+            });
+
+            const regionNames = {
+                usa: { name: 'USA', icon: '🇺🇸' },
+                europe: { name: 'Europe', icon: '🇪🇺' },
+                nordic: { name: 'Nordic', icon: '❄️' },
+                asia: { name: 'Asia Pacific', icon: '🌏' }
+            };
+
+            let html = '';
+            Object.entries(byRegion).forEach(([regionId, regionRoasters]) => {
+                const region = regionNames[regionId] || { name: regionId, icon: '☕' };
+                regionRoasters.sort((a, b) => b.year - a.year || a.name.localeCompare(b.name));
+                
+                html += `
+                    <div class="region-section">
+                        <div class="region-header">
+                            <span class="icon">${region.icon}</span>
+                            <h3>${region.name}</h3>
+                            <span class="count">(${regionRoasters.length})</span>
+                        </div>
+                        <div class="roasters-grid">
+                            ${regionRoasters.map(r => `
+                                <div class="roaster-card${r.year === currentYear ? ' founded-this-year' : ''}">
+                                    <span class="roaster-icon">${r.icon}</span>
+                                    <div class="roaster-info">
+                                        <div class="roaster-name">${r.name}</div>
+                                        <div class="roaster-meta">${r.location}</div>
+                                    </div>
+                                    <span class="roaster-year">${r.year}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            roastersDisplay.innerHTML = html;
+        }
+
+        function updateYear(year) {
+            currentYear = parseInt(year);
+            currentYearDisplay.textContent = currentYear;
+            renderRoasterBars();
+            renderRoasters();
+        }
+
+        function updateDisplay() {
+            currentYearDisplay.textContent = currentYear;
+            renderRoasterBars();
+            renderRoasters();
+        }
+
+        yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentYear > currentDecade.start) {
+                yearSlider.value = currentYear - 1;
+                updateYear(currentYear - 1);
+            }
+            if (e.key === 'ArrowRight' && currentYear < currentDecade.end) {
+                yearSlider.value = currentYear + 1;
+                updateYear(currentYear + 1);
             }
         });
 
-        // Initialize
-        renderTabs();
-        updateDisplay();
-
-        // Mobile nav
+        // Mobile nav toggle
         const navToggle = document.querySelector('.nav-toggle');
         const navLinks = document.querySelector('.nav-links');
         navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('nav-links--open');
             navToggle.classList.toggle('nav-toggle--open');
         });
+
+        // Initialize
+        updateTimelineMarkers();
+        updateDisplay();
     </script>
 </body>
 </html>
