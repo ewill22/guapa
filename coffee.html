@@ -114,6 +114,38 @@
             color: var(--gray-600);
         }
 
+        /* Decade nav */
+        .decade-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .decade-btn {
+            background: transparent;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-800);
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .decade-btn:hover {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .decade-btn.active {
+            background: var(--yellow);
+            color: var(--black);
+            border-color: var(--yellow);
+        }
+
         /* Compact Roaster Cards */
         .roasters-grid {
             display: grid;
@@ -288,6 +320,16 @@
             <div class="music-main">
                 <!-- Coffee Timeline Section -->
                 <section class="journey-section">
+                    <nav class="decade-nav">
+                        <button class="decade-btn" data-year="1966">60s</button>
+                        <button class="decade-btn" data-year="1970">70s</button>
+                        <button class="decade-btn" data-year="1980">80s</button>
+                        <button class="decade-btn" data-year="1990">90s</button>
+                        <button class="decade-btn" data-year="2000">00s</button>
+                        <button class="decade-btn" data-year="2010">10s</button>
+                        <button class="decade-btn" data-year="2020">20s</button>
+                    </nav>
+
                     <div class="journey-header">
                         <div class="year-display">
                             <h2 id="currentYear">1995</h2>
@@ -431,6 +473,24 @@
             });
         });
 
+        // Decade button clicks - jump to that decade
+        document.querySelectorAll('.decade-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const year = parseInt(btn.dataset.year);
+                yearSlider.value = year;
+                updateYear(year);
+            });
+        });
+
+        function updateDecadeButtons() {
+            const decadeStart = Math.floor(currentYear / 10) * 10;
+            document.querySelectorAll('.decade-btn').forEach(btn => {
+                const btnYear = parseInt(btn.dataset.year);
+                const btnDecade = Math.floor(btnYear / 10) * 10;
+                btn.classList.toggle('active', btnDecade === decadeStart);
+            });
+        }
+
         function updateTimelineMarkers() {
             const markers = document.getElementById('timelineMarkers');
             const range = currentDecade.end - currentDecade.start;
@@ -544,6 +604,7 @@
                 updateTimelineMarkers();
             }
             
+            updateDecadeButtons();
             renderRoasterBars();
             renderRoasters();
         }
@@ -552,6 +613,7 @@
             currentYearDisplay.textContent = currentYear;
             currentDecade = getDecadeWindow(currentYear);
             updateTimelineMarkers();
+            updateDecadeButtons();
             renderRoasterBars();
             renderRoasters();
         }
