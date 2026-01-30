@@ -114,38 +114,6 @@
             color: var(--gray-600);
         }
 
-        /* Decade nav */
-        .decade-nav {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .decade-btn {
-            background: transparent;
-            color: var(--gray-600);
-            border: 1px solid var(--gray-800);
-            border-radius: 4px;
-            padding: 6px 12px;
-            font-family: var(--font-main);
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .decade-btn:hover {
-            color: var(--yellow);
-            border-color: var(--yellow);
-        }
-
-        .decade-btn.active {
-            background: var(--yellow);
-            color: var(--black);
-            border-color: var(--yellow);
-        }
-
         /* Compact Roaster Cards */
         .roasters-grid {
             display: grid;
@@ -320,16 +288,6 @@
             <div class="music-main">
                 <!-- Coffee Timeline Section -->
                 <section class="journey-section">
-                    <nav class="decade-nav">
-                        <button class="decade-btn" data-decade="60s" data-start="1960" data-end="1969">60s</button>
-                        <button class="decade-btn" data-decade="70s" data-start="1970" data-end="1979">70s</button>
-                        <button class="decade-btn" data-decade="80s" data-start="1980" data-end="1989">80s</button>
-                        <button class="decade-btn active" data-decade="90s" data-start="1990" data-end="1999">90s</button>
-                        <button class="decade-btn" data-decade="00s" data-start="2000" data-end="2009">00s</button>
-                        <button class="decade-btn" data-decade="10s" data-start="2010" data-end="2019">10s</button>
-                        <button class="decade-btn" data-decade="20s" data-start="2020" data-end="2025">20s</button>
-                    </nav>
-
                     <div class="journey-header">
                         <div class="year-display">
                             <h2 id="currentYear">1995</h2>
@@ -340,13 +298,8 @@
                     <div class="slider-row">
                         <div class="slider-spacer"></div>
                         <div class="slider-wrapper">
-                            <input type="range" class="year-slider" id="yearSlider" min="1990" max="1999" value="1995">
-                            <div class="timeline-markers" id="timelineMarkers">
-                                <span>1990</span>
-                                <span>1993</span>
-                                <span>1996</span>
-                                <span>1999</span>
-                            </div>
+                            <input type="range" class="year-slider" id="yearSlider" min="1966" max="2025" value="1995">
+                            <div class="timeline-markers" id="timelineMarkers"></div>
                         </div>
                     </div>
 
@@ -449,13 +402,23 @@
         ];
 
         let currentYear = 1995;
-        let currentDecade = { start: 1990, end: 1999 };
         let activeFilter = 'all';
 
         const yearSlider = document.getElementById('yearSlider');
         const currentYearDisplay = document.getElementById('currentYear');
         const roasterBars = document.getElementById('roasterBars');
         const roastersDisplay = document.getElementById('roastersDisplay');
+
+        // Get decade window for a given year
+        function getDecadeWindow(year) {
+            const decadeStart = Math.floor(year / 10) * 10;
+            // Handle edge cases: 1960s starts at 1966, 2020s ends at 2025
+            const actualStart = decadeStart === 1960 ? 1966 : decadeStart;
+            const actualEnd = decadeStart === 2020 ? 2025 : decadeStart + 9;
+            return { start: actualStart, end: actualEnd };
+        }
+
+        let currentDecade = getDecadeWindow(currentYear);
 
         // Filter sidebar clicks
         document.querySelectorAll('.genre-link[data-filter]').forEach(link => {
@@ -464,27 +427,6 @@
                 document.querySelectorAll('.genre-link[data-filter]').forEach(l => l.classList.remove('filter-active'));
                 link.classList.add('filter-active');
                 activeFilter = link.dataset.filter;
-                updateDisplay();
-            });
-        });
-
-        // Decade button clicks
-        document.querySelectorAll('.decade-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.decade-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                currentDecade = {
-                    start: parseInt(btn.dataset.start),
-                    end: parseInt(btn.dataset.end)
-                };
-                
-                yearSlider.min = currentDecade.start;
-                yearSlider.max = currentDecade.end;
-                currentYear = currentDecade.start;
-                yearSlider.value = currentYear;
-                
-                updateTimelineMarkers();
                 updateDisplay();
             });
         });
@@ -594,12 +536,22 @@
         function updateYear(year) {
             currentYear = parseInt(year);
             currentYearDisplay.textContent = currentYear;
+            
+            // Check if we've crossed into a new decade
+            const newDecade = getDecadeWindow(currentYear);
+            if (newDecade.start !== currentDecade.start) {
+                currentDecade = newDecade;
+                updateTimelineMarkers();
+            }
+            
             renderRoasterBars();
             renderRoasters();
         }
 
         function updateDisplay() {
             currentYearDisplay.textContent = currentYear;
+            currentDecade = getDecadeWindow(currentYear);
+            updateTimelineMarkers();
             renderRoasterBars();
             renderRoasters();
         }
@@ -607,11 +559,11 @@
         yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentYear > currentDecade.start) {
+            if (e.key === 'ArrowLeft' && currentYear > 1966) {
                 yearSlider.value = currentYear - 1;
                 updateYear(currentYear - 1);
             }
-            if (e.key === 'ArrowRight' && currentYear < currentDecade.end) {
+            if (e.key === 'ArrowRight' && currentYear < 2025) {
                 yearSlider.value = currentYear + 1;
                 updateYear(currentYear + 1);
             }
