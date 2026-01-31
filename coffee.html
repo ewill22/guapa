@@ -443,6 +443,9 @@
             { name: "Methodical Coffee", year: 2015, region: "usa", location: "Greenville, SC", icon: "📊" },
         ];
 
+        const MIN_YEAR = 1966;
+        const MAX_YEAR = 2025;
+
         let currentYear = 1995;
         let activeFilter = 'all';
 
@@ -450,17 +453,6 @@
         const currentYearDisplay = document.getElementById('currentYear');
         const roasterBars = document.getElementById('roasterBars');
         const roastersDisplay = document.getElementById('roastersDisplay');
-
-        // Get decade window for a given year
-        function getDecadeWindow(year) {
-            const decadeStart = Math.floor(year / 10) * 10;
-            // Handle edge cases: 1960s starts at 1966, 2020s ends at 2025
-            const actualStart = decadeStart === 1960 ? 1966 : decadeStart;
-            const actualEnd = decadeStart === 2020 ? 2025 : decadeStart + 9;
-            return { start: actualStart, end: actualEnd };
-        }
-
-        let currentDecade = getDecadeWindow(currentYear);
 
         // Filter sidebar clicks
         document.querySelectorAll('.genre-link[data-filter]').forEach(link => {
@@ -493,22 +485,22 @@
 
         function updateTimelineMarkers() {
             const markers = document.getElementById('timelineMarkers');
-            const range = currentDecade.end - currentDecade.start;
-            const step = Math.floor(range / 3);
             markers.innerHTML = `
-                <span>${currentDecade.start}</span>
-                <span>${currentDecade.start + step}</span>
-                <span>${currentDecade.start + step * 2}</span>
-                <span>${currentDecade.end}</span>
+                <span>${MIN_YEAR}</span>
+                <span>1980</span>
+                <span>1990</span>
+                <span>2000</span>
+                <span>2010</span>
+                <span>${MAX_YEAR}</span>
             `;
         }
 
         function getRoasterCounts() {
             const counts = {};
-            for (let y = currentDecade.start; y <= currentDecade.end; y++) counts[y] = 0;
+            for (let y = MIN_YEAR; y <= MAX_YEAR; y++) counts[y] = 0;
             
             roasters.forEach(r => {
-                if (r.year >= currentDecade.start && r.year <= currentDecade.end) {
+                if (r.year >= MIN_YEAR && r.year <= MAX_YEAR) {
                     if (activeFilter === 'all' || r.region === activeFilter) {
                         counts[r.year]++;
                     }
@@ -522,11 +514,11 @@
             const maxCount = Math.max(...Object.values(counts), 1);
             roasterBars.innerHTML = '';
             
-            for (let y = currentDecade.start; y <= currentDecade.end; y++) {
+            for (let y = MIN_YEAR; y <= MAX_YEAR; y++) {
                 const bar = document.createElement('div');
                 bar.className = `roaster-bar${y === currentYear ? ' active' : ''}`;
                 const height = (counts[y] / maxCount) * 100;
-                bar.style.height = `${Math.max(height, 8)}%`;
+                bar.style.height = `${Math.max(height, 4)}%`;
                 bar.title = `${y}: ${counts[y]} roasters founded`;
                 bar.onclick = () => { yearSlider.value = y; updateYear(y); };
                 roasterBars.appendChild(bar);
@@ -596,14 +588,6 @@
         function updateYear(year) {
             currentYear = parseInt(year);
             currentYearDisplay.textContent = currentYear;
-            
-            // Check if we've crossed into a new decade
-            const newDecade = getDecadeWindow(currentYear);
-            if (newDecade.start !== currentDecade.start) {
-                currentDecade = newDecade;
-                updateTimelineMarkers();
-            }
-            
             updateDecadeButtons();
             renderRoasterBars();
             renderRoasters();
@@ -611,7 +595,6 @@
 
         function updateDisplay() {
             currentYearDisplay.textContent = currentYear;
-            currentDecade = getDecadeWindow(currentYear);
             updateTimelineMarkers();
             updateDecadeButtons();
             renderRoasterBars();
@@ -621,11 +604,11 @@
         yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentYear > 1966) {
+            if (e.key === 'ArrowLeft' && currentYear > MIN_YEAR) {
                 yearSlider.value = currentYear - 1;
                 updateYear(currentYear - 1);
             }
-            if (e.key === 'ArrowRight' && currentYear < 2025) {
+            if (e.key === 'ArrowRight' && currentYear < MAX_YEAR) {
                 yearSlider.value = currentYear + 1;
                 updateYear(currentYear + 1);
             }
