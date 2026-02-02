@@ -256,6 +256,67 @@
             padding: 20px;
             text-align: center;
         }
+
+        /* Search */
+        .search-container {
+            position: relative;
+            width: 240px;
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-sm);
+            color: var(--white);
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input::placeholder { color: var(--gray-600); }
+        .search-input:focus { border-color: var(--yellow); }
+
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-top: none;
+            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+            max-height: 260px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .search-results.open { display: block; }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: var(--gray-800); }
+
+        .search-result-item .result-icon { font-size: 1rem; }
+        .search-result-item .result-name { font-size: 0.8rem; color: var(--white); font-weight: 500; }
+        .search-result-item .result-meta { font-size: 0.65rem; color: var(--gray-600); margin-left: auto; white-space: nowrap; }
+
+        @media (max-width: 768px) {
+            .search-container { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -297,6 +358,10 @@
             <div class="music-header-text">
                 <h1>Coffee</h1>
                 <p>Origins, producers, and roasts from around the world</p>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search roasters..." autocomplete="off">
+                <div class="search-results" id="searchResults"></div>
             </div>
         </header>
 
@@ -620,6 +685,40 @@
         navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('nav-links--open');
             navToggle.classList.toggle('nav-toggle--open');
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResultsEl = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            if (q.length < 2) { searchResultsEl.classList.remove('open'); return; }
+            const matches = roasters.filter(r => r.name.toLowerCase().includes(q)).slice(0, 8);
+            if (matches.length === 0) { searchResultsEl.classList.remove('open'); return; }
+            searchResultsEl.innerHTML = matches.map((m, i) => `
+                <div class="search-result-item" data-index="${i}">
+                    <span class="result-icon">${m.icon}</span>
+                    <span class="result-name">${m.name}</span>
+                    <span class="result-meta">${m.location} · ${m.year}</span>
+                </div>
+            `).join('');
+            searchResultsEl.classList.add('open');
+            searchResultsEl.querySelectorAll('.search-result-item').forEach((el, i) => {
+                el.addEventListener('click', () => {
+                    const match = matches[i];
+                    if (match.year >= MIN_YEAR && match.year <= MAX_YEAR) {
+                        yearSlider.value = match.year;
+                        updateYear(match.year);
+                    }
+                    searchInput.value = '';
+                    searchResultsEl.classList.remove('open');
+                });
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) searchResultsEl.classList.remove('open');
         });
 
         // Initialize
