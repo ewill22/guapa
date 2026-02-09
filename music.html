@@ -1654,9 +1654,9 @@
                 // No subgenres visible - show origin story
                 const origin = genreOrigins[genreId];
                 const originDiv = document.createElement('div');
-                originDiv.style.cssText = 'padding: 20px; color: var(--gray-400); font-size: 0.9rem; line-height: 1.6; font-style: italic;';
+                originDiv.style.cssText = 'padding: 40px 30px; color: var(--gray-400); font-size: 0.9rem; line-height: 1.6; font-style: italic; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 200px;';
                 if (origin && currentYear < origin.emergeYear) {
-                    originDiv.innerHTML = `<p style="margin-bottom: 12px; color: var(--yellow);">${genre.name} doesn't exist yet in ${currentYear}.</p><p>${origin.story}</p><p style="margin-top: 12px; color: var(--gray-500);">Move the timeline to <strong style="color: var(--pink);">${origin.emergeYear}</strong> or later to explore this genre.</p>`;
+                    originDiv.innerHTML = `<p style="margin-bottom: 12px; color: var(--yellow); font-size: 1.1rem;">${genre.name} doesn't exist yet in ${currentYear}.</p><p style="max-width: 500px;">${origin.story}</p><p style="margin-top: 16px; color: var(--gray-500);">Move the timeline to <strong style="color: var(--pink);">${origin.emergeYear}</strong> or later to explore this genre.</p>`;
                 } else {
                     originDiv.innerHTML = `<p>No ${genre.name.toLowerCase()} subgenres active in ${currentYear}. Try a different year.</p>`;
                 }
