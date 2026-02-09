@@ -1621,6 +1621,7 @@
             albumGrid.innerHTML = '';
             Object.values(subgenre.artists).forEach(artist => albumGrid.appendChild(makeArtistCard(artist)));
             artistPanel.classList.add('visible');
+            document.getElementById('rankingsSection').style.display = 'none';
         }
 
         function showGenrePanel(genreId) {
@@ -1641,6 +1642,7 @@
                 Object.values(subgenre.artists).forEach(artist => albumGrid.appendChild(makeArtistCard(artist)));
             });
             artistPanel.classList.add('visible');
+            document.getElementById('rankingsSection').style.display = 'none';
         }
 
         function closeArtistPanel() {
@@ -1648,6 +1650,7 @@
             selectedGenre = null;
             selectedSubgenre = null;
             renderGenreGroups();
+            document.getElementById('rankingsSection').style.display = 'block';
         }
 
         yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
