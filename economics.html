@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics | Guapa</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="economics.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="guapa_logo_dark.png" alt="Guapa" class="logo-img">
+            <span class="logo-text" style="font-size: 1.8rem;">GUAPA <span style="font-size: 0.6rem; font-weight: 400; vertical-align: middle;">inc</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="music.html">Music</a>
+            <a href="coffee.html">Coffee</a>
+            <a href="economics.html">Economics</a>
+            <a href="index.html#shop">Photography</a>
+            <a href="index.html#about">About</a>
+        </div>
+        <div class="nav-actions">
+            <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener" class="nav-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="shop.html" class="nav-cart">Shop →</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <main class="econ-page">
+        <header class="econ-header">
+            <div class="econ-header-text">
+                <h1>Economics</h1>
+                <p>Global data releases, tracked and visualized</p>
+            </div>
+            <span class="live-badge"><span class="live-dot"></span> Live Data</span>
+        </header>
+
+        <div class="filter-bar">
+            <div class="filter-bar-inner">
+                <span class="filter-label">Countries</span>
+                <div class="filter-divider"></div>
+                <div class="country-chips" id="countryChips"></div>
+                <div class="filter-actions">
+                    <button class="filter-btn" id="selectAllBtn">All</button>
+                    <button class="filter-btn" id="clearAllBtn">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="econ-main">
+            <div class="econ-layout">
+                <div class="econ-charts" id="econCharts"></div>
+                <aside class="upcoming-panel" id="upcomingPanel"></aside>
+            </div>
+        </div>
+    </main>
+
+    <div class="chart-tooltip" id="chartTooltip">
+        <div class="tt-date"></div>
+        <div class="tt-val"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="lockup_light.png" alt="Guapa" class="footer-logo">
+                    <p>A creative collective for friends who make things.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <a href="shop.html">All Products</a>
+                    <a href="#">Photography</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <a href="index.html#about">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Follow</h4>
+                    <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Guapa Collective</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    var countries = [
+        { id: 'us', name: 'United States', flag: '🇺🇸', short: 'US' },
+        { id: 'gb', name: 'United Kingdom', flag: '🇬🇧', short: 'UK' },
+        { id: 'eu', name: 'Eurozone', flag: '🇪🇺', short: 'EU' },
+        { id: 'de', name: 'Germany', flag: '🇩🇪', short: 'DE' },
+        { id: 'fr', name: 'France', flag: '🇫🇷', short: 'FR' },
+        { id: 'jp', name: 'Japan', flag: '🇯🇵', short: 'JP' },
+        { id: 'cn', name: 'China', flag: '🇨🇳', short: 'CN' },
+        { id: 'ca', name: 'Canada', flag: '🇨🇦', short: 'CA' },
+        { id: 'au', name: 'Australia', flag: '🇦🇺', short: 'AU' },
+        { id: 'kr', name: 'South Korea', flag: '🇰🇷', short: 'KR' },
+        { id: 'in', name: 'India', flag: '🇮🇳', short: 'IN' },
+        { id: 'br', name: 'Brazil', flag: '🇧🇷', short: 'BR' },
+        { id: 'mx', name: 'Mexico', flag: '🇲🇽', short: 'MX' },
+        { id: 'ch', name: 'Switzerland', flag: '🇨🇭', short: 'CH' },
+        { id: 'se', name: 'Sweden', flag: '🇸🇪', short: 'SE' },
+        { id: 'no', name: 'Norway', flag: '🇳🇴', short: 'NO' },
+        { id: 'nz', name: 'New Zealand', flag: '🇳🇿', short: 'NZ' },
+        { id: 'sg', name: 'Singapore', flag: '🇸🇬', short: 'SG' },
+    ];
+
+    var categories = [
+        { id: 'growth', name: 'Growth & Output', icon: '↗', cssClass: 'cat-growth' },
+        { id: 'inflation', name: 'Inflation & Prices', icon: '🔥', cssClass: 'cat-inflation' },
+        { id: 'labor', name: 'Labor Market', icon: '👷', cssClass: 'cat-labor' },
+        { id: 'consumption', name: 'Consumption & Retail', icon: '🛒', cssClass: 'cat-consumption' },
+        { id: 'housing', name: 'Housing & Construction', icon: '🏗', cssClass: 'cat-housing' },
+        { id: 'sentiment', name: 'Confidence & Sentiment', icon: '📊', cssClass: 'cat-sentiment' },
+        { id: 'trade', name: 'Trade & Balance', icon: '🚢', cssClass: 'cat-trade' },
+        { id: 'monetary', name: 'Monetary Policy', icon: '🏦', cssClass: 'cat-monetary' },
+    ];
+
+    function genSeries(n, base, vol, trend) {
+        trend = trend || 0; var pts = [], val = base;
+        for (var i = 0; i < n; i++) { val += (Math.random() - 0.48) * vol + trend; pts.push(Math.round(val * 100) / 100); }
+        return pts;
+    }
+    function genDate(mb, n) {
+        var dates = [], now = new Date(2026, 1, 1);
+        for (var i = n - 1; i >= 0; i--) { var d = new Date(now); d.setMonth(d.getMonth() - Math.round(i * mb / n)); dates.push(d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })); }
+        return dates;
+    }
+
+    var accentColors = { growth:'#7ec89b', inflation:'#d47878', labor:'#88a8d4', consumption:'#d4a056', housing:'#b088d4', sentiment:'#e8a0b0', trade:'#f0c014', monetary:'#88a8d4' };
+
+    var indicators = [
+        { id:'gdp_us', name:'GDP Growth (Q/Q)', country:'us', category:'growth', value:'3.2%', change:'+0.4', dir:'up', period:'Q4 2025', source:'BEA', freq:'Quarterly', next:'Mar 27', series:genSeries(20,2.5,0.6,0.04), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_gb', name:'GDP Growth (Q/Q)', country:'gb', category:'growth', value:'0.3%', change:'+0.1', dir:'up', period:'Q4 2025', source:'ONS', freq:'Quarterly', next:'Mar 15', series:genSeries(20,0.4,0.4,-0.01), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_eu', name:'GDP Growth (Q/Q)', country:'eu', category:'growth', value:'0.2%', change:'-0.1', dir:'down', period:'Q4 2025', source:'Eurostat', freq:'Quarterly', next:'Mar 14', series:genSeries(20,0.3,0.3,-0.01), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_jp', name:'GDP Growth (Q/Q)', country:'jp', category:'growth', value:'0.5%', change:'+0.3', dir:'up', period:'Q4 2025', source:'Cabinet Office', freq:'Quarterly', next:'Mar 10', series:genSeries(20,0.2,0.5,0.02), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_cn', name:'GDP Growth (Y/Y)', country:'cn', category:'growth', value:'5.0%', change:'-0.2', dir:'down', period:'Q4 2025', source:'NBS', freq:'Quarterly', next:'Apr 16', series:genSeries(20,5.2,0.4,-0.02), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_de', name:'GDP Growth (Q/Q)', country:'de', category:'growth', value:'-0.1%', change:'-0.3', dir:'down', period:'Q4 2025', source:'Destatis', freq:'Quarterly', next:'Feb 25', series:genSeries(20,0.1,0.4,-0.03), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_ca', name:'GDP Growth (Q/Q)', country:'ca', category:'growth', value:'1.5%', change:'+0.2', dir:'up', period:'Q4 2025', source:'StatCan', freq:'Quarterly', next:'Feb 28', series:genSeries(20,1.2,0.5,0.01), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_in', name:'GDP Growth (Y/Y)', country:'in', category:'growth', value:'6.7%', change:'+0.2', dir:'up', period:'Q3 FY26', source:'MoSPI', freq:'Quarterly', next:'Feb 28', series:genSeries(20,6.5,0.8,0.02), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'gdp_br', name:'GDP Growth (Q/Q)', country:'br', category:'growth', value:'0.9%', change:'+0.1', dir:'up', period:'Q4 2025', source:'IBGE', freq:'Quarterly', next:'Mar 4', series:genSeries(20,0.7,0.5,0.01), dates:genDate(60,20), unit:'%', impact:3 },
+        { id:'pmi_us', name:'Manufacturing PMI', country:'us', category:'growth', value:'51.2', change:'+1.4', dir:'up', period:'Jan 2026', source:'ISM', freq:'Monthly', next:'Mar 3', series:genSeries(36,50,2.5,0.03), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'pmi_eu', name:'Manufacturing PMI', country:'eu', category:'growth', value:'46.6', change:'+0.7', dir:'up', period:'Jan 2026', source:'S&P Global', freq:'Monthly', next:'Mar 3', series:genSeries(36,47,2,-0.02), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'pmi_cn', name:'Manufacturing PMI', country:'cn', category:'growth', value:'50.1', change:'+0.2', dir:'up', period:'Jan 2026', source:'NBS', freq:'Monthly', next:'Mar 1', series:genSeries(36,49.5,1.5,0.01), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'pmi_jp', name:'Manufacturing PMI', country:'jp', category:'growth', value:'48.7', change:'-0.5', dir:'down', period:'Jan 2026', source:'Jibun Bank', freq:'Monthly', next:'Mar 3', series:genSeries(36,49,2,-0.03), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'ip_de', name:'Industrial Production', country:'de', category:'growth', value:'-1.5%', change:'-0.8', dir:'down', period:'Dec 2025', source:'Destatis', freq:'Monthly', next:'Mar 7', series:genSeries(36,-0.2,1.5,-0.04), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'cpi_us', name:'CPI (Y/Y)', country:'us', category:'inflation', value:'2.9%', change:'+0.1', dir:'up', period:'Jan 2026', source:'BLS', freq:'Monthly', next:'Mar 12', series:genSeries(36,3.2,0.3,-0.02), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'pce_us', name:'PCE Core (Y/Y)', country:'us', category:'inflation', value:'2.8%', change:'0.0', dir:'flat', period:'Dec 2025', source:'BEA', freq:'Monthly', next:'Feb 28', series:genSeries(36,3.0,0.2,-0.02), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'cpi_gb', name:'CPI (Y/Y)', country:'gb', category:'inflation', value:'3.0%', change:'+0.3', dir:'up', period:'Jan 2026', source:'ONS', freq:'Monthly', next:'Mar 19', series:genSeries(36,3.5,0.5,-0.03), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'cpi_eu', name:'HICP (Y/Y)', country:'eu', category:'inflation', value:'2.4%', change:'+0.2', dir:'up', period:'Jan 2026', source:'Eurostat', freq:'Monthly', next:'Mar 3', series:genSeries(36,2.8,0.4,-0.02), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'cpi_jp', name:'CPI (Y/Y)', country:'jp', category:'inflation', value:'3.6%', change:'+0.3', dir:'up', period:'Jan 2026', source:'MIC', freq:'Monthly', next:'Mar 21', series:genSeries(36,2.5,0.5,0.03), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'cpi_cn', name:'CPI (Y/Y)', country:'cn', category:'inflation', value:'0.1%', change:'-0.1', dir:'down', period:'Jan 2026', source:'NBS', freq:'Monthly', next:'Mar 9', series:genSeries(36,0.5,0.4,-0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'ppi_us', name:'PPI (Y/Y)', country:'us', category:'inflation', value:'3.3%', change:'+0.2', dir:'up', period:'Jan 2026', source:'BLS', freq:'Monthly', next:'Mar 13', series:genSeries(36,2.0,0.8,0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'cpi_in', name:'CPI (Y/Y)', country:'in', category:'inflation', value:'5.2%', change:'+0.3', dir:'up', period:'Jan 2026', source:'MoSPI', freq:'Monthly', next:'Mar 12', series:genSeries(36,5.0,0.7,0.01), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'cpi_br', name:'IPCA (Y/Y)', country:'br', category:'inflation', value:'4.6%', change:'+0.1', dir:'up', period:'Jan 2026', source:'IBGE', freq:'Monthly', next:'Mar 12', series:genSeries(36,4.2,0.5,0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'nfp_us', name:'Non-Farm Payrolls', country:'us', category:'labor', value:'256K', change:'+89K', dir:'up', period:'Jan 2026', source:'BLS', freq:'Monthly', next:'Mar 7', series:genSeries(36,200,60,1), dates:genDate(36,36), unit:'K', impact:3 },
+        { id:'unemp_us', name:'Unemployment Rate', country:'us', category:'labor', value:'4.1%', change:'0.0', dir:'flat', period:'Jan 2026', source:'BLS', freq:'Monthly', next:'Mar 7', series:genSeries(36,3.8,0.15,0.005), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'claims_us', name:'Initial Jobless Claims', country:'us', category:'labor', value:'219K', change:'-8K', dir:'down', period:'Feb 1', source:'DOL', freq:'Weekly', next:'Feb 13', series:genSeries(52,220,15,0), dates:genDate(12,52), unit:'K', impact:2 },
+        { id:'unemp_gb', name:'Unemployment Rate', country:'gb', category:'labor', value:'4.4%', change:'+0.1', dir:'up', period:'Dec 2025', source:'ONS', freq:'Monthly', next:'Mar 18', series:genSeries(36,4.0,0.15,0.01), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'unemp_eu', name:'Unemployment Rate', country:'eu', category:'labor', value:'6.3%', change:'-0.1', dir:'down', period:'Dec 2025', source:'Eurostat', freq:'Monthly', next:'Mar 3', series:genSeries(36,6.6,0.15,-0.01), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'unemp_jp', name:'Unemployment Rate', country:'jp', category:'labor', value:'2.4%', change:'0.0', dir:'flat', period:'Dec 2025', source:'MIC', freq:'Monthly', next:'Feb 28', series:genSeries(36,2.5,0.1,-0.005), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'wage_us', name:'Avg Hourly Earnings (Y/Y)', country:'us', category:'labor', value:'4.1%', change:'+0.2', dir:'up', period:'Jan 2026', source:'BLS', freq:'Monthly', next:'Mar 7', series:genSeries(36,4.5,0.3,-0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'unemp_ca', name:'Unemployment Rate', country:'ca', category:'labor', value:'6.7%', change:'+0.2', dir:'up', period:'Jan 2026', source:'StatCan', freq:'Monthly', next:'Mar 14', series:genSeries(36,5.8,0.2,0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'unemp_au', name:'Unemployment Rate', country:'au', category:'labor', value:'4.0%', change:'-0.1', dir:'down', period:'Jan 2026', source:'ABS', freq:'Monthly', next:'Mar 20', series:genSeries(36,3.8,0.15,0.01), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'retail_us', name:'Retail Sales (M/M)', country:'us', category:'consumption', value:'0.4%', change:'+0.8', dir:'up', period:'Jan 2026', source:'Census', freq:'Monthly', next:'Mar 14', series:genSeries(36,0.3,0.6,0), dates:genDate(36,36), unit:'%', impact:3 },
+        { id:'retail_gb', name:'Retail Sales (M/M)', country:'gb', category:'consumption', value:'-0.3%', change:'-0.6', dir:'down', period:'Jan 2026', source:'ONS', freq:'Monthly', next:'Mar 21', series:genSeries(36,0.1,0.5,-0.01), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'retail_cn', name:'Retail Sales (Y/Y)', country:'cn', category:'consumption', value:'3.7%', change:'+0.5', dir:'up', period:'Dec 2025', source:'NBS', freq:'Monthly', next:'Mar 17', series:genSeries(36,4.0,1.5,-0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'retail_de', name:'Retail Sales (M/M)', country:'de', category:'consumption', value:'-1.6%', change:'-2.1', dir:'down', period:'Dec 2025', source:'Destatis', freq:'Monthly', next:'Mar 5', series:genSeries(36,-0.2,1.0,-0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'cc_us', name:'Consumer Credit', country:'us', category:'consumption', value:'$23.8B', change:'+6.8', dir:'up', period:'Dec 2025', source:'Fed', freq:'Monthly', next:'Mar 7', series:genSeries(36,18,8,0.1), dates:genDate(36,36), unit:'B', impact:1 },
+        { id:'retail_jp', name:'Retail Sales (Y/Y)', country:'jp', category:'consumption', value:'3.4%', change:'+0.7', dir:'up', period:'Dec 2025', source:'METI', freq:'Monthly', next:'Feb 28', series:genSeries(36,2.5,1.2,0.02), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'housing_us', name:'Housing Starts', country:'us', category:'housing', value:'1.50M', change:'+4.0%', dir:'up', period:'Dec 2025', source:'Census', freq:'Monthly', next:'Feb 19', series:genSeries(36,1.4,0.1,0.003), dates:genDate(36,36), unit:'M', impact:2 },
+        { id:'newhome_us', name:'New Home Sales', country:'us', category:'housing', value:'698K', change:'+3.6%', dir:'up', period:'Dec 2025', source:'Census', freq:'Monthly', next:'Feb 26', series:genSeries(36,650,40,1), dates:genDate(36,36), unit:'K', impact:2 },
+        { id:'cshpi_us', name:'Case-Shiller HPI (Y/Y)', country:'us', category:'housing', value:'4.3%', change:'-0.5', dir:'down', period:'Nov 2025', source:'S&P', freq:'Monthly', next:'Feb 25', series:genSeries(36,5.0,0.8,-0.03), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'house_gb', name:'House Prices (Y/Y)', country:'gb', category:'housing', value:'4.6%', change:'+0.8', dir:'up', period:'Jan 2026', source:'Nationwide', freq:'Monthly', next:'Mar 3', series:genSeries(36,2.0,1.5,0.06), dates:genDate(36,36), unit:'%', impact:2 },
+        { id:'umich_us', name:'Consumer Sentiment', country:'us', category:'sentiment', value:'71.1', change:'-2.0', dir:'down', period:'Feb 2026', source:'UMich', freq:'Monthly', next:'Mar 14', series:genSeries(36,68,4,0.05), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'confboard_us', name:'Consumer Confidence', country:'us', category:'sentiment', value:'104.1', change:'-2.2', dir:'down', period:'Jan 2026', source:'Conference Board', freq:'Monthly', next:'Feb 25', series:genSeries(36,102,5,0.05), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'zew_de', name:'ZEW Economic Sentiment', country:'de', category:'sentiment', value:'10.3', change:'+5.2', dir:'up', period:'Feb 2026', source:'ZEW', freq:'Monthly', next:'Mar 18', series:genSeries(36,5,10,0.1), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'ifo_de', name:'Ifo Business Climate', country:'de', category:'sentiment', value:'85.1', change:'+0.6', dir:'up', period:'Jan 2026', source:'Ifo', freq:'Monthly', next:'Feb 24', series:genSeries(36,86,2.5,-0.02), dates:genDate(36,36), unit:'', impact:2 },
+        { id:'tankan_jp', name:'Tankan Survey', country:'jp', category:'sentiment', value:'14', change:'+1', dir:'up', period:'Q4 2025', source:'BoJ', freq:'Quarterly', next:'Apr 1', series:genSeries(20,10,4,0.1), dates:genDate(60,20), unit:'', impact:2 },
+        { id:'gfk_gb', name:'GfK Consumer Confidence', country:'gb', category:'sentiment', value:'-22', change:'+2', dir:'up', period:'Feb 2026', source:'GfK', freq:'Monthly', next:'Mar 21', series:genSeries(36,-25,3,0.05), dates:genDate(36,36), unit:'', impact:1 },
+        { id:'trade_us', name:'Trade Balance', country:'us', category:'trade', value:'-$78.2B', change:'-5.1', dir:'down', period:'Dec 2025', source:'Census', freq:'Monthly', next:'Mar 6', series:genSeries(36,-68,6,-0.3), dates:genDate(36,36), unit:'B', impact:2 },
+        { id:'trade_cn', name:'Trade Balance', country:'cn', category:'trade', value:'$104.8B', change:'+16.2', dir:'up', period:'Jan 2026', source:'Customs', freq:'Monthly', next:'Mar 7', series:genSeries(36,75,20,0.5), dates:genDate(36,36), unit:'B', impact:2 },
+        { id:'trade_de', name:'Trade Balance', country:'de', category:'trade', value:'€20.7B', change:'+1.2', dir:'up', period:'Dec 2025', source:'Destatis', freq:'Monthly', next:'Mar 7', series:genSeries(36,18,4,0.05), dates:genDate(36,36), unit:'B', impact:1 },
+        { id:'trade_jp', name:'Trade Balance', country:'jp', category:'trade', value:'-¥1.77T', change:'-0.8', dir:'down', period:'Jan 2026', source:'MoF', freq:'Monthly', next:'Mar 19', series:genSeries(36,-0.5,1.2,-0.03), dates:genDate(36,36), unit:'T', impact:2 },
+        { id:'ca_us', name:'Current Account', country:'us', category:'trade', value:'-$310.9B', change:'-18.4', dir:'down', period:'Q3 2025', source:'BEA', freq:'Quarterly', next:'Mar 26', series:genSeries(20,-250,30,-2), dates:genDate(60,20), unit:'B', impact:1 },
+        { id:'rate_us', name:'Fed Funds Rate', country:'us', category:'monetary', value:'4.50%', change:'-0.25', dir:'down', period:'Jan 2026', source:'Federal Reserve', freq:'Meeting', next:'Mar 19', series:[0.25,0.25,0.25,0.25,0.50,1.00,1.75,2.50,3.25,4.00,4.50,5.00,5.25,5.50,5.50,5.50,5.50,5.25,5.00,4.75,4.50], dates:genDate(60,21), unit:'%', impact:3 },
+        { id:'rate_gb', name:'Bank Rate', country:'gb', category:'monetary', value:'4.50%', change:'-0.25', dir:'down', period:'Feb 2026', source:'Bank of England', freq:'Meeting', next:'Mar 20', series:[0.10,0.25,0.50,1.00,1.75,2.25,3.50,4.00,4.50,5.00,5.25,5.25,5.25,5.25,5.00,5.00,4.75,4.75,4.50,4.50,4.50], dates:genDate(60,21), unit:'%', impact:3 },
+        { id:'rate_eu', name:'ECB Deposit Rate', country:'eu', category:'monetary', value:'2.75%', change:'-0.25', dir:'down', period:'Jan 2026', source:'ECB', freq:'Meeting', next:'Mar 6', series:[-0.50,-0.50,0,0.75,1.50,2.00,2.50,3.00,3.50,3.75,4.00,4.00,4.00,3.75,3.50,3.25,3.00,2.75,2.75,2.75,2.75], dates:genDate(60,21), unit:'%', impact:3 },
+        { id:'rate_jp', name:'Policy Rate', country:'jp', category:'monetary', value:'0.50%', change:'+0.25', dir:'up', period:'Jan 2026', source:'Bank of Japan', freq:'Meeting', next:'Mar 14', series:[-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,0,0,0.10,0.25,0.25,0.50,0.50], dates:genDate(60,21), unit:'%', impact:3 },
+        { id:'rate_ca', name:'Overnight Rate', country:'ca', category:'monetary', value:'3.00%', change:'-0.25', dir:'down', period:'Jan 2026', source:'Bank of Canada', freq:'Meeting', next:'Mar 12', series:[0.25,0.25,0.50,1.00,2.50,3.25,3.75,4.25,4.50,5.00,5.00,5.00,5.00,4.75,4.50,4.25,3.75,3.50,3.25,3.00,3.00], dates:genDate(60,21), unit:'%', impact:3 },
+        { id:'rate_au', name:'Cash Rate', country:'au', category:'monetary', value:'4.10%', change:'-0.25', dir:'down', period:'Feb 2026', source:'RBA', freq:'Meeting', next:'Apr 1', series:[0.10,0.10,0.10,0.35,0.85,1.35,2.35,3.10,3.60,4.10,4.35,4.35,4.35,4.35,4.35,4.35,4.35,4.35,4.35,4.35,4.10], dates:genDate(60,21), unit:'%', impact:3 },
+    ];
+
+    var activeCountries = new Set(['us','gb','eu','jp','cn','de']);
+
+    function renderCountryChips() {
+        var el = document.getElementById('countryChips');
+        el.innerHTML = countries.map(function(c) { return '<button class="country-chip '+(activeCountries.has(c.id)?'active':'')+'" data-country="'+c.id+'"><span class="flag">'+c.flag+'</span> '+c.short+'</button>'; }).join('');
+        el.querySelectorAll('.country-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() { var id = chip.dataset.country; if(activeCountries.has(id)) activeCountries.delete(id); else activeCountries.add(id); renderCountryChips(); renderCharts(); renderUpcoming(); });
+        });
+    }
+
+    function drawChart(canvas, series, color) {
+        var ctx = canvas.getContext('2d'), dpr = window.devicePixelRatio||1, rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width*dpr; canvas.height = rect.height*dpr; ctx.scale(dpr,dpr);
+        var w=rect.width, h=rect.height, pad={top:4,bottom:4,left:0,right:0};
+        var plotW=w-pad.left-pad.right, plotH=h-pad.top-pad.bottom;
+        var min=Math.min.apply(null,series), max=Math.max.apply(null,series), range=max-min||1;
+        var points = series.map(function(val,i){ return {x:pad.left+(i/(series.length-1))*plotW, y:pad.top+plotH-((val-min)/range)*plotH}; });
+        var grad = ctx.createLinearGradient(0,pad.top,0,h); grad.addColorStop(0,color+'14'); grad.addColorStop(1,color+'00');
+        ctx.beginPath(); ctx.moveTo(points[0].x,h); points.forEach(function(p){ctx.lineTo(p.x,p.y);}); ctx.lineTo(points[points.length-1].x,h); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+        ctx.beginPath(); ctx.moveTo(points[0].x,points[0].y);
+        for(var i=1;i<points.length;i++){var cpx=(points[i-1].x+points[i].x)/2; ctx.bezierCurveTo(cpx,points[i-1].y,cpx,points[i].y,points[i].x,points[i].y);}
+        ctx.strokeStyle=color; ctx.lineWidth=1.8; ctx.stroke();
+        var last=points[points.length-1]; ctx.beginPath(); ctx.arc(last.x,last.y,3,0,Math.PI*2); ctx.fillStyle=color; ctx.fill();
+        ctx.beginPath(); ctx.arc(last.x,last.y,5,0,Math.PI*2); ctx.strokeStyle=color; ctx.lineWidth=1; ctx.globalAlpha=0.3; ctx.stroke(); ctx.globalAlpha=1;
+        if(min<0&&max>0){var zy=pad.top+plotH-((0-min)/range)*plotH; ctx.beginPath(); ctx.setLineDash([3,3]); ctx.moveTo(pad.left,zy); ctx.lineTo(w-pad.right,zy); ctx.strokeStyle='#444'; ctx.lineWidth=0.5; ctx.stroke(); ctx.setLineDash([]);}
+    }
+
+    function renderCharts() {
+        var el = document.getElementById('econCharts');
+        var filtered = indicators.filter(function(ind){return activeCountries.has(ind.country);});
+        if(!filtered.length){ el.innerHTML='<div class="econ-empty"><div class="icon">🌍</div><p>Select one or more countries to view economic data releases</p></div>'; return; }
+        var html='';
+        categories.forEach(function(cat){
+            var ci=filtered.filter(function(ind){return ind.category===cat.id;});
+            if(!ci.length) return;
+            html+='<div class="category-section '+cat.cssClass+'"><div class="category-header"><div class="category-icon">'+cat.icon+'</div><span class="category-title">'+cat.name+'</span><span class="category-count">'+ci.length+' indicator'+(ci.length>1?'s':'')+'</span></div><div class="chart-grid">';
+            ci.forEach(function(ind){
+                var c=countries.find(function(x){return x.id===ind.country;}); var clr=accentColors[ind.category];
+                html+='<div class="chart-card" style="--accent-color:'+clr+'" data-indicator="'+ind.id+'"><div class="chart-card-header"><span class="chart-title">'+ind.name+'</span><span class="chart-country-tag"><span class="flag">'+c.flag+'</span>'+c.short+'</span></div><div class="chart-meta"><span class="chart-value">'+ind.value+'</span><span class="chart-change '+ind.dir+'">'+(ind.dir==='up'?'▲':ind.dir==='down'?'▼':'—')+' '+ind.change+'</span><span class="chart-period">'+ind.period+'</span></div><div class="chart-canvas-wrap"><canvas data-series="'+ind.id+'"></canvas></div><div class="chart-footer"><span class="chart-source">'+ind.source+'</span><span class="chart-freq">'+ind.freq+'</span><span class="chart-next">Next: '+ind.next+'</span></div></div>';
+            });
+            html+='</div></div>';
+        });
+        el.innerHTML=html;
+        requestAnimationFrame(function(){
+            el.querySelectorAll('canvas[data-series]').forEach(function(canvas){
+                var indId=canvas.dataset.series, ind=indicators.find(function(x){return x.id===indId;});
+                if(!ind) return; drawChart(canvas,ind.series,accentColors[ind.category]);
+                canvas.addEventListener('mousemove',function(e){ var rect=canvas.getBoundingClientRect(), x=e.clientX-rect.left, idx=Math.round((x/rect.width)*(ind.series.length-1)); if(idx>=0&&idx<ind.series.length){var tt=document.getElementById('chartTooltip'); tt.querySelector('.tt-date').textContent=ind.dates[idx]; tt.querySelector('.tt-val').textContent=ind.series[idx].toFixed(1)+(ind.unit==='%'?'%':ind.unit?' '+ind.unit:''); tt.style.left=(e.clientX+12)+'px'; tt.style.top=(e.clientY-30)+'px'; tt.classList.add('visible');} });
+                canvas.addEventListener('mouseleave',function(){document.getElementById('chartTooltip').classList.remove('visible');});
+            });
+        });
+    }
+
+    function renderUpcoming() {
+        var panel=document.getElementById('upcomingPanel'), filtered=indicators.filter(function(ind){return activeCountries.has(ind.country);});
+        var months={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+        var upcoming=filtered.slice().sort(function(a,b){var pa=a.next.split(' '),pb=b.next.split(' '); return new Date(2026,months[pa[0]]||1,parseInt(pa[1])||1)-new Date(2026,months[pb[0]]||1,parseInt(pb[1])||1);}).slice(0,20);
+        var html='<div class="upcoming-header">Upcoming Releases</div>';
+        upcoming.forEach(function(ind){
+            var c=countries.find(function(x){return x.id===ind.country;}), parts=ind.next.split(' ');
+            html+='<div class="upcoming-item"><div class="upcoming-date"><div class="upcoming-day">'+parts[1]+'</div><div class="upcoming-month">'+parts[0]+'</div></div><div class="upcoming-info"><div class="upcoming-name">'+ind.name+'</div><div class="upcoming-country">'+c.flag+' '+c.name+'</div></div><div class="upcoming-impact">';
+            for(var n=1;n<=3;n++) html+='<div class="impact-dot'+(n<=ind.impact?' filled':'')+(ind.impact===3&&n<=ind.impact?' high':'')+'"></div>';
+            html+='</div></div>';
+        });
+        panel.innerHTML=html;
+    }
+
+    document.getElementById('selectAllBtn').addEventListener('click',function(){activeCountries=new Set(countries.map(function(c){return c.id;})); renderCountryChips(); renderCharts(); renderUpcoming();});
+    document.getElementById('clearAllBtn').addEventListener('click',function(){activeCountries.clear(); renderCountryChips(); renderCharts(); renderUpcoming();});
+
+    var resizeTimer; window.addEventListener('resize',function(){clearTimeout(resizeTimer); resizeTimer=setTimeout(function(){document.querySelectorAll('canvas[data-series]').forEach(function(canvas){var indId=canvas.dataset.series,ind=indicators.find(function(x){return x.id===indId;}); if(ind) drawChart(canvas,ind.series,accentColors[ind.category]);});},150);});
+
+    var navToggle=document.querySelector('.nav-toggle'), navLinks=document.querySelector('.nav-links');
+    navToggle.addEventListener('click',function(){navLinks.classList.toggle('nav-links--open'); navToggle.classList.toggle('nav-toggle--open');});
+
+    renderCountryChips(); renderCharts(); renderUpcoming();
+    </script>
+</body>
+</html>
