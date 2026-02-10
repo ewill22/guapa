@@ -710,8 +710,8 @@
         <div class="nav-links">
             <a href="music.html">Music</a>
             <a href="coffee.html">Coffee</a>
-            <a href="economics.html">Economics</a>
-            <a href="photography.html">Photography</a>
+            <a href="index.html#shop">Data</a>
+            <a href="index.html#shop">Photography</a>
             <a href="index.html#about">About</a>
         </div>
 
@@ -1464,18 +1464,6 @@
             { id: 'kraftwerk', name: 'Kraftwerk', genres: ['electronic'], subgenres: ['synth', 'electro'], score: 93, active: [1970, 2025], albums: [{title: 'Trans-Europe Express', year: 1977}] },
         ];
 
-        // Genre origin stories for contextual messaging
-        const genreOrigins = {
-            pop: { emergeYear: 1960, story: "Pop music has been around since the start of our timeline, evolving from Tin Pan Alley and early rock and roll." },
-            rock: { emergeYear: 1960, story: "Rock emerged in the late 1950s from blues, country, and R&B. By 1960, it was already transforming popular music." },
-            soul: { emergeYear: 1960, story: "Soul music grew from gospel and R&B in the late 1950s, reaching full form with artists like Ray Charles and Sam Cooke." },
-            jazz: { emergeYear: 1960, story: "Jazz had been thriving since the early 1900s. By 1960, bebop was established and new forms like free jazz were emerging." },
-            hiphop: { emergeYear: 1973, story: "Hip hop wouldn't exist until 1973, when DJ Kool Herc threw a back-to-school party in the Bronx and isolated the 'break' — the instrumental section where dancers went off. From that moment, hip hop was born." },
-            electronic: { emergeYear: 1970, story: "Electronic music as a distinct genre emerged around 1970 with Kraftwerk and other experimenters using synthesizers. Before this, electronic sounds were mostly confined to academic studios and film scores." },
-            country: { emergeYear: 1960, story: "Country music has deep roots in American folk traditions, well established by the 1960s through the Grand Ole Opry and artists like Hank Williams." },
-            folk: { emergeYear: 1960, story: "Folk music traditions stretch back centuries. The 1960s folk revival was already underway with artists like Pete Seeger paving the way." }
-        };
-
         const yearSlider = document.getElementById('yearSlider');
         const currentYearDisplay = document.getElementById('currentYear');
         const genreGroups = document.getElementById('genreGroups');
@@ -1633,7 +1621,6 @@
             albumGrid.innerHTML = '';
             Object.values(subgenre.artists).forEach(artist => albumGrid.appendChild(makeArtistCard(artist)));
             artistPanel.classList.add('visible');
-            document.getElementById('rankingsSection').style.display = 'none';
         }
 
         function showGenrePanel(genreId) {
@@ -1644,37 +1631,16 @@
             document.getElementById('artistSubgenre').textContent = '';
             const albumGrid = document.getElementById('albumGrid');
             albumGrid.innerHTML = '';
-            
-            // Check if any subgenres are visible in this year
-            const visibleSubgenres = Object.entries(genre.subgenres).filter(([subId, subgenre]) => 
-                subgenre.status[currentYear] !== 'hidden'
-            );
-            
-            if (visibleSubgenres.length === 0) {
-                // No subgenres visible - show origin story
-                const origin = genreOrigins[genreId];
-                const originDiv = document.createElement('div');
-                originDiv.style.cssText = 'padding: 40px 30px; color: var(--gray-400); font-size: 0.9rem; line-height: 1.6; font-style: italic; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 200px;';
-                if (origin && currentYear < origin.emergeYear) {
-                    originDiv.innerHTML = `<p style="margin-bottom: 12px; color: var(--yellow); font-size: 1.1rem;">${genre.name} doesn't exist yet in ${currentYear}.</p><p style="max-width: 500px;">${origin.story}</p><p style="margin-top: 16px; color: var(--gray-500);">Move the timeline to <strong style="color: var(--pink);">${origin.emergeYear}</strong> or later to explore this genre.</p>`;
-                } else {
-                    originDiv.innerHTML = `<p>No ${genre.name.toLowerCase()} subgenres active in ${currentYear}. Try a different year.</p>`;
-                }
-                albumGrid.appendChild(originDiv);
-            } else {
-                // Show visible subgenres
-                visibleSubgenres.forEach(([subId, subgenre]) => {
-                    const status = subgenre.status[currentYear];
-                    const subgenreHeader = document.createElement('div');
-                    subgenreHeader.style.cssText = 'grid-column: 1 / -1; padding: 12px 0 8px 0; border-bottom: 1px solid var(--gray-800); margin-bottom: 8px;';
-                    subgenreHeader.innerHTML = `<div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2rem;">${subgenre.icon}</span><span style="font-size: 0.85rem; font-weight: 600; color: var(--pink);">${subgenre.name}</span><span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status} · ${currentYear}</span></div>`;
-                    albumGrid.appendChild(subgenreHeader);
-                    Object.values(subgenre.artists).forEach(artist => albumGrid.appendChild(makeArtistCard(artist)));
-                });
-            }
-            
+            Object.entries(genre.subgenres).forEach(([subId, subgenre]) => {
+                if (subgenre.status[currentYear] === 'hidden') return;
+                const status = subgenre.status[currentYear];
+                const subgenreHeader = document.createElement('div');
+                subgenreHeader.style.cssText = 'grid-column: 1 / -1; padding: 12px 0 8px 0; border-bottom: 1px solid var(--gray-800); margin-bottom: 8px;';
+                subgenreHeader.innerHTML = `<div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2rem;">${subgenre.icon}</span><span style="font-size: 0.85rem; font-weight: 600; color: var(--pink);">${subgenre.name}</span><span style="font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase;">${status} · ${currentYear}</span></div>`;
+                albumGrid.appendChild(subgenreHeader);
+                Object.values(subgenre.artists).forEach(artist => albumGrid.appendChild(makeArtistCard(artist)));
+            });
             artistPanel.classList.add('visible');
-            document.getElementById('rankingsSection').style.display = 'none';
         }
 
         function closeArtistPanel() {
@@ -1682,7 +1648,6 @@
             selectedGenre = null;
             selectedSubgenre = null;
             renderGenreGroups();
-            document.getElementById('rankingsSection').style.display = 'block';
         }
 
         yearSlider.addEventListener('input', (e) => updateYear(e.target.value));

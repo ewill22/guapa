@@ -330,8 +330,8 @@
         <div class="nav-links">
             <a href="music.html">Music</a>
             <a href="coffee.html">Coffee</a>
-            <a href="economics.html">Economics</a>
-            <a href="photography.html">Photography</a>
+            <a href="index.html#shop">Data</a>
+            <a href="index.html#shop">Photography</a>
             <a href="index.html#about">About</a>
         </div>
 
@@ -448,65 +448,12 @@
 
     <script>
         // Roasters data with founding years
-        const roasters = [
-            // 1960s
-            { name: "Peet's Coffee", year: 1966, region: "usa", location: "Berkeley, CA", icon: "☕" },
-            
-            // 1970s
-            { name: "Starbucks", year: 1971, region: "usa", location: "Seattle, WA", icon: "⭐" },
-            { name: "Coffee Connection", year: 1975, region: "usa", location: "Boston, MA", icon: "🔗" },
-            { name: "Allegro Coffee", year: 1977, region: "usa", location: "Boulder, CO", icon: "🏔️" },
-            { name: "Monmouth Coffee", year: 1978, region: "europe", location: "London, UK", icon: "🇬🇧" },
-            
-            // 1980s
-            { name: "Peerless Coffee", year: 1924, region: "usa", location: "Oakland, CA", icon: "🏆" },
-            { name: "Equator Coffees", year: 1995, region: "usa", location: "San Rafael, CA", icon: "🌍" },
-            
-            // 1990s
-            { name: "Counter Culture", year: 1995, region: "usa", location: "Durham, NC", icon: "🔄" },
-            { name: "Intelligentsia", year: 1995, region: "usa", location: "Chicago, IL", icon: "💡" },
-            { name: "Stumptown", year: 1999, region: "usa", location: "Portland, OR", icon: "🌲" },
-            { name: "Square Mile", year: 1999, region: "europe", location: "London, UK", icon: "📐" },
-            { name: "Tim Wendelboe", year: 1999, region: "nordic", location: "Oslo, Norway", icon: "🇳🇴" },
-            { name: "Café Imports", year: 1997, region: "usa", location: "Minneapolis, MN", icon: "📦" },
-            
-            // 2000s
-            { name: "Blue Bottle", year: 2002, region: "usa", location: "Oakland, CA", icon: "🫐" },
-            { name: "Single O", year: 2003, region: "asia", location: "Sydney, AU", icon: "🇦🇺" },
-            { name: "Ritual Coffee", year: 2005, region: "usa", location: "San Francisco, CA", icon: "✨" },
-            { name: "Koppi", year: 2007, region: "nordic", location: "Helsingborg, SE", icon: "🇸🇪" },
-            { name: "Verve Coffee", year: 2007, region: "usa", location: "Santa Cruz, CA", icon: "🌊" },
-            { name: "Heart Coffee", year: 2009, region: "usa", location: "Portland, OR", icon: "❤️" },
-            { name: "Drop Coffee", year: 2009, region: "nordic", location: "Stockholm, SE", icon: "💧" },
-            { name: "Proud Mary", year: 2009, region: "asia", location: "Melbourne, AU", icon: "🦘" },
-            { name: "Market Lane", year: 2009, region: "asia", location: "Melbourne, AU", icon: "🛒" },
-            
-            // 2010s
-            { name: "The Barn", year: 2010, region: "europe", location: "Berlin, DE", icon: "🏠" },
-            { name: "Five Elephant", year: 2010, region: "europe", location: "Berlin, DE", icon: "🐘" },
-            { name: "Workshop Coffee", year: 2011, region: "europe", location: "London, UK", icon: "🔧" },
-            { name: "La Cabra", year: 2012, region: "nordic", location: "Aarhus, DK", icon: "🐐" },
-            { name: "Fuglen", year: 2012, region: "nordic", location: "Oslo/Tokyo", icon: "🦅" },
-            { name: "Onyx Coffee Lab", year: 2012, region: "usa", location: "Rogers, AR", icon: "⬛" },
-            { name: "% Arabica", year: 2014, region: "asia", location: "Kyoto, JP", icon: "🇯🇵" },
-            { name: "Nomad Coffee", year: 2014, region: "europe", location: "Barcelona, ES", icon: "🏜️" },
-            { name: "Passenger Coffee", year: 2014, region: "usa", location: "Lancaster, PA", icon: "🚂" },
-            { name: "Brandywine Coffee", year: 2015, region: "usa", location: "Wilmington, DE", icon: "🌿" },
-            { name: "April Coffee", year: 2016, region: "nordic", location: "Copenhagen, DK", icon: "🌸" },
-            { name: "Gardelli", year: 2016, region: "europe", location: "Forlì, IT", icon: "🏆" },
-            { name: "Little Wolf", year: 2016, region: "usa", location: "Ipswich, MA", icon: "🐺" },
-            { name: "Sey Coffee", year: 2017, region: "usa", location: "Brooklyn, NY", icon: "🗽" },
-            { name: "Mañana", year: 2018, region: "usa", location: "Brooklyn, NY", icon: "🌅" },
-            { name: "Manhattan Coffee", year: 2018, region: "europe", location: "Rotterdam, NL", icon: "🏙️" },
-            { name: "Commonplace Coffee", year: 2018, region: "usa", location: "Pittsburgh, PA", icon: "🏭" },
-            
-            // 2020s
-            { name: "Dak Coffee", year: 2020, region: "europe", location: "Amsterdam, NL", icon: "🦆" },
-            { name: "Detour Coffee", year: 2009, region: "usa", location: "Burlington, ON", icon: "🔀" },
-            { name: "Coffee Bros", year: 2019, region: "usa", location: "Queens, NY", icon: "👬" },
-            { name: "Black & White", year: 2015, region: "usa", location: "Wake Forest, NC", icon: "◐" },
-            { name: "Methodical Coffee", year: 2015, region: "usa", location: "Greenville, SC", icon: "📊" },
-        ];
+        let roasters = [];
+
+        async function loadCoffeeData() {
+            const res = await fetch('data/coffee-data.json');
+            return await res.json();
+        }
 
         const MIN_YEAR = 1966;
         const MAX_YEAR = 2025;
@@ -721,9 +668,15 @@
             if (!e.target.closest('.search-container')) searchResultsEl.classList.remove('open');
         });
 
-        // Initialize
-        updateTimelineMarkers();
-        updateDisplay();
+        // Load data and initialize
+        loadCoffeeData().then(data => {
+            roasters = data;
+            updateTimelineMarkers();
+            updateDisplay();
+        }).catch(err => {
+            console.error('Failed to load coffee data:', err);
+            document.getElementById('roastersDisplay').innerHTML = '<p style="color:var(--gray-600);padding:20px;">Failed to load coffee data. Check that data/coffee-data.json exists.</p>';
+        });
     </script>
 </body>
 </html>
