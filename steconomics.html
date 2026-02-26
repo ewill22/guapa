@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steconomics | Guapa</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="steconomics.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="guapa_logo_dark.png" alt="Guapa" class="logo-img">
+            <span class="logo-text" style="font-size: 1.8rem;">GUAPA <span style="font-size: 0.6rem; font-weight: 400; vertical-align: middle;">inc</span></span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="music.html">Music</a>
+            <a href="coffee.html">Coffee</a>
+            <a href="steconomics.html">Steconomics</a>
+            <a href="shop.html">Shop</a>
+            <a href="index.html#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener" class="nav-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="shop.html" class="nav-cart">Shop →</a>
+        </div>
+
+        <button class="nav-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <main class="steconomics-page">
+        <!-- Page Header -->
+        <header class="steconomics-header">
+            <div class="steconomics-header-text">
+                <h1>Steconomics</h1>
+                <p>State-by-state economic data & government structure</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="steconomics-main">
+            <div class="steconomics-layout">
+                <!-- Map Section -->
+                <div class="map-section">
+                    <div class="map-container" id="mapContainer">
+                        <svg viewBox="0 0 960 600" class="us-map" id="usMap">
+                            <!-- States will be rendered here -->
+                        </svg>
+                    </div>
+                    <div class="map-legend">
+                        <span class="legend-label">Click a state to explore</span>
+                    </div>
+                </div>
+
+                <!-- State Detail Panel -->
+                <div class="state-panel" id="statePanel">
+                    <div class="panel-placeholder">
+                        <div class="placeholder-icon">🗺️</div>
+                        <h3>Select a State</h3>
+                        <p>Click on any state to view economic data and government structure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="lockup_light.png" alt="Guapa" class="footer-logo">
+                    <p>A creative collective for friends who make things.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Explore</h4>
+                    <a href="music.html">Music</a>
+                    <a href="coffee.html">Coffee</a>
+                    <a href="steconomics.html">Steconomics</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <a href="index.html#about">About</a>
+                    <a href="shop.html">Shop</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Follow</h4>
+                    <a href="https://instagram.com/guapa_skate" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Guapa Collective</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-links--open');
+            navToggle.classList.toggle('nav-toggle--open');
+        });
+
+        // US States data with basic info (to be expanded with real data sources)
+        const statesData = {
+            'AL': { name: 'Alabama', abbr: 'AL', capital: 'Montgomery', population: '5.0M', gdp: '$272B', governor: 'Kay Ivey', party: 'R' },
+            'AK': { name: 'Alaska', abbr: 'AK', capital: 'Juneau', population: '733K', gdp: '$55B', governor: 'Mike Dunleavy', party: 'R' },
+            'AZ': { name: 'Arizona', abbr: 'AZ', capital: 'Phoenix', population: '7.3M', gdp: '$436B', governor: 'Katie Hobbs', party: 'D' },
+            'AR': { name: 'Arkansas', abbr: 'AR', capital: 'Little Rock', population: '3.0M', gdp: '$150B', governor: 'Sarah Huckabee Sanders', party: 'R' },
+            'CA': { name: 'California', abbr: 'CA', capital: 'Sacramento', population: '39.0M', gdp: '$3.6T', governor: 'Gavin Newsom', party: 'D' },
+            'CO': { name: 'Colorado', abbr: 'CO', capital: 'Denver', population: '5.8M', gdp: '$436B', governor: 'Jared Polis', party: 'D' },
+            'CT': { name: 'Connecticut', abbr: 'CT', capital: 'Hartford', population: '3.6M', gdp: '$295B', governor: 'Ned Lamont', party: 'D' },
+            'DE': { name: 'Delaware', abbr: 'DE', capital: 'Dover', population: '1.0M', gdp: '$80B', governor: 'Matt Meyer', party: 'D' },
+            'FL': { name: 'Florida', abbr: 'FL', capital: 'Tallahassee', population: '22.2M', gdp: '$1.4T', governor: 'Ron DeSantis', party: 'R' },
+            'GA': { name: 'Georgia', abbr: 'GA', capital: 'Atlanta', population: '10.9M', gdp: '$730B', governor: 'Brian Kemp', party: 'R' },
+            'HI': { name: 'Hawaii', abbr: 'HI', capital: 'Honolulu', population: '1.4M', gdp: '$92B', governor: 'Josh Green', party: 'D' },
+            'ID': { name: 'Idaho', abbr: 'ID', capital: 'Boise', population: '1.9M', gdp: '$100B', governor: 'Brad Little', party: 'R' },
+            'IL': { name: 'Illinois', abbr: 'IL', capital: 'Springfield', population: '12.6M', gdp: '$950B', governor: 'JB Pritzker', party: 'D' },
+            'IN': { name: 'Indiana', abbr: 'IN', capital: 'Indianapolis', population: '6.8M', gdp: '$420B', governor: 'Mike Braun', party: 'R' },
+            'IA': { name: 'Iowa', abbr: 'IA', capital: 'Des Moines', population: '3.2M', gdp: '$212B', governor: 'Kim Reynolds', party: 'R' },
+            'KS': { name: 'Kansas', abbr: 'KS', capital: 'Topeka', population: '2.9M', gdp: '$190B', governor: 'Laura Kelly', party: 'D' },
+            'KY': { name: 'Kentucky', abbr: 'KY', capital: 'Frankfort', population: '4.5M', gdp: '$235B', governor: 'Andy Beshear', party: 'D' },
+            'LA': { name: 'Louisiana', abbr: 'LA', capital: 'Baton Rouge', population: '4.6M', gdp: '$260B', governor: 'Jeff Landry', party: 'R' },
+            'ME': { name: 'Maine', abbr: 'ME', capital: 'Augusta', population: '1.4M', gdp: '$78B', governor: 'Janet Mills', party: 'D' },
+            'MD': { name: 'Maryland', abbr: 'MD', capital: 'Annapolis', population: '6.2M', gdp: '$450B', governor: 'Wes Moore', party: 'D' },
+            'MA': { name: 'Massachusetts', abbr: 'MA', capital: 'Boston', population: '7.0M', gdp: '$625B', governor: 'Maura Healey', party: 'D' },
+            'MI': { name: 'Michigan', abbr: 'MI', capital: 'Lansing', population: '10.0M', gdp: '$590B', governor: 'Gretchen Whitmer', party: 'D' },
+            'MN': { name: 'Minnesota', abbr: 'MN', capital: 'Saint Paul', population: '5.7M', gdp: '$420B', governor: 'Tim Walz', party: 'D' },
+            'MS': { name: 'Mississippi', abbr: 'MS', capital: 'Jackson', population: '2.9M', gdp: '$125B', governor: 'Tate Reeves', party: 'R' },
+            'MO': { name: 'Missouri', abbr: 'MO', capital: 'Jefferson City', population: '6.2M', gdp: '$365B', governor: 'Mike Kehoe', party: 'R' },
+            'MT': { name: 'Montana', abbr: 'MT', capital: 'Helena', population: '1.1M', gdp: '$60B', governor: 'Greg Gianforte', party: 'R' },
+            'NE': { name: 'Nebraska', abbr: 'NE', capital: 'Lincoln', population: '2.0M', gdp: '$150B', governor: 'Jim Pillen', party: 'R' },
+            'NV': { name: 'Nevada', abbr: 'NV', capital: 'Carson City', population: '3.2M', gdp: '$195B', governor: 'Joe Lombardo', party: 'R' },
+            'NH': { name: 'New Hampshire', abbr: 'NH', capital: 'Concord', population: '1.4M', gdp: '$100B', governor: 'Kelly Ayotte', party: 'R' },
+            'NJ': { name: 'New Jersey', abbr: 'NJ', capital: 'Trenton', population: '9.3M', gdp: '$700B', governor: 'Phil Murphy', party: 'D' },
+            'NM': { name: 'New Mexico', abbr: 'NM', capital: 'Santa Fe', population: '2.1M', gdp: '$110B', governor: 'Michelle Lujan Grisham', party: 'D' },
+            'NY': { name: 'New York', abbr: 'NY', capital: 'Albany', population: '19.5M', gdp: '$2.0T', governor: 'Kathy Hochul', party: 'D' },
+            'NC': { name: 'North Carolina', abbr: 'NC', capital: 'Raleigh', population: '10.7M', gdp: '$680B', governor: 'Josh Stein', party: 'D' },
+            'ND': { name: 'North Dakota', abbr: 'ND', capital: 'Bismarck', population: '780K', gdp: '$65B', governor: 'Kelly Armstrong', party: 'R' },
+            'OH': { name: 'Ohio', abbr: 'OH', capital: 'Columbus', population: '11.8M', gdp: '$740B', governor: 'Mike DeWine', party: 'R' },
+            'OK': { name: 'Oklahoma', abbr: 'OK', capital: 'Oklahoma City', population: '4.0M', gdp: '$210B', governor: 'Kevin Stitt', party: 'R' },
+            'OR': { name: 'Oregon', abbr: 'OR', capital: 'Salem', population: '4.2M', gdp: '$280B', governor: 'Tina Kotek', party: 'D' },
+            'PA': { name: 'Pennsylvania', abbr: 'PA', capital: 'Harrisburg', population: '13.0M', gdp: '$880B', governor: 'Josh Shapiro', party: 'D' },
+            'RI': { name: 'Rhode Island', abbr: 'RI', capital: 'Providence', population: '1.1M', gdp: '$67B', governor: 'Dan McKee', party: 'D' },
+            'SC': { name: 'South Carolina', abbr: 'SC', capital: 'Columbia', population: '5.2M', gdp: '$280B', governor: 'Henry McMaster', party: 'R' },
+            'SD': { name: 'South Dakota', abbr: 'SD', capital: 'Pierre', population: '900K', gdp: '$60B', governor: 'Kristi Noem', party: 'R' },
+            'TN': { name: 'Tennessee', abbr: 'TN', capital: 'Nashville', population: '7.0M', gdp: '$440B', governor: 'Bill Lee', party: 'R' },
+            'TX': { name: 'Texas', abbr: 'TX', capital: 'Austin', population: '30.0M', gdp: '$2.0T', governor: 'Greg Abbott', party: 'R' },
+            'UT': { name: 'Utah', abbr: 'UT', capital: 'Salt Lake City', population: '3.4M', gdp: '$230B', governor: 'Spencer Cox', party: 'R' },
+            'VT': { name: 'Vermont', abbr: 'VT', capital: 'Montpelier', population: '647K', gdp: '$38B', governor: 'Phil Scott', party: 'R' },
+            'VA': { name: 'Virginia', abbr: 'VA', capital: 'Richmond', population: '8.6M', gdp: '$620B', governor: 'Glenn Youngkin', party: 'R' },
+            'WA': { name: 'Washington', abbr: 'WA', capital: 'Olympia', population: '7.8M', gdp: '$700B', governor: 'Bob Ferguson', party: 'D' },
+            'WV': { name: 'West Virginia', abbr: 'WV', capital: 'Charleston', population: '1.8M', gdp: '$85B', governor: 'Patrick Morrisey', party: 'R' },
+            'WI': { name: 'Wisconsin', abbr: 'WI', capital: 'Madison', population: '5.9M', gdp: '$380B', governor: 'Tony Evers', party: 'D' },
+            'WY': { name: 'Wyoming', abbr: 'WY', capital: 'Cheyenne', population: '580K', gdp: '$42B', governor: 'Mark Gordon', party: 'R' },
+            'DC': { name: 'Washington D.C.', abbr: 'DC', capital: 'N/A', population: '670K', gdp: '$150B', governor: 'Muriel Bowser', party: 'D' }
+        };
+
+        // Simplified US state paths (TopoJSON-derived coordinates)
+        const statePaths = {
+            'AL': 'M628,396 L632,330 L673,333 L676,399 L661,425 L628,422 Z',
+            'AK': 'M120,505 L190,505 L190,560 L120,560 Z',
+            'AZ': 'M205,340 L270,340 L280,430 L200,430 L185,380 Z',
+            'AR': 'M555,355 L610,355 L615,410 L550,415 Z',
+            'CA': 'M120,240 L175,240 L185,380 L130,430 L100,340 Z',
+            'CO': 'M285,280 L380,280 L380,350 L285,350 Z',
+            'CT': 'M820,210 L845,210 L845,235 L815,240 Z',
+            'DE': 'M785,260 L800,255 L805,285 L785,285 Z',
+            'FL': 'M680,410 L740,400 L760,500 L700,520 L665,450 Z',
+            'GA': 'M680,340 L730,330 L740,400 L680,410 Z',
+            'HI': 'M260,510 L320,510 L320,560 L260,560 Z',
+            'ID': 'M200,120 L250,120 L270,240 L210,260 L185,180 Z',
+            'IL': 'M580,230 L620,230 L630,330 L570,340 L565,270 Z',
+            'IN': 'M620,235 L660,230 L670,320 L625,330 Z',
+            'IA': 'M500,220 L570,215 L575,280 L500,285 Z',
+            'KS': 'M390,290 L490,290 L490,355 L385,355 Z',
+            'KY': 'M620,310 L710,290 L715,335 L625,345 Z',
+            'LA': 'M545,420 L605,415 L620,480 L555,485 Z',
+            'ME': 'M840,100 L870,95 L885,170 L845,185 Z',
+            'MD': 'M730,260 L785,250 L790,290 L730,295 Z',
+            'MA': 'M830,185 L870,180 L875,205 L825,215 Z',
+            'MI': 'M590,130 L650,120 L680,200 L620,220 L580,180 Z',
+            'MN': 'M480,100 L550,95 L560,200 L485,210 Z',
+            'MS': 'M595,360 L625,355 L630,440 L590,445 Z',
+            'MO': 'M500,290 L580,285 L590,370 L505,375 Z',
+            'MT': 'M220,80 L340,80 L350,170 L210,180 Z',
+            'NE': 'M340,230 L440,225 L450,290 L340,295 Z',
+            'NV': 'M155,200 L210,195 L230,340 L160,350 Z',
+            'NH': 'M835,140 L855,135 L858,185 L830,190 Z',
+            'NJ': 'M790,220 L815,215 L820,275 L790,285 Z',
+            'NM': 'M280,350 L370,345 L380,440 L275,445 Z',
+            'NY': 'M745,145 L830,135 L840,215 L750,230 Z',
+            'NC': 'M680,310 L790,295 L800,340 L690,355 Z',
+            'ND': 'M360,95 L450,90 L455,160 L355,165 Z',
+            'OH': 'M665,235 L720,225 L730,295 L670,305 Z',
+            'OK': 'M385,355 L500,350 L510,410 L395,420 Z',
+            'OR': 'M115,120 L195,115 L205,200 L125,210 Z',
+            'PA': 'M720,210 L790,200 L795,260 L725,270 Z',
+            'RI': 'M845,200 L860,198 L862,220 L843,222 Z',
+            'SC': 'M700,340 L760,330 L770,385 L710,390 Z',
+            'SD': 'M360,165 L455,160 L460,235 L360,240 Z',
+            'TN': 'M590,325 L710,310 L720,355 L600,365 Z',
+            'TX': 'M320,380 L500,365 L540,520 L340,530 L290,450 Z',
+            'UT': 'M230,230 L290,225 L295,340 L235,345 Z',
+            'VT': 'M820,125 L840,120 L845,175 L818,180 Z',
+            'VA': 'M700,275 L790,260 L800,310 L710,325 Z',
+            'WA': 'M130,60 L210,55 L220,130 L140,140 Z',
+            'WV': 'M700,265 L745,255 L755,305 L710,315 Z',
+            'WI': 'M545,130 L600,125 L610,215 L550,225 Z',
+            'WY': 'M265,165 L355,160 L365,250 L270,255 Z',
+            'DC': 'M765,272 L775,270 L777,280 L767,282 Z'
+        };
+
+        // Render the map
+        function renderMap() {
+            const svg = document.getElementById('usMap');
+            let pathsHtml = '';
+            
+            for (const [abbr, path] of Object.entries(statePaths)) {
+                const state = statesData[abbr];
+                const partyClass = state.party === 'D' ? 'dem' : 'rep';
+                pathsHtml += `<path 
+                    d="${path}" 
+                    class="state ${partyClass}" 
+                    data-state="${abbr}"
+                    data-name="${state.name}"
+                >
+                    <title>${state.name}</title>
+                </path>`;
+            }
+            
+            svg.innerHTML = pathsHtml;
+            
+            // Add click handlers
+            svg.querySelectorAll('.state').forEach(path => {
+                path.addEventListener('click', () => {
+                    const abbr = path.dataset.state;
+                    selectState(abbr);
+                    
+                    // Update active state
+                    svg.querySelectorAll('.state').forEach(p => p.classList.remove('active'));
+                    path.classList.add('active');
+                });
+            });
+        }
+
+        // Select a state and show details
+        function selectState(abbr) {
+            const state = statesData[abbr];
+            const panel = document.getElementById('statePanel');
+            const partyFull = state.party === 'D' ? 'Democrat' : 'Republican';
+            const partyClass = state.party === 'D' ? 'dem' : 'rep';
+            
+            panel.innerHTML = `
+                <div class="state-detail">
+                    <div class="state-header">
+                        <h2>${state.name}</h2>
+                        <span class="state-abbr">${state.abbr}</span>
+                    </div>
+                    
+                    <div class="state-section">
+                        <h3>Government</h3>
+                        <div class="stat-row">
+                            <span class="stat-label">Governor</span>
+                            <span class="stat-value">${state.governor}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Party</span>
+                            <span class="stat-value party-tag ${partyClass}">${partyFull}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Capital</span>
+                            <span class="stat-value">${state.capital}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="state-section">
+                        <h3>Economy</h3>
+                        <div class="stat-row">
+                            <span class="stat-label">GDP</span>
+                            <span class="stat-value highlight">${state.gdp}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Population</span>
+                            <span class="stat-value">${state.population}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="state-section coming-soon">
+                        <h3>Coming Soon</h3>
+                        <ul>
+                            <li>Unemployment rate</li>
+                            <li>Median household income</li>
+                            <li>State budget breakdown</li>
+                            <li>Legislative composition</li>
+                            <li>Historical election data</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize
+        renderMap();
+    </script>
+</body>
+</html>

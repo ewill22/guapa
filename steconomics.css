@@ -1,0 +1,335 @@
+/* ========================================
+   STECONOMICS PAGE STYLES
+======================================== */
+
+.steconomics-page {
+    min-height: 100vh;
+    padding-bottom: var(--space-xl);
+}
+
+/* Header */
+.steconomics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
+    border-bottom: 1px solid var(--gray-800);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.steconomics-header-text {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-shrink: 0;
+}
+
+.steconomics-header-text h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    color: var(--pink);
+}
+
+.steconomics-header-text p {
+    color: var(--gray-400);
+    font-size: 1rem;
+}
+
+/* Main Layout */
+.steconomics-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+}
+
+.steconomics-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--space-lg);
+    align-items: start;
+}
+
+/* Map Section */
+.map-section {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-800);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.map-container {
+    width: 100%;
+    aspect-ratio: 960/600;
+    position: relative;
+}
+
+.us-map {
+    width: 100%;
+    height: 100%;
+}
+
+.us-map .state {
+    fill: var(--gray-700);
+    stroke: var(--gray-900);
+    stroke-width: 1.5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.us-map .state:hover {
+    fill: var(--gray-500);
+}
+
+.us-map .state.active {
+    stroke: var(--yellow);
+    stroke-width: 3;
+}
+
+/* Party colors */
+.us-map .state.dem {
+    fill: #4a7eb8;
+}
+
+.us-map .state.dem:hover {
+    fill: #5a9ed8;
+}
+
+.us-map .state.rep {
+    fill: #c45a5a;
+}
+
+.us-map .state.rep:hover {
+    fill: #d47a7a;
+}
+
+.us-map .state.dem.active {
+    fill: #5a9ed8;
+}
+
+.us-map .state.rep.active {
+    fill: #d47a7a;
+}
+
+.map-legend {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--gray-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+}
+
+.legend-label {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: var(--gray-400);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.legend-dot.dem { background: #4a7eb8; }
+.legend-dot.rep { background: #c45a5a; }
+
+/* State Panel */
+.state-panel {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-800);
+    border-radius: var(--radius-lg);
+    min-height: 400px;
+    position: sticky;
+    top: 100px;
+}
+
+.panel-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-xl);
+    height: 100%;
+    min-height: 400px;
+    color: var(--gray-500);
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+.panel-placeholder h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-400);
+    margin-bottom: var(--space-xs);
+}
+
+.panel-placeholder p {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    max-width: 200px;
+}
+
+/* State Detail */
+.state-detail {
+    padding: var(--space-lg);
+}
+
+.state-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--gray-800);
+}
+
+.state-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.state-abbr {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    background: var(--gray-800);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.state-section {
+    margin-bottom: var(--space-lg);
+}
+
+.state-section h3 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    margin-bottom: var(--space-sm);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-800);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.stat-value.highlight {
+    color: var(--yellow);
+    font-size: 1.1rem;
+}
+
+.party-tag {
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+}
+
+.party-tag.dem {
+    background: rgba(74, 126, 184, 0.2);
+    color: #6ab0e8;
+}
+
+.party-tag.rep {
+    background: rgba(196, 90, 90, 0.2);
+    color: #e88a8a;
+}
+
+.coming-soon {
+    background: var(--gray-800);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+}
+
+.coming-soon h3 {
+    color: var(--gray-400);
+}
+
+.coming-soon ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.coming-soon li {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.coming-soon li:last-child {
+    border-bottom: none;
+}
+
+.coming-soon li::before {
+    content: '○';
+    font-size: 0.6rem;
+    color: var(--gray-600);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .steconomics-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .state-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .steconomics-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .steconomics-header-text {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .map-section {
+        padding: var(--space-md);
+    }
+}
