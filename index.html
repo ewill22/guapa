@@ -10,11 +10,367 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
-        @media (max-width: 900px) {
-            .reviews-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        /* Dashboard Hero */
+        .dashboard-hero {
+            padding: var(--space-lg) var(--space-md);
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        @media (max-width: 500px) {
-            .reviews-grid { grid-template-columns: 1fr !important; }
+
+        .dashboard-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray-600);
+            text-align: center;
+            margin-bottom: var(--space-md);
+        }
+
+        /* Timeline Section */
+        .world-timeline {
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-sm);
+        }
+
+        .year-display h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--yellow);
+            letter-spacing: -0.02em;
+            line-height: 1;
+            min-width: 120px;
+        }
+
+        .year-vibe {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            font-style: italic;
+            padding-bottom: 8px;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #7ec89b;
+            background: rgba(126, 200, 155, 0.1);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(126, 200, 155, 0.2);
+            margin-left: auto;
+        }
+
+        .live-badge.hidden { visibility: hidden; }
+
+        .live-dot {
+            width: 5px;
+            height: 5px;
+            background: #7ec89b;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Event Bars */
+        .event-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 60px;
+            flex: 1;
+        }
+
+        .event-bar {
+            flex: 1;
+            background: var(--pink);
+            opacity: 0.2;
+            border-radius: 2px 2px 0 0;
+            min-height: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .event-bar:hover {
+            opacity: 0.5;
+        }
+
+        .event-bar.active {
+            opacity: 1;
+            background: var(--yellow);
+        }
+
+        /* Slider Row */
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .slider-spacer {
+            min-width: 120px;
+        }
+
+        .slider-wrapper {
+            flex: 1;
+        }
+
+        .year-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 3px;
+            background: var(--gray-800);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--yellow);
+            cursor: pointer;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(240, 192, 20, 0.5);
+        }
+
+        .year-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--yellow);
+            cursor: pointer;
+            border-radius: 3px;
+            border: none;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+
+        .timeline-markers span {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+        }
+
+        /* Decade Nav */
+        .decade-nav {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .decade-btn {
+            padding: 6px 14px;
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-sm);
+            color: var(--gray-500);
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .decade-btn:hover {
+            border-color: var(--gray-600);
+            color: var(--white);
+        }
+
+        .decade-btn.active {
+            border-color: var(--yellow);
+            background: rgba(240, 192, 20, 0.1);
+            color: var(--yellow);
+        }
+
+        /* World Event Card */
+        .world-event {
+            background: var(--gray-800);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-top: var(--space-md);
+            display: none;
+        }
+
+        .world-event.visible {
+            display: block;
+        }
+
+        .event-category {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--pink);
+            margin-bottom: 6px;
+        }
+
+        .event-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .event-description {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            line-height: 1.5;
+        }
+
+        /* World Stats */
+        .world-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--gray-800);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        /* Category Cards */
+        .category-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-lg) var(--space-md);
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray-600);
+            margin-bottom: var(--space-md);
+            text-align: center;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+
+        .category-card {
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg) var(--space-md);
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--pink);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: var(--gray-600);
+            transform: translateY(-3px);
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-xs);
+            display: block;
+        }
+
+        .category-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+
+        .category-card p {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Tagline */
+        .tagline-section {
+            text-align: center;
+            padding: var(--space-lg) var(--space-md);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tagline {
+            font-family: var(--font-accent);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--gray-500);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .world-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .timeline-header { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+            .year-display h2 { font-size: 2.5rem; }
+            .slider-row { flex-direction: column; gap: var(--space-sm); }
+            .slider-spacer { display: none; }
+            .decade-nav { flex-wrap: wrap; }
+            .live-badge { margin-left: 0; }
         }
     </style>
 </head>
@@ -52,51 +408,108 @@
     </nav>
 
     <main>
-        <!-- Featured Banner -->
-        <section class="featured-banner" style="padding: var(--space-sm) var(--space-md);">
-            <div class="featured-content">
-                <h2 style="font-size: 1.2rem; margin-bottom: 0;">yearning for something to keep him up at night</h2>
+        <!-- Dashboard Hero -->
+        <section class="dashboard-hero">
+            <p class="dashboard-label">The World According to Guapa</p>
+            
+            <div class="world-timeline">
+                <!-- Decade Nav -->
+                <nav class="decade-nav">
+                    <button class="decade-btn" data-year="1960">60s</button>
+                    <button class="decade-btn" data-year="1970">70s</button>
+                    <button class="decade-btn" data-year="1980">80s</button>
+                    <button class="decade-btn" data-year="1990">90s</button>
+                    <button class="decade-btn" data-year="2000">00s</button>
+                    <button class="decade-btn" data-year="2010">10s</button>
+                    <button class="decade-btn active" data-year="2020">20s</button>
+                </nav>
+
+                <!-- Year + Event Bars -->
+                <div class="timeline-header">
+                    <div class="year-display">
+                        <h2 id="currentYear">2026</h2>
+                    </div>
+                    <div class="year-vibe" id="yearVibe">the algorithm age</div>
+                    <div class="event-bars" id="eventBars"></div>
+                    <span class="live-badge" id="liveBadge">
+                        <span class="live-dot"></span>
+                        Live
+                    </span>
+                </div>
+
+                <!-- Slider -->
+                <div class="slider-row">
+                    <div class="slider-spacer"></div>
+                    <div class="slider-wrapper">
+                        <input type="range" class="year-slider" id="yearSlider" min="1960" max="2026" value="2026">
+                        <div class="timeline-markers">
+                            <span>1960</span>
+                            <span>1980</span>
+                            <span>2000</span>
+                            <span>2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- World Event -->
+                <div class="world-event visible" id="worldEvent">
+                    <div class="event-category" id="eventCategory">Now</div>
+                    <div class="event-title" id="eventTitle">The Age of AI</div>
+                    <div class="event-description" id="eventDesc">Large language models reshape work, creativity, and how we find information. Everyone's trying to figure out what it means.</div>
+                </div>
+
+                <!-- Stats -->
+                <div class="world-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statPop">8.1B</div>
+                        <div class="stat-label">World Pop</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statInternet">5.5B</div>
+                        <div class="stat-label">Online</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statTemp">+1.2°C</div>
+                        <div class="stat-label">Temp Δ</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statMusic">—</div>
+                        <div class="stat-label">#1 Song</div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Shop Categories as Cards -->
-        <section id="shop" class="reviews">
-            <div class="container">
-                <div class="reviews-grid" style="grid-template-columns: repeat(4, 1fr);">
-                    <a href="music.html" class="review-card">
-                        <div class="review-icon">♫</div>
-                        <div class="review-content">
-                            <h3>Music</h3>
-                            <p>Explore the journey</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                    <a href="coffee.html" class="review-card">
-                        <div class="review-icon">☕</div>
-                        <div class="review-content">
-                            <h3>Coffee</h3>
-                            <p>Origins & roasts</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                    <a href="steconomics.html" class="review-card">
-                        <div class="review-icon">🗺️</div>
-                        <div class="review-content">
-                            <h3>Steconomics</h3>
-                            <p>State-by-state data</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                    <a href="shop.html" class="review-card">
-                        <div class="review-icon">👕</div>
-                        <div class="review-content">
-                            <h3>Apparel</h3>
-                            <p>Tees & merch</p>
-                        </div>
-                        <span class="review-arrow">→</span>
-                    </a>
-                </div>
+        <!-- Category Cards -->
+        <section class="category-section">
+            <p class="section-label">Explore</p>
+            <div class="category-grid">
+                <a href="music.html" class="category-card">
+                    <span class="category-icon">♫</span>
+                    <h3>Music</h3>
+                    <p>Journey through sound</p>
+                </a>
+                <a href="coffee.html" class="category-card">
+                    <span class="category-icon">☕</span>
+                    <h3>Coffee</h3>
+                    <p>Origins & roasters</p>
+                </a>
+                <a href="steconomics.html" class="category-card">
+                    <span class="category-icon">🗺️</span>
+                    <h3>Steconomics</h3>
+                    <p>State-by-state data</p>
+                </a>
+                <a href="shop.html" class="category-card">
+                    <span class="category-icon">👕</span>
+                    <h3>Shop</h3>
+                    <p>Merch & apparel</p>
+                </a>
             </div>
+        </section>
+
+        <!-- Tagline -->
+        <section class="tagline-section">
+            <p class="tagline">"yearning for something to keep him up at night"</p>
         </section>
 
         <!-- About Section -->
@@ -152,16 +565,15 @@
                     <p>A creative collective for friends who make things.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Shop</h4>
-                    <a href="shop.html">All Products</a>
+                    <h4>Explore</h4>
+                    <a href="music.html">Music</a>
+                    <a href="coffee.html">Coffee</a>
                     <a href="steconomics.html">Steconomics</a>
                 </div>
                 <div class="footer-links">
                     <h4>Info</h4>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-                    <a href="#">Shipping</a>
-                    <a href="#">Returns</a>
+                    <a href="#about">About</a>
+                    <a href="shop.html">Shop</a>
                 </div>
                 <div class="footer-links">
                     <h4>Follow</h4>
@@ -196,6 +608,143 @@
                 }
             });
         });
+
+        // Timeline data
+        const MIN_YEAR = 1960;
+        const MAX_YEAR = 2026;
+
+        const worldData = {
+            1960: { vibe: 'the space race begins', event: { cat: 'Space', title: 'The Final Frontier', desc: 'JFK promises the moon. The Cold War goes orbital. Everything feels possible and terrifying.' }, pop: '3.0B', internet: '0', temp: '+0.0°C', music: 'Elvis' },
+            1963: { vibe: 'innocence lost', event: { cat: 'History', title: 'Dallas, November', desc: 'Kennedy assassinated. The 60s take a dark turn. Nothing feels safe anymore.' }, pop: '3.2B', internet: '0', temp: '+0.1°C', music: 'Beatles' },
+            1969: { vibe: 'one giant leap', event: { cat: 'Space', title: 'Moon Landing', desc: 'Armstrong walks on the moon. 600 million people watch. Humanity\'s greatest flex.' }, pop: '3.6B', internet: '0', temp: '+0.1°C', music: 'Stones' },
+            1970: { vibe: 'the hangover decade', event: { cat: 'Culture', title: 'Post-60s Reality', desc: 'Vietnam drags on. Watergate looms. The optimism fades into disco and malaise.' }, pop: '3.7B', internet: '0', temp: '+0.1°C', music: 'Zeppelin' },
+            1977: { vibe: 'a new hope', event: { cat: 'Culture', title: 'Star Wars', desc: 'George Lucas creates a universe. Blockbusters are born. Escapism becomes an industry.' }, pop: '4.2B', internet: '0', temp: '+0.2°C', music: 'Fleetwood' },
+            1980: { vibe: 'morning in america', event: { cat: 'Politics', title: 'Reagan Era Begins', desc: 'Conservative revolution. MTV launches. Greed is good. The 80s arrive in neon.' }, pop: '4.4B', internet: '~1K', temp: '+0.3°C', music: 'MJ' },
+            1989: { vibe: 'walls come down', event: { cat: 'History', title: 'Berlin Wall Falls', desc: 'Cold War ends with sledgehammers. History is over, they say. New world order.' }, pop: '5.2B', internet: '~500K', temp: '+0.3°C', music: 'Madonna' },
+            1990: { vibe: 'the end of history?', event: { cat: 'Tech', title: 'World Wide Web', desc: 'Tim Berners-Lee invents the web. Nobody knows it yet, but everything changes.' }, pop: '5.3B', internet: '2.6M', temp: '+0.4°C', music: 'MC Hammer' },
+            1994: { vibe: 'grunge and apathy', event: { cat: 'Culture', title: 'Cobain\'s Last Year', desc: 'Generation X peaks. Nirvana ends. The internet starts creeping into homes.' }, pop: '5.6B', internet: '25M', temp: '+0.4°C', music: 'Nirvana' },
+            2000: { vibe: 'y2k survived', event: { cat: 'Tech', title: 'Dot-Com Bubble', desc: 'The millennium bug was nothing. The real crash is coming. Napster changes music forever.' }, pop: '6.1B', internet: '413M', temp: '+0.5°C', music: 'Eminem' },
+            2001: { vibe: 'everything changed', event: { cat: 'History', title: 'September 11', desc: 'The towers fall. The 21st century actually begins. Security theater forever.' }, pop: '6.2B', internet: '500M', temp: '+0.5°C', music: 'Aaliyah' },
+            2007: { vibe: 'the world in your pocket', event: { cat: 'Tech', title: 'iPhone Launches', desc: 'Steve Jobs reveals the future. Smartphones consume everything. Attention becomes currency.' }, pop: '6.6B', internet: '1.4B', temp: '+0.7°C', music: 'Rihanna' },
+            2010: { vibe: 'the social era', event: { cat: 'Tech', title: 'Social Media Dominates', desc: 'Facebook hits 500M users. Twitter drives news. Everyone becomes a broadcaster.' }, pop: '6.9B', internet: '2.0B', temp: '+0.8°C', music: 'Gaga' },
+            2016: { vibe: 'post-truth arrives', event: { cat: 'Politics', title: 'Brexit & Trump', desc: 'Populism surges. Algorithms radicalize. Reality becomes negotiable.' }, pop: '7.4B', internet: '3.4B', temp: '+1.0°C', music: 'Drake' },
+            2020: { vibe: 'the great pause', event: { cat: 'History', title: 'COVID-19 Pandemic', desc: 'The world stops. Remote everything. A collective trauma we\'re still processing.' }, pop: '7.8B', internet: '4.6B', temp: '+1.1°C', music: 'Weeknd' },
+            2023: { vibe: 'ai awakening', event: { cat: 'Tech', title: 'ChatGPT Moment', desc: 'AI goes mainstream. Everyone\'s job feels uncertain. The future arrives faster than expected.' }, pop: '8.0B', internet: '5.3B', temp: '+1.2°C', music: 'Taylor' },
+            2026: { vibe: 'the algorithm age', event: { cat: 'Now', title: 'The Age of AI', desc: 'Large language models reshape work, creativity, and how we find information. Everyone\'s trying to figure out what it means.' }, pop: '8.1B', internet: '5.5B', temp: '+1.2°C', music: '—' }
+        };
+
+        // Get data for a year (interpolate if needed)
+        function getYearData(year) {
+            if (worldData[year]) return worldData[year];
+            
+            // Find nearest data points
+            const years = Object.keys(worldData).map(Number).sort((a, b) => a - b);
+            let before = years[0], after = years[years.length - 1];
+            
+            for (let i = 0; i < years.length - 1; i++) {
+                if (years[i] <= year && years[i + 1] >= year) {
+                    before = years[i];
+                    after = years[i + 1];
+                    break;
+                }
+            }
+            
+            // Use the earlier year's data with interpolated vibe
+            const data = { ...worldData[before] };
+            data.vibe = worldData[before].vibe;
+            return data;
+        }
+
+        // Render event bars
+        function renderEventBars() {
+            const container = document.getElementById('eventBars');
+            container.innerHTML = '';
+            
+            const eventYears = Object.keys(worldData).map(Number);
+            
+            for (let y = MIN_YEAR; y <= MAX_YEAR; y++) {
+                const bar = document.createElement('div');
+                bar.className = 'event-bar';
+                
+                // Make bars taller for years with events
+                const hasEvent = eventYears.includes(y);
+                const height = hasEvent ? (20 + Math.random() * 40) : (5 + Math.random() * 15);
+                bar.style.height = height + 'px';
+                
+                bar.dataset.year = y;
+                bar.addEventListener('click', () => {
+                    yearSlider.value = y;
+                    updateYear(y);
+                });
+                
+                container.appendChild(bar);
+            }
+        }
+
+        // Update display for a year
+        function updateYear(year) {
+            year = parseInt(year);
+            const data = getYearData(year);
+            
+            document.getElementById('currentYear').textContent = year;
+            document.getElementById('yearVibe').textContent = data.vibe;
+            
+            // Event
+            document.getElementById('eventCategory').textContent = data.event.cat;
+            document.getElementById('eventTitle').textContent = data.event.title;
+            document.getElementById('eventDesc').textContent = data.event.desc;
+            
+            // Stats
+            document.getElementById('statPop').textContent = data.pop;
+            document.getElementById('statInternet').textContent = data.internet;
+            document.getElementById('statTemp').textContent = data.temp;
+            document.getElementById('statMusic').textContent = data.music;
+            
+            // Live badge
+            document.getElementById('liveBadge').classList.toggle('hidden', year !== 2026);
+            
+            // Update bars
+            document.querySelectorAll('.event-bar').forEach(bar => {
+                bar.classList.toggle('active', parseInt(bar.dataset.year) === year);
+            });
+            
+            // Update decade buttons
+            const decadeStart = Math.floor(year / 10) * 10;
+            document.querySelectorAll('.decade-btn').forEach(btn => {
+                const btnYear = parseInt(btn.dataset.year);
+                btn.classList.toggle('active', btnYear === decadeStart || (year >= 2020 && btnYear === 2020));
+            });
+        }
+
+        // Slider
+        const yearSlider = document.getElementById('yearSlider');
+        yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
+
+        // Decade buttons
+        document.querySelectorAll('.decade-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const year = parseInt(btn.dataset.year);
+                yearSlider.value = year;
+                updateYear(year);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const current = parseInt(yearSlider.value);
+            if (e.key === 'ArrowLeft' && current > MIN_YEAR) {
+                yearSlider.value = current - 1;
+                updateYear(current - 1);
+            }
+            if (e.key === 'ArrowRight' && current < MAX_YEAR) {
+                yearSlider.value = current + 1;
+                updateYear(current + 1);
+            }
+        });
+
+        // Initialize
+        renderEventBars();
+        updateYear(2026);
     </script>
 </body>
 </html>
