@@ -250,35 +250,6 @@
             line-height: 1.5;
         }
 
-        /* World Stats */
-        .world-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--space-sm);
-            margin-top: var(--space-md);
-            padding-top: var(--space-md);
-            border-top: 1px solid var(--gray-800);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.6rem;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 4px;
-        }
-
         /* Category Cards */
         .category-section {
             max-width: 1400px;
@@ -353,25 +324,9 @@
             color: var(--gray-500);
         }
 
-        /* Tagline */
-        .tagline-section {
-            text-align: center;
-            padding: var(--space-lg) var(--space-md);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .tagline {
-            font-family: var(--font-accent);
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--gray-500);
-        }
-
         /* Responsive */
         @media (max-width: 900px) {
             .category-grid { grid-template-columns: repeat(2, 1fr); }
-            .world-stats { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 600px) {
@@ -473,26 +428,6 @@
                     <div class="event-title" id="eventTitle">The Age of AI</div>
                     <div class="event-description" id="eventDesc">Large language models reshape work, creativity, and how we find information. Everyone's trying to figure out what it means.</div>
                 </div>
-
-                <!-- Stats -->
-                <div class="world-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="statPop">8.1B</div>
-                        <div class="stat-label">World Pop</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="statInternet">5.5B</div>
-                        <div class="stat-label">Online</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="statTemp">+1.2°C</div>
-                        <div class="stat-label">Temp Δ</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="statMusic">—</div>
-                        <div class="stat-label">#1 Song</div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -521,11 +456,6 @@
                     <p>Merch & apparel</p>
                 </a>
             </div>
-        </section>
-
-        <!-- Tagline -->
-        <section class="tagline-section">
-            <p class="tagline">"yearning for something to keep him up at night"</p>
         </section>
 
         <!-- About Section -->
@@ -709,12 +639,6 @@
             document.getElementById('eventCategory').textContent = data.event.cat;
             document.getElementById('eventTitle').textContent = data.event.title;
             document.getElementById('eventDesc').textContent = data.event.desc;
-            
-            // Stats
-            document.getElementById('statPop').textContent = data.pop;
-            document.getElementById('statInternet').textContent = data.internet;
-            document.getElementById('statTemp').textContent = data.temp;
-            document.getElementById('statMusic').textContent = data.music;
             
             // Live badge
             document.getElementById('liveBadge').classList.toggle('hidden', year !== 2026);
