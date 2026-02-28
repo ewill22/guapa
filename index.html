@@ -35,7 +35,50 @@
             letter-spacing: 0.15em;
             color: var(--gray-600);
             text-align: center;
+            margin-bottom: var(--space-sm);
+            transition: color 0.3s ease;
+        }
+
+        /* ====== LENS SELECTOR ====== */
+        .lens-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .lens-btn {
+            padding: 6px 16px;
+            background: transparent;
+            border: 1px solid var(--gray-800);
+            border-radius: 20px;
+            color: var(--gray-500);
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lens-btn:hover {
+            border-color: var(--gray-600);
+            color: var(--white);
+        }
+
+        .lens-btn.active {
+            border-color: var(--yellow);
+            background: rgba(240, 192, 20, 0.08);
+            color: var(--yellow);
+        }
+
+        .lens-btn .lens-icon {
+            font-size: 0.85rem;
+            line-height: 1;
         }
 
         /* Timeline Section */
@@ -44,6 +87,7 @@
             border: 1px solid var(--gray-800);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
+            transition: border-color 0.4s ease;
         }
 
         .timeline-header {
@@ -60,6 +104,7 @@
             letter-spacing: -0.02em;
             line-height: 1;
             min-width: 120px;
+            transition: color 0.3s ease;
         }
 
         .year-vibe {
@@ -250,7 +295,230 @@
             line-height: 1.5;
         }
 
-        /* Category Cards */
+        /* ====== TAXONOMY EXPLORER ====== */
+        .taxonomy-explorer {
+            margin-top: var(--space-lg);
+            border-top: 1px solid var(--gray-800);
+            padding-top: var(--space-lg);
+        }
+
+        .taxonomy-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+        }
+
+        .taxonomy-header h3 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--gray-500);
+        }
+
+        .taxonomy-header .year-context {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-style: italic;
+        }
+
+        /* Taxonomy Tree */
+        .taxonomy-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .taxonomy-branch {
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .taxonomy-branch:hover {
+            border-color: var(--gray-600);
+        }
+
+        .branch-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 14px var(--space-md);
+            cursor: pointer;
+            background: rgba(26, 26, 26, 0.5);
+            transition: background 0.2s ease;
+            user-select: none;
+        }
+
+        .branch-header:hover {
+            background: rgba(42, 42, 42, 0.5);
+        }
+
+        .branch-icon {
+            font-size: 1.1rem;
+            width: 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .branch-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            flex: 1;
+        }
+
+        .branch-stat {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .branch-chevron {
+            width: 16px;
+            height: 16px;
+            color: var(--gray-600);
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .taxonomy-branch.open .branch-chevron {
+            transform: rotate(90deg);
+        }
+
+        /* Branch Content */
+        .branch-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .taxonomy-branch.open .branch-content {
+            max-height: 600px;
+        }
+
+        .branch-items {
+            padding: 0 var(--space-md) var(--space-md);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .branch-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 10px 12px;
+            background: var(--gray-800);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .branch-item:hover {
+            background: rgba(42, 42, 42, 0.8);
+        }
+
+        .item-rank {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .item-name {
+            font-size: 0.85rem;
+            color: var(--white);
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .item-detail {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .item-badge {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .item-badge.up {
+            color: #7ec89b;
+            background: rgba(126, 200, 155, 0.1);
+        }
+
+        .item-badge.down {
+            color: #c45a5a;
+            background: rgba(196, 90, 90, 0.1);
+        }
+
+        .item-badge.new {
+            color: var(--yellow);
+            background: rgba(240, 192, 20, 0.1);
+        }
+
+        .item-badge.peak {
+            color: var(--pink);
+            background: rgba(232, 160, 176, 0.1);
+        }
+
+        /* Taxonomy empty state */
+        .taxonomy-empty {
+            text-align: center;
+            padding: var(--space-lg);
+            color: var(--gray-600);
+        }
+
+        .taxonomy-empty .empty-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+            opacity: 0.4;
+        }
+
+        .taxonomy-empty p {
+            font-size: 0.85rem;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Taxonomy CTA */
+        .taxonomy-cta {
+            margin-top: var(--space-md);
+            padding: var(--space-md);
+            border: 1px dashed var(--gray-800);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .taxonomy-cta p {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+
+        .taxonomy-cta a {
+            font-size: 0.8rem;
+            color: var(--pink);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .taxonomy-cta a:hover {
+            color: var(--white);
+        }
+
+        /* ====== CATEGORY CARDS (Explore) ====== */
         .category-section {
             max-width: 1400px;
             margin: 0 auto;
@@ -324,6 +592,31 @@
             color: var(--gray-500);
         }
 
+        /* ====== LENS-SPECIFIC ACCENT COLORS ====== */
+        [data-lens="music"] .year-display h2 { color: var(--pink); }
+        [data-lens="music"] .event-bar.active { background: var(--pink); }
+        [data-lens="music"] .year-slider::-webkit-slider-thumb { background: var(--pink); box-shadow: 0 0 10px rgba(232, 160, 176, 0.5); }
+        [data-lens="music"] .decade-btn.active { border-color: var(--pink); background: rgba(232, 160, 176, 0.1); color: var(--pink); }
+        [data-lens="music"] .lens-btn.active { border-color: var(--pink); background: rgba(232, 160, 176, 0.08); color: var(--pink); }
+
+        [data-lens="tech"] .year-display h2 { color: #6ab0e8; }
+        [data-lens="tech"] .event-bar.active { background: #6ab0e8; }
+        [data-lens="tech"] .year-slider::-webkit-slider-thumb { background: #6ab0e8; box-shadow: 0 0 10px rgba(106, 176, 232, 0.5); }
+        [data-lens="tech"] .decade-btn.active { border-color: #6ab0e8; background: rgba(106, 176, 232, 0.1); color: #6ab0e8; }
+        [data-lens="tech"] .lens-btn.active { border-color: #6ab0e8; background: rgba(106, 176, 232, 0.08); color: #6ab0e8; }
+
+        [data-lens="coffee"] .year-display h2 { color: #c89b6a; }
+        [data-lens="coffee"] .event-bar.active { background: #c89b6a; }
+        [data-lens="coffee"] .year-slider::-webkit-slider-thumb { background: #c89b6a; box-shadow: 0 0 10px rgba(200, 155, 106, 0.5); }
+        [data-lens="coffee"] .decade-btn.active { border-color: #c89b6a; background: rgba(200, 155, 106, 0.1); color: #c89b6a; }
+        [data-lens="coffee"] .lens-btn.active { border-color: #c89b6a; background: rgba(200, 155, 106, 0.08); color: #c89b6a; }
+
+        [data-lens="economics"] .year-display h2 { color: #7ec89b; }
+        [data-lens="economics"] .event-bar.active { background: #7ec89b; }
+        [data-lens="economics"] .year-slider::-webkit-slider-thumb { background: #7ec89b; box-shadow: 0 0 10px rgba(126, 200, 155, 0.5); }
+        [data-lens="economics"] .decade-btn.active { border-color: #7ec89b; background: rgba(126, 200, 155, 0.1); color: #7ec89b; }
+        [data-lens="economics"] .lens-btn.active { border-color: #7ec89b; background: rgba(126, 200, 155, 0.08); color: #7ec89b; }
+
         /* Responsive */
         @media (max-width: 900px) {
             .category-grid { grid-template-columns: repeat(2, 1fr); }
@@ -337,6 +630,8 @@
             .slider-spacer { display: none; }
             .decade-nav { flex-wrap: wrap; }
             .live-badge { margin-left: 0; }
+            .lens-selector { gap: 4px; }
+            .lens-btn { padding: 5px 12px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -379,9 +674,28 @@
     <main>
         <!-- Dashboard Hero -->
         <section class="dashboard-hero">
-            <p class="dashboard-label">The World According to Guapa</p>
+            <p class="dashboard-label" id="dashboardLabel">The World According to Guapa</p>
+
+            <!-- Lens Selector -->
+            <div class="lens-selector">
+                <button class="lens-btn active" data-lens="world">
+                    <span class="lens-icon">◉</span> World
+                </button>
+                <button class="lens-btn" data-lens="music">
+                    <span class="lens-icon">♫</span> Music
+                </button>
+                <button class="lens-btn" data-lens="tech">
+                    <span class="lens-icon">⚡</span> Tech
+                </button>
+                <button class="lens-btn" data-lens="coffee">
+                    <span class="lens-icon">☕</span> Coffee
+                </button>
+                <button class="lens-btn" data-lens="economics">
+                    <span class="lens-icon">📊</span> Economics
+                </button>
+            </div>
             
-            <div class="world-timeline">
+            <div class="world-timeline" id="worldTimeline">
                 <!-- Decade Nav -->
                 <nav class="decade-nav">
                     <button class="decade-btn" data-year="1960">60s</button>
@@ -426,12 +740,27 @@
                     <div class="event-title" id="eventTitle">The Age of AI</div>
                     <div class="event-description" id="eventDesc">Large language models reshape work, creativity, and how we find information. Everyone's trying to figure out what it means.</div>
                 </div>
+
+                <!-- Taxonomy Explorer -->
+                <div class="taxonomy-explorer" id="taxonomyExplorer">
+                    <div class="taxonomy-header">
+                        <h3 id="taxonomyTitle">What's Happening</h3>
+                        <span class="year-context" id="taxonomyContext"></span>
+                    </div>
+                    <div class="taxonomy-tree" id="taxonomyTree">
+                        <!-- Dynamically populated -->
+                    </div>
+                    <div class="taxonomy-cta">
+                        <p>This is the Guapa Aggregated Taxonomy — a living index of the world.</p>
+                        <a href="#">Explore the full archive →</a>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Category Cards -->
         <section class="category-section">
-            <p class="section-label">Explore</p>
+            <p class="section-label">Go Deeper</p>
             <div class="category-grid">
                 <a href="music.html" class="category-card">
                     <span class="category-icon">♫</span>
@@ -548,64 +877,429 @@
             });
         });
 
-        // Timeline data
+        // ============================================
+        // CORE STATE
+        // ============================================
         const MIN_YEAR = 1960;
         const MAX_YEAR = 2026;
+        let currentLens = 'world';
+        let currentYear = 2026;
 
-        const worldData = {
-            1960: { vibe: 'the space race begins', event: { cat: 'Space', title: 'The Final Frontier', desc: 'JFK promises the moon. The Cold War goes orbital. Everything feels possible and terrifying.' }, pop: '3.0B', internet: '0', temp: '+0.0°C', music: 'Elvis' },
-            1963: { vibe: 'innocence lost', event: { cat: 'History', title: 'Dallas, November', desc: 'Kennedy assassinated. The 60s take a dark turn. Nothing feels safe anymore.' }, pop: '3.2B', internet: '0', temp: '+0.1°C', music: 'Beatles' },
-            1969: { vibe: 'one giant leap', event: { cat: 'Space', title: 'Moon Landing', desc: 'Armstrong walks on the moon. 600 million people watch. Humanity\'s greatest flex.' }, pop: '3.6B', internet: '0', temp: '+0.1°C', music: 'Stones' },
-            1970: { vibe: 'the hangover decade', event: { cat: 'Culture', title: 'Post-60s Reality', desc: 'Vietnam drags on. Watergate looms. The optimism fades into disco and malaise.' }, pop: '3.7B', internet: '0', temp: '+0.1°C', music: 'Zeppelin' },
-            1977: { vibe: 'a new hope', event: { cat: 'Culture', title: 'Star Wars', desc: 'George Lucas creates a universe. Blockbusters are born. Escapism becomes an industry.' }, pop: '4.2B', internet: '0', temp: '+0.2°C', music: 'Fleetwood' },
-            1980: { vibe: 'morning in america', event: { cat: 'Politics', title: 'Reagan Era Begins', desc: 'Conservative revolution. MTV launches. Greed is good. The 80s arrive in neon.' }, pop: '4.4B', internet: '~1K', temp: '+0.3°C', music: 'MJ' },
-            1989: { vibe: 'walls come down', event: { cat: 'History', title: 'Berlin Wall Falls', desc: 'Cold War ends with sledgehammers. History is over, they say. New world order.' }, pop: '5.2B', internet: '~500K', temp: '+0.3°C', music: 'Madonna' },
-            1990: { vibe: 'the end of history?', event: { cat: 'Tech', title: 'World Wide Web', desc: 'Tim Berners-Lee invents the web. Nobody knows it yet, but everything changes.' }, pop: '5.3B', internet: '2.6M', temp: '+0.4°C', music: 'MC Hammer' },
-            1994: { vibe: 'grunge and apathy', event: { cat: 'Culture', title: 'Cobain\'s Last Year', desc: 'Generation X peaks. Nirvana ends. The internet starts creeping into homes.' }, pop: '5.6B', internet: '25M', temp: '+0.4°C', music: 'Nirvana' },
-            2000: { vibe: 'y2k survived', event: { cat: 'Tech', title: 'Dot-Com Bubble', desc: 'The millennium bug was nothing. The real crash is coming. Napster changes music forever.' }, pop: '6.1B', internet: '413M', temp: '+0.5°C', music: 'Eminem' },
-            2001: { vibe: 'everything changed', event: { cat: 'History', title: 'September 11', desc: 'The towers fall. The 21st century actually begins. Security theater forever.' }, pop: '6.2B', internet: '500M', temp: '+0.5°C', music: 'Aaliyah' },
-            2007: { vibe: 'the world in your pocket', event: { cat: 'Tech', title: 'iPhone Launches', desc: 'Steve Jobs reveals the future. Smartphones consume everything. Attention becomes currency.' }, pop: '6.6B', internet: '1.4B', temp: '+0.7°C', music: 'Rihanna' },
-            2010: { vibe: 'the social era', event: { cat: 'Tech', title: 'Social Media Dominates', desc: 'Facebook hits 500M users. Twitter drives news. Everyone becomes a broadcaster.' }, pop: '6.9B', internet: '2.0B', temp: '+0.8°C', music: 'Gaga' },
-            2016: { vibe: 'post-truth arrives', event: { cat: 'Politics', title: 'Brexit & Trump', desc: 'Populism surges. Algorithms radicalize. Reality becomes negotiable.' }, pop: '7.4B', internet: '3.4B', temp: '+1.0°C', music: 'Drake' },
-            2020: { vibe: 'the great pause', event: { cat: 'History', title: 'COVID-19 Pandemic', desc: 'The world stops. Remote everything. A collective trauma we\'re still processing.' }, pop: '7.8B', internet: '4.6B', temp: '+1.1°C', music: 'Weeknd' },
-            2023: { vibe: 'ai awakening', event: { cat: 'Tech', title: 'ChatGPT Moment', desc: 'AI goes mainstream. Everyone\'s job feels uncertain. The future arrives faster than expected.' }, pop: '8.0B', internet: '5.3B', temp: '+1.2°C', music: 'Taylor' },
-            2026: { vibe: 'the algorithm age', event: { cat: 'Now', title: 'The Age of AI', desc: 'Large language models reshape work, creativity, and how we find information. Everyone\'s trying to figure out what it means.' }, pop: '8.1B', internet: '5.5B', temp: '+1.2°C', music: '—' }
+        // ============================================
+        // LENS LABELS
+        // ============================================
+        const lensLabels = {
+            world: 'The World According to Guapa',
+            music: 'The World of Music',
+            tech: 'The World of Tech',
+            coffee: 'The World of Coffee',
+            economics: 'The World of Economics'
         };
 
-        // Get data for a year (interpolate if needed)
-        function getYearData(year) {
-            if (worldData[year]) return worldData[year];
+        // ============================================
+        // TIMELINE DATA PER LENS
+        // ============================================
+        const lensData = {
+            world: {
+                1960: { vibe: 'the space race begins', event: { cat: 'Space', title: 'The Final Frontier', desc: 'JFK promises the moon. The Cold War goes orbital. Everything feels possible and terrifying.' } },
+                1963: { vibe: 'innocence lost', event: { cat: 'History', title: 'Dallas, November', desc: 'Kennedy assassinated. The 60s take a dark turn. Nothing feels safe anymore.' } },
+                1969: { vibe: 'one giant leap', event: { cat: 'Space', title: 'Moon Landing', desc: 'Armstrong walks on the moon. 600 million people watch. Humanity\'s greatest flex.' } },
+                1970: { vibe: 'the hangover decade', event: { cat: 'Culture', title: 'Post-60s Reality', desc: 'Vietnam drags on. Watergate looms. The optimism fades into disco and malaise.' } },
+                1977: { vibe: 'a new hope', event: { cat: 'Culture', title: 'Star Wars', desc: 'George Lucas creates a universe. Blockbusters are born. Escapism becomes an industry.' } },
+                1980: { vibe: 'morning in america', event: { cat: 'Politics', title: 'Reagan Era Begins', desc: 'Conservative revolution. MTV launches. Greed is good. The 80s arrive in neon.' } },
+                1989: { vibe: 'walls come down', event: { cat: 'History', title: 'Berlin Wall Falls', desc: 'Cold War ends with sledgehammers. History is over, they say. New world order.' } },
+                1990: { vibe: 'the end of history?', event: { cat: 'Tech', title: 'World Wide Web', desc: 'Tim Berners-Lee invents the web. Nobody knows it yet, but everything changes.' } },
+                1994: { vibe: 'grunge and apathy', event: { cat: 'Culture', title: 'Cobain\'s Last Year', desc: 'Generation X peaks. Nirvana ends. The internet starts creeping into homes.' } },
+                2000: { vibe: 'y2k survived', event: { cat: 'Tech', title: 'Dot-Com Bubble', desc: 'The millennium bug was nothing. The real crash is coming. Napster changes music forever.' } },
+                2001: { vibe: 'everything changed', event: { cat: 'History', title: 'September 11', desc: 'The towers fall. The 21st century actually begins. Security theater forever.' } },
+                2007: { vibe: 'the world in your pocket', event: { cat: 'Tech', title: 'iPhone Launches', desc: 'Steve Jobs reveals the future. Smartphones consume everything. Attention becomes currency.' } },
+                2010: { vibe: 'the social era', event: { cat: 'Tech', title: 'Social Media Dominates', desc: 'Facebook hits 500M users. Twitter drives news. Everyone becomes a broadcaster.' } },
+                2016: { vibe: 'post-truth arrives', event: { cat: 'Politics', title: 'Brexit & Trump', desc: 'Populism surges. Algorithms radicalize. Reality becomes negotiable.' } },
+                2020: { vibe: 'the great pause', event: { cat: 'History', title: 'COVID-19 Pandemic', desc: 'The world stops. Remote everything. A collective trauma we\'re still processing.' } },
+                2023: { vibe: 'ai awakening', event: { cat: 'Tech', title: 'ChatGPT Moment', desc: 'AI goes mainstream. Everyone\'s job feels uncertain. The future arrives faster than expected.' } },
+                2026: { vibe: 'the algorithm age', event: { cat: 'Now', title: 'The Age of AI', desc: 'Large language models reshape work, creativity, and how we find information. Everyone\'s trying to figure out what it means.' } }
+            },
+            music: {
+                1960: { vibe: 'the birth of soul', event: { cat: 'Genre', title: 'Motown Rises', desc: 'Berry Gordy builds a hit factory in Detroit. Soul music becomes the sound of Black America and then the world.' } },
+                1964: { vibe: 'the british invasion', event: { cat: 'Movement', title: 'Beatles Land in America', desc: 'Ed Sullivan. 73 million viewers. Rock and roll will never be the same. The 60s have a soundtrack.' } },
+                1969: { vibe: 'three days of peace', event: { cat: 'Culture', title: 'Woodstock', desc: '400,000 people on a farm in Bethel. Hendrix plays the anthem. The counterculture gets its communion.' } },
+                1973: { vibe: 'the bronx is burning', event: { cat: 'Genre', title: 'Hip-Hop Is Born', desc: 'DJ Kool Herc throws a back-to-school party at 1520 Sedgwick Ave. The breakbeat is born. Everything follows.' } },
+                1977: { vibe: 'no future', event: { cat: 'Movement', title: 'Punk Explodes', desc: 'Sex Pistols. Ramones. The Clash. Three chords and the truth. DIY becomes an ethos.' } },
+                1980: { vibe: 'I want my MTV', event: { cat: 'Industry', title: 'MTV Launches', desc: 'Music becomes visual. "Video Killed the Radio Star" plays first. Pop will never be the same.' } },
+                1982: { vibe: 'the king of pop', event: { cat: 'Album', title: 'Thriller', desc: 'Michael Jackson sells 70 million copies. The biggest album ever. Music videos become cinema.' } },
+                1991: { vibe: 'smells like teen spirit', event: { cat: 'Movement', title: 'Grunge Arrives', desc: 'Nevermind drops. Seattle is the center of the universe. Flannel replaces spandex.' } },
+                1994: { vibe: 'east vs west', event: { cat: 'Genre', title: 'Hip-Hop\'s Golden Age', desc: 'Nas drops Illmatic. Biggie rises. Tupac goes platinum. The coasts are at war and the music is transcendent.' } },
+                1999: { vibe: 'the napster effect', event: { cat: 'Industry', title: 'File Sharing Begins', desc: 'Napster launches. 80 million users. The music industry\'s business model starts to die.' } },
+                2003: { vibe: '99 cents a song', event: { cat: 'Industry', title: 'iTunes Store Opens', desc: 'Apple sells 1 million songs in 5 days. Legal downloads save the industry. Singles > albums.' } },
+                2008: { vibe: 'streaming starts', event: { cat: 'Industry', title: 'Spotify Launches', desc: 'A Swedish startup bets on streaming. The labels are skeptical. Listeners aren\'t.' } },
+                2015: { vibe: 'the streaming era', event: { cat: 'Industry', title: 'Streaming Dominates', desc: 'Streaming revenue surpasses digital downloads. Drake is everywhere. Playlists replace albums.' } },
+                2020: { vibe: 'bedroom pop', event: { cat: 'Culture', title: 'Pandemic Music', desc: 'Lockdown produces a wave of home recordings. TikTok becomes the new A&R. Virality is the new radio.' } },
+                2026: { vibe: 'ai producers', event: { cat: 'Now', title: 'AI Meets Music', desc: 'Generative AI creates beats, masters tracks, and writes hooks. The definition of "artist" is being renegotiated in real time.' } }
+            },
+            tech: {
+                1960: { vibe: 'mainframe era', event: { cat: 'Computing', title: 'IBM Dominates', desc: 'Mainframes fill entire rooms. Computing is for corporations and governments. IBM is the whole market.' } },
+                1971: { vibe: 'the chip', event: { cat: 'Hardware', title: 'Intel 4004', desc: 'The first commercial microprocessor. 2,300 transistors. The seed of everything that follows.' } },
+                1976: { vibe: 'garage revolution', event: { cat: 'Company', title: 'Apple Founded', desc: 'Two Steves in a garage. The Apple I is hand-built. Personal computing starts here.' } },
+                1981: { vibe: 'the PC era', event: { cat: 'Hardware', title: 'IBM PC Launches', desc: 'IBM legitimizes personal computers. Microsoft provides DOS. The enterprise adopts PCs.' } },
+                1990: { vibe: 'the web is born', event: { cat: 'Internet', title: 'World Wide Web', desc: 'Tim Berners-Lee writes HTTP, HTML, and the first browser. The internet gets a user interface.' } },
+                1994: { vibe: 'everyone online', event: { cat: 'Internet', title: 'Netscape & Amazon', desc: 'Netscape makes the web accessible. Amazon sells its first book. E-commerce begins.' } },
+                1998: { vibe: 'search everything', event: { cat: 'Company', title: 'Google Founded', desc: 'Two Stanford PhDs organize the world\'s information. PageRank changes how we find things.' } },
+                2004: { vibe: 'the social web', event: { cat: 'Company', title: 'Facebook Launches', desc: 'A Harvard dorm room project becomes the social graph. Web 2.0 is about people, not pages.' } },
+                2007: { vibe: 'everything is mobile', event: { cat: 'Hardware', title: 'iPhone', desc: 'Steve Jobs: "An iPod, a phone, and an internet communicator." Smartphones eat the world.' } },
+                2010: { vibe: 'cloud takes over', event: { cat: 'Infrastructure', title: 'AWS Scales', desc: 'Amazon\'s cloud business becomes the backbone of the internet. Startups don\'t need servers anymore.' } },
+                2016: { vibe: 'AI winter ends', event: { cat: 'AI', title: 'DeepMind Beats Go', desc: 'AlphaGo defeats Lee Sedol. Deep learning works. The AI race begins in earnest.' } },
+                2020: { vibe: 'remote everything', event: { cat: 'Culture', title: 'The Great Digitization', desc: 'COVID forces everything online. Zoom, Slack, and cloud become essential infrastructure overnight.' } },
+                2023: { vibe: 'the GPT moment', event: { cat: 'AI', title: 'ChatGPT & LLMs', desc: 'OpenAI\'s ChatGPT reaches 100M users in 2 months. Every company pivots to AI. The gold rush begins.' } },
+                2025: { vibe: 'the capex supercycle', event: { cat: 'Industry', title: '$200B AI Infrastructure', desc: 'Amazon commits $200B in capex. Alphabet $175B. The GPU buildout rivals the 1990s telecom boom.' } },
+                2026: { vibe: 'agents everywhere', event: { cat: 'Now', title: 'Agentic AI', desc: 'AI agents write code, manage workflows, and make decisions. The line between tool and coworker blurs.' } }
+            },
+            coffee: {
+                1960: { vibe: 'instant everything', event: { cat: 'Industry', title: 'First Wave Coffee', desc: 'Folgers and Maxwell House dominate American kitchens. Coffee is a commodity, not an experience.' } },
+                1966: { vibe: 'a dutch import', event: { cat: 'Company', title: 'Peet\'s Opens', desc: 'Alfred Peet opens a shop in Berkeley selling fresh-roasted, dark beans. He teaches America what coffee can be.' } },
+                1971: { vibe: 'pike place', event: { cat: 'Company', title: 'Starbucks Founded', desc: 'Three Peet\'s customers open a bean shop in Seattle\'s Pike Place Market. They just want to sell good beans.' } },
+                1982: { vibe: 'the espresso epiphany', event: { cat: 'Company', title: 'Howard Schultz Joins Starbucks', desc: 'Schultz visits Milan, sees espresso bars everywhere, and knows this is the future. Starbucks transforms.' } },
+                1990: { vibe: 'second wave crests', event: { cat: 'Movement', title: 'Second Wave Coffee', desc: 'Starbucks goes national. Espresso drinks go mainstream. Coffee becomes a lifestyle, not just caffeine.' } },
+                2002: { vibe: 'the origin matters', event: { cat: 'Movement', title: 'Third Wave Begins', desc: 'Trish Skeie coins "third wave." Coffee treated like wine — terroir, processing, single origins matter.' } },
+                2005: { vibe: 'pour it over', event: { cat: 'Method', title: 'Pour-Over Revival', desc: 'Intelligentsia, Stumptown, Counter Culture lead the charge. Manual brewing methods return. The barista is an artisan.' } },
+                2010: { vibe: 'direct trade', event: { cat: 'Industry', title: 'Farm-to-Cup Movement', desc: 'Roasters build direct relationships with farmers. Transparency in sourcing becomes a selling point.' } },
+                2015: { vibe: 'light roast revolution', event: { cat: 'Trend', title: 'Specialty Goes Mainstream', desc: 'Light roasts and natural processing go mainstream. Cold brew is everywhere. Blue Bottle sells to Nestlé.' } },
+                2020: { vibe: 'home brewing boom', event: { cat: 'Culture', title: 'Pandemic Home Coffee', desc: 'Lockdowns turn everyone into a home barista. Grinder sales skyrocket. James Hoffmann is everyone\'s teacher.' } },
+                2026: { vibe: 'precision and access', event: { cat: 'Now', title: 'AI-Optimized Extraction', desc: 'Smart grinders dial in recipes automatically. Climate change threatens high-altitude arabica. The fourth wave is about preservation.' } }
+            },
+            economics: {
+                1960: { vibe: 'post-war prosperity', event: { cat: 'Growth', title: 'The Golden Age', desc: 'US GDP growth averaging 4%+. The middle class expands. Manufacturing is king. Unions are strong.' } },
+                1971: { vibe: 'the gold window closes', event: { cat: 'Monetary', title: 'Nixon Ends Gold Standard', desc: 'Bretton Woods collapses. The dollar floats freely. Modern monetary policy begins.' } },
+                1973: { vibe: 'oil shock', event: { cat: 'Crisis', title: 'OPEC Embargo', desc: 'Arab oil embargo quadruples prices. Gas lines. Stagflation. The post-war boom is over.' } },
+                1980: { vibe: 'volcker shock', event: { cat: 'Monetary', title: 'Interest Rates Hit 20%', desc: 'Paul Volcker crushes inflation with brutal rate hikes. Recession follows. The cure works.' } },
+                1987: { vibe: 'black monday', event: { cat: 'Markets', title: 'Market Crash', desc: 'Dow drops 22.6% in a single day. Program trading gets blamed. Markets recover. Lessons are ignored.' } },
+                1999: { vibe: 'irrational exuberance', event: { cat: 'Markets', title: 'Dot-Com Peak', desc: 'Pets.com is worth billions. Day trading is a hobby. Greenspan warned you but nobody listened.' } },
+                2001: { vibe: 'the bubble pops', event: { cat: 'Crisis', title: 'Dot-Com Bust', desc: 'NASDAQ loses 78% from peak. Trillions evaporate. Silicon Valley goes quiet. For a while.' } },
+                2008: { vibe: 'the great recession', event: { cat: 'Crisis', title: 'Financial Crisis', desc: 'Lehman collapses. Housing market implodes. The global financial system nearly dies. Bailouts follow.' } },
+                2010: { vibe: 'quantitative easing', event: { cat: 'Monetary', title: 'The Fed Goes Big', desc: 'Zero interest rates. Trillions in QE. Asset prices soar. The recovery is real but uneven.' } },
+                2020: { vibe: 'money printer go brrr', event: { cat: 'Monetary', title: 'Pandemic Stimulus', desc: '$5 trillion in fiscal stimulus. Fed balance sheet explodes. Inflation is coming. Nobody believes it yet.' } },
+                2022: { vibe: 'inflation arrives', event: { cat: 'Monetary', title: 'Rate Hikes Begin', desc: 'CPI hits 9.1%. The Fed hikes aggressively. Mortgage rates double. The era of free money ends.' } },
+                2025: { vibe: 'the AI economy', event: { cat: 'Industry', title: 'Capex Supercycle', desc: 'Tech companies commit $700B+ to AI infrastructure. GDP growth driven by AI investment. Are we building the future or a bubble?' } },
+                2026: { vibe: 'divergence', event: { cat: 'Now', title: 'Two-Speed Economy', desc: 'AI-enabled sectors boom. Traditional sectors lag. The labor market is transforming faster than policy can adapt.' } }
+            }
+        };
+
+        // ============================================
+        // TAXONOMY DATA PER LENS
+        // ============================================
+        const taxonomyData = {
+            world: {
+                2026: [
+                    { icon: '⚡', label: 'Technology', stat: 'dominant force', items: [
+                        { name: 'Artificial Intelligence', detail: '$700B+ capex', badge: 'peak', rank: 1 },
+                        { name: 'Quantum Computing', detail: 'early commercial', badge: 'new', rank: 2 },
+                        { name: 'Renewable Energy', detail: '35% of global grid', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '🌍', label: 'Geopolitics', stat: 'multi-polar', items: [
+                        { name: 'US-China Tech Cold War', detail: 'chip export controls', badge: 'peak', rank: 1 },
+                        { name: 'EU Digital Sovereignty', detail: 'AI Act enforced', badge: 'new', rank: 2 },
+                        { name: 'BRICS Expansion', detail: '10 member states', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '💰', label: 'Economy', stat: '$105T global GDP', items: [
+                        { name: 'AI Infrastructure Boom', detail: 'largest capex cycle ever', badge: 'peak', rank: 1 },
+                        { name: 'US Debt', detail: '$36T+', badge: 'up', rank: 2 },
+                        { name: 'Interest Rates', detail: 'elevated plateau', badge: 'down', rank: 3 },
+                    ]},
+                    { icon: '🎵', label: 'Culture', stat: 'fragmented', items: [
+                        { name: 'AI-Generated Content', detail: '30% of media', badge: 'new', rank: 1 },
+                        { name: 'Streaming Wars', detail: 'consolidation era', badge: 'down', rank: 2 },
+                        { name: 'Short-Form Video', detail: 'TikTok + Reels', badge: 'peak', rank: 3 },
+                    ]}
+                ],
+                2023: [
+                    { icon: '⚡', label: 'Technology', stat: 'AI breakout', items: [
+                        { name: 'ChatGPT / LLMs', detail: '100M users in 2 months', badge: 'new', rank: 1 },
+                        { name: 'Generative AI', detail: 'images, code, text', badge: 'new', rank: 2 },
+                        { name: 'Cloud Computing', detail: '$500B market', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '💰', label: 'Economy', stat: 'soft landing?', items: [
+                        { name: 'Inflation Cooling', detail: 'CPI dropping to 3%', badge: 'down', rank: 1 },
+                        { name: 'Tech Layoffs', detail: '260K+ jobs cut', badge: 'down', rank: 2 },
+                        { name: 'Housing Frozen', detail: '7%+ mortgage rates', badge: 'down', rank: 3 },
+                    ]}
+                ],
+                2020: [
+                    { icon: '🦠', label: 'Pandemic', stat: 'global crisis', items: [
+                        { name: 'COVID-19', detail: '6M+ deaths worldwide', badge: 'peak', rank: 1 },
+                        { name: 'Vaccine Development', detail: 'mRNA breakthrough', badge: 'new', rank: 2 },
+                        { name: 'Remote Work', detail: 'permanent shift', badge: 'new', rank: 3 },
+                    ]},
+                    { icon: '💰', label: 'Economy', stat: 'stimulus era', items: [
+                        { name: 'Fed Balance Sheet', detail: '$8.9T', badge: 'up', rank: 1 },
+                        { name: 'Stimulus Checks', detail: '$5T fiscal response', badge: 'new', rank: 2 },
+                        { name: 'Stock Market', detail: 'V-shaped recovery', badge: 'up', rank: 3 },
+                    ]}
+                ],
+                2007: [
+                    { icon: '📱', label: 'Technology', stat: 'mobile revolution', items: [
+                        { name: 'iPhone', detail: 'announced Jan 9', badge: 'new', rank: 1 },
+                        { name: 'Facebook', detail: '50M users', badge: 'up', rank: 2 },
+                        { name: 'Twitter', detail: 'SXSW breakout', badge: 'new', rank: 3 },
+                    ]},
+                    { icon: '💰', label: 'Economy', stat: 'peak before crash', items: [
+                        { name: 'Housing Bubble', detail: 'subprime cracks showing', badge: 'peak', rank: 1 },
+                        { name: 'S&P 500', detail: 'all-time highs', badge: 'peak', rank: 2 },
+                    ]}
+                ],
+                2000: [
+                    { icon: '💻', label: 'Technology', stat: 'dot-com peak', items: [
+                        { name: 'Internet Users', detail: '413M worldwide', badge: 'up', rank: 1 },
+                        { name: 'Napster', detail: '80M users', badge: 'peak', rank: 2 },
+                        { name: 'Y2K', detail: 'nothing happened', badge: 'down', rank: 3 },
+                    ]}
+                ],
+                1980: [
+                    { icon: '🎬', label: 'Culture', stat: 'neon decade begins', items: [
+                        { name: 'MTV', detail: 'launches Aug 1, 1981', badge: 'new', rank: 1 },
+                        { name: 'Reaganomics', detail: 'trickle-down theory', badge: 'new', rank: 2 },
+                        { name: 'PC Revolution', detail: 'IBM PC 1981', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                1969: [
+                    { icon: '🚀', label: 'Space', stat: 'the moon', items: [
+                        { name: 'Apollo 11', detail: 'July 20, 1969', badge: 'peak', rank: 1 },
+                        { name: 'Woodstock', detail: '400,000 attend', badge: 'peak', rank: 2 },
+                        { name: 'ARPANET', detail: 'first message sent', badge: 'new', rank: 3 },
+                    ]}
+                ]
+            },
+            music: {
+                2026: [
+                    { icon: '🤖', label: 'AI & Production', stat: 'transforming', items: [
+                        { name: 'AI Mastering Tools', detail: 'LANDR, iZotope', badge: 'peak', rank: 1 },
+                        { name: 'Generative Composition', detail: 'Suno, Udio', badge: 'new', rank: 2 },
+                        { name: 'Voice Cloning Debate', detail: 'legal battles ongoing', badge: 'peak', rank: 3 },
+                    ]},
+                    { icon: '📊', label: 'Streaming', stat: '$40B+ revenue', items: [
+                        { name: 'Spotify', detail: '650M+ users', badge: 'up', rank: 1 },
+                        { name: 'Apple Music', detail: 'spatial audio push', badge: 'up', rank: 2 },
+                        { name: 'Vinyl Revival', detail: '$1.4B market', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '🎤', label: 'Genres', stat: 'fragmentation era', items: [
+                        { name: 'Afrobeats', detail: 'global mainstream', badge: 'up', rank: 1 },
+                        { name: 'Hyperpop / Experimental', detail: 'niche but influential', badge: 'peak', rank: 2 },
+                        { name: 'Regional Mexican', detail: 'Billboard dominance', badge: 'up', rank: 3 },
+                    ]}
+                ],
+                2015: [
+                    { icon: '📱', label: 'Streaming', stat: 'takeover', items: [
+                        { name: 'Spotify', detail: '75M users', badge: 'up', rank: 1 },
+                        { name: 'Apple Music', detail: 'launches June', badge: 'new', rank: 2 },
+                        { name: 'Tidal', detail: 'Jay-Z\'s bet', badge: 'new', rank: 3 },
+                    ]},
+                    { icon: '🎤', label: 'Artists', stat: 'drake era', items: [
+                        { name: 'Drake', detail: 'dominates streaming', badge: 'peak', rank: 1 },
+                        { name: 'Kendrick Lamar', detail: 'To Pimp a Butterfly', badge: 'peak', rank: 2 },
+                        { name: 'Adele', detail: '25 sells 3.4M first week', badge: 'peak', rank: 3 },
+                    ]}
+                ],
+                1994: [
+                    { icon: '🎤', label: 'Hip-Hop', stat: 'golden age', items: [
+                        { name: 'Nas', detail: 'Illmatic drops', badge: 'peak', rank: 1 },
+                        { name: 'Notorious B.I.G.', detail: 'Ready to Die', badge: 'new', rank: 2 },
+                        { name: 'Outkast', detail: 'Southernplayalisticadillacmuzik', badge: 'new', rank: 3 },
+                    ]},
+                    { icon: '🎸', label: 'Rock', stat: 'grunge dominant', items: [
+                        { name: 'Nirvana', detail: 'Kurt Cobain dies April 5', badge: 'down', rank: 1 },
+                        { name: 'Green Day', detail: 'Dookie goes 10x platinum', badge: 'up', rank: 2 },
+                        { name: 'Weezer', detail: 'Blue Album', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                1982: [
+                    { icon: '👑', label: 'Pop', stat: 'MTV era', items: [
+                        { name: 'Michael Jackson', detail: 'Thriller drops Nov 30', badge: 'peak', rank: 1 },
+                        { name: 'Prince', detail: '1999', badge: 'up', rank: 2 },
+                        { name: 'Madonna', detail: 'debut single', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                1973: [
+                    { icon: '🎧', label: 'Hip-Hop', stat: 'year zero', items: [
+                        { name: 'DJ Kool Herc', detail: '1520 Sedgwick Ave party', badge: 'new', rank: 1 },
+                        { name: 'The Breakbeat', detail: 'born from funk records', badge: 'new', rank: 2 },
+                    ]},
+                    { icon: '🎸', label: 'Rock', stat: 'progressive peak', items: [
+                        { name: 'Pink Floyd', detail: 'Dark Side of the Moon', badge: 'peak', rank: 1 },
+                        { name: 'Led Zeppelin', detail: 'Houses of the Holy', badge: 'peak', rank: 2 },
+                    ]}
+                ]
+            },
+            tech: {
+                2026: [
+                    { icon: '🤖', label: 'AI & ML', stat: '$200B+ market', items: [
+                        { name: 'Agentic AI', detail: 'autonomous workflows', badge: 'peak', rank: 1 },
+                        { name: 'OpenAI', detail: '$150B+ valuation', badge: 'up', rank: 2 },
+                        { name: 'Anthropic', detail: 'Claude leading enterprise', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '💰', label: 'Big Tech Capex', stat: '$700B+ combined', items: [
+                        { name: 'Amazon', detail: '$200B capex', badge: 'peak', rank: 1 },
+                        { name: 'Alphabet', detail: '$175B capex', badge: 'peak', rank: 2 },
+                        { name: 'Microsoft', detail: '$80B+ capex', badge: 'up', rank: 3 },
+                        { name: 'Meta', detail: '$65B capex', badge: 'up', rank: 4 },
+                    ]},
+                    { icon: '🔧', label: 'Infrastructure', stat: 'GPU buildout', items: [
+                        { name: 'NVIDIA', detail: '$3T+ market cap', badge: 'peak', rank: 1 },
+                        { name: 'Data Centers', detail: 'power grid strain', badge: 'up', rank: 2 },
+                        { name: 'Custom Silicon', detail: 'every co building chips', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                2023: [
+                    { icon: '🤖', label: 'AI', stat: 'breakout year', items: [
+                        { name: 'ChatGPT', detail: '100M users', badge: 'peak', rank: 1 },
+                        { name: 'GPT-4', detail: 'multimodal', badge: 'new', rank: 2 },
+                        { name: 'Midjourney / DALL-E', detail: 'image gen mainstream', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '📉', label: 'Downturn', stat: 'correction', items: [
+                        { name: 'Tech Layoffs', detail: '260K+ jobs', badge: 'down', rank: 1 },
+                        { name: 'SVB Collapse', detail: 'March 10', badge: 'down', rank: 2 },
+                    ]}
+                ],
+                2007: [
+                    { icon: '📱', label: 'Mobile', stat: 'revolution begins', items: [
+                        { name: 'iPhone', detail: 'launched June 29', badge: 'new', rank: 1 },
+                        { name: 'Android', detail: 'announced November', badge: 'new', rank: 2 },
+                    ]},
+                    { icon: '🌐', label: 'Web 2.0', stat: 'social era', items: [
+                        { name: 'Facebook', detail: '50M → 100M users', badge: 'up', rank: 1 },
+                        { name: 'Twitter', detail: 'SXSW moment', badge: 'new', rank: 2 },
+                        { name: 'Tumblr', detail: 'launches', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                1998: [
+                    { icon: '🔍', label: 'Internet', stat: 'search wars', items: [
+                        { name: 'Google', detail: 'founded Sept 4', badge: 'new', rank: 1 },
+                        { name: 'Yahoo', detail: 'dominant portal', badge: 'peak', rank: 2 },
+                        { name: 'Amazon', detail: 'expands beyond books', badge: 'up', rank: 3 },
+                    ]}
+                ]
+            },
+            coffee: {
+                2026: [
+                    { icon: '☕', label: 'Brewing Methods', stat: 'precision era', items: [
+                        { name: 'French Press', detail: 'classic immersion', badge: 'peak', rank: 1 },
+                        { name: 'Pour Over', detail: 'V60, Kalita', badge: 'up', rank: 2 },
+                        { name: 'Espresso', detail: 'home machines booming', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '🌱', label: 'Origins', stat: 'climate pressure', items: [
+                        { name: 'Ethiopia', detail: 'birthplace, naturals', badge: 'peak', rank: 1 },
+                        { name: 'Colombia', detail: 'washed excellence', badge: 'up', rank: 2 },
+                        { name: 'Honduras', detail: 'rising star', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '🏪', label: 'Industry', stat: '$500B+ global', items: [
+                        { name: 'Specialty Segment', detail: '15% of market', badge: 'up', rank: 1 },
+                        { name: 'Home Brewing', detail: 'post-pandemic boom', badge: 'up', rank: 2 },
+                        { name: 'Climate Impact', detail: 'arabica zones shrinking', badge: 'down', rank: 3 },
+                    ]}
+                ],
+                2020: [
+                    { icon: '🏠', label: 'Home Brewing', stat: 'lockdown boom', items: [
+                        { name: 'Grinder Sales', detail: 'up 300%', badge: 'up', rank: 1 },
+                        { name: 'James Hoffmann', detail: 'YouTube educator', badge: 'peak', rank: 2 },
+                        { name: 'Subscription Roasters', detail: 'DTC explodes', badge: 'up', rank: 3 },
+                    ]}
+                ],
+                2002: [
+                    { icon: '🌊', label: 'Third Wave', stat: 'begins', items: [
+                        { name: 'Intelligentsia', detail: 'Chicago pioneer', badge: 'new', rank: 1 },
+                        { name: 'Stumptown', detail: 'Portland pioneer', badge: 'new', rank: 2 },
+                        { name: 'Counter Culture', detail: 'Durham pioneer', badge: 'new', rank: 3 },
+                    ]}
+                ]
+            },
+            economics: {
+                2026: [
+                    { icon: '📈', label: 'Markets', stat: 'AI-driven', items: [
+                        { name: 'S&P 500', detail: 'tech-heavy rally', badge: 'up', rank: 1 },
+                        { name: 'Bond Market', detail: 'inverted curve normalizing', badge: 'down', rank: 2 },
+                        { name: 'Real Estate', detail: 'rate-sensitive stall', badge: 'down', rank: 3 },
+                    ]},
+                    { icon: '🏛️', label: 'Policy', stat: 'divergence', items: [
+                        { name: 'Fed Funds Rate', detail: '4.25-4.50%', badge: 'down', rank: 1 },
+                        { name: 'National Debt', detail: '$36T+', badge: 'up', rank: 2 },
+                        { name: 'Tariff Policy', detail: 'trade tensions', badge: 'up', rank: 3 },
+                    ]},
+                    { icon: '💼', label: 'Labor', stat: 'AI disruption', items: [
+                        { name: 'AI Displacement', detail: 'white-collar shift', badge: 'new', rank: 1 },
+                        { name: 'Unemployment', detail: '~4.0%', badge: 'up', rank: 2 },
+                        { name: 'Wage Growth', detail: 'slowing', badge: 'down', rank: 3 },
+                    ]}
+                ],
+                2022: [
+                    { icon: '🔥', label: 'Inflation', stat: '9.1% peak', items: [
+                        { name: 'CPI', detail: 'highest since 1981', badge: 'peak', rank: 1 },
+                        { name: 'Fed Hikes', detail: '425bps in one year', badge: 'new', rank: 2 },
+                        { name: 'Crypto Crash', detail: 'FTX collapses', badge: 'down', rank: 3 },
+                    ]}
+                ],
+                2008: [
+                    { icon: '💥', label: 'Crisis', stat: 'systemic failure', items: [
+                        { name: 'Lehman Brothers', detail: 'files Sept 15', badge: 'down', rank: 1 },
+                        { name: 'Housing Collapse', detail: '-33% home values', badge: 'down', rank: 2 },
+                        { name: 'TARP Bailout', detail: '$700B', badge: 'new', rank: 3 },
+                    ]}
+                ],
+                1980: [
+                    { icon: '🏦', label: 'Monetary', stat: 'Volcker era', items: [
+                        { name: 'Fed Funds Rate', detail: '20% peak', badge: 'peak', rank: 1 },
+                        { name: 'Inflation', detail: '14.8% → falling', badge: 'down', rank: 2 },
+                        { name: 'Recession', detail: 'double-dip 1980-82', badge: 'down', rank: 3 },
+                    ]}
+                ]
+            }
+        };
+
+        // ============================================
+        // GET DATA HELPERS
+        // ============================================
+        function getLensTimeline(lens) {
+            return lensData[lens] || lensData.world;
+        }
+
+        function getYearData(year, lens) {
+            const data = getLensTimeline(lens);
+            if (data[year]) return data[year];
             
-            // Find nearest data points
-            const years = Object.keys(worldData).map(Number).sort((a, b) => a - b);
-            let before = years[0], after = years[years.length - 1];
-            
+            const years = Object.keys(data).map(Number).sort((a, b) => a - b);
+            let before = years[0];
             for (let i = 0; i < years.length - 1; i++) {
                 if (years[i] <= year && years[i + 1] >= year) {
                     before = years[i];
-                    after = years[i + 1];
                     break;
                 }
             }
-            
-            // Use the earlier year's data with interpolated vibe
-            const data = { ...worldData[before] };
-            data.vibe = worldData[before].vibe;
-            return data;
+            return { ...data[before] };
         }
 
-        // Render event bars
+        function getTaxonomyForYear(year, lens) {
+            const data = taxonomyData[lens];
+            if (!data) return null;
+            if (data[year]) return data[year];
+            
+            // Find nearest year with taxonomy data
+            const years = Object.keys(data).map(Number).sort((a, b) => b - a);
+            for (const y of years) {
+                if (y <= year) return data[y];
+            }
+            return null;
+        }
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
         function renderEventBars() {
             const container = document.getElementById('eventBars');
             container.innerHTML = '';
             
-            const eventYears = Object.keys(worldData).map(Number);
+            const timeline = getLensTimeline(currentLens);
+            const eventYears = Object.keys(timeline).map(Number);
             
             for (let y = MIN_YEAR; y <= MAX_YEAR; y++) {
                 const bar = document.createElement('div');
                 bar.className = 'event-bar';
                 
-                // Make bars taller for years with events
                 const hasEvent = eventYears.includes(y);
                 const height = hasEvent ? (20 + Math.random() * 40) : (5 + Math.random() * 15);
                 bar.style.height = height + 'px';
@@ -620,10 +1314,69 @@
             }
         }
 
-        // Update display for a year
+        function renderTaxonomy(year, lens) {
+            const tree = document.getElementById('taxonomyTree');
+            const context = document.getElementById('taxonomyContext');
+            const title = document.getElementById('taxonomyTitle');
+            
+            const taxonomy = getTaxonomyForYear(year, lens);
+            
+            title.textContent = lens === 'world' ? 'What\'s Happening' : `${lensLabels[lens].replace('The World of ', '')} Landscape`;
+            
+            if (!taxonomy) {
+                tree.innerHTML = `
+                    <div class="taxonomy-empty">
+                        <div class="empty-icon">🔮</div>
+                        <p>Taxonomy data for ${year} is being compiled. Slide to a highlighted year to explore.</p>
+                    </div>
+                `;
+                context.textContent = '';
+                return;
+            }
+
+            // Find which year's data we're actually showing
+            const dataYears = Object.keys(taxonomyData[lens] || {}).map(Number).sort((a,b) => b-a);
+            const shownYear = dataYears.find(y => y <= year) || year;
+            context.textContent = shownYear !== year ? `showing ${shownYear} data` : '';
+
+            tree.innerHTML = taxonomy.map((branch, i) => `
+                <div class="taxonomy-branch${i === 0 ? ' open' : ''}" data-branch="${i}">
+                    <div class="branch-header" onclick="toggleBranch(${i})">
+                        <span class="branch-icon">${branch.icon}</span>
+                        <span class="branch-label">${branch.label}</span>
+                        <span class="branch-stat">${branch.stat}</span>
+                        <svg class="branch-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <div class="branch-content">
+                        <div class="branch-items">
+                            ${branch.items.map(item => `
+                                <div class="branch-item">
+                                    <span class="item-rank">${item.rank}</span>
+                                    <span class="item-name">${item.name}</span>
+                                    <span class="item-detail">${item.detail}</span>
+                                    <span class="item-badge ${item.badge}">${item.badge === 'up' ? '↑ rising' : item.badge === 'down' ? '↓ falling' : item.badge === 'new' ? '✦ new' : '● peak'}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleBranch(index) {
+            const branch = document.querySelector(`.taxonomy-branch[data-branch="${index}"]`);
+            if (branch) branch.classList.toggle('open');
+        }
+
+        // ============================================
+        // UPDATE DISPLAY
+        // ============================================
         function updateYear(year) {
             year = parseInt(year);
-            const data = getYearData(year);
+            currentYear = year;
+            const data = getYearData(year, currentLens);
             
             document.getElementById('currentYear').textContent = year;
             document.getElementById('yearVibe').textContent = data.vibe;
@@ -647,9 +1400,35 @@
                 const btnYear = parseInt(btn.dataset.year);
                 btn.classList.toggle('active', btnYear === decadeStart || (year >= 2020 && btnYear === 2020));
             });
+
+            // Update taxonomy
+            renderTaxonomy(year, currentLens);
         }
 
-        // Slider
+        function switchLens(lens) {
+            currentLens = lens;
+            
+            // Update lens buttons
+            document.querySelectorAll('.lens-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lens === lens);
+            });
+            
+            // Update label
+            document.getElementById('dashboardLabel').textContent = lensLabels[lens];
+            
+            // Update data-lens attribute for accent colors
+            document.getElementById('worldTimeline').setAttribute('data-lens', lens);
+            
+            // Re-render bars for new lens
+            renderEventBars();
+            
+            // Re-render current year with new lens data
+            updateYear(currentYear);
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
         const yearSlider = document.getElementById('yearSlider');
         yearSlider.addEventListener('input', (e) => updateYear(e.target.value));
 
@@ -659,6 +1438,13 @@
                 const year = parseInt(btn.dataset.year);
                 yearSlider.value = year;
                 updateYear(year);
+            });
+        });
+
+        // Lens buttons
+        document.querySelectorAll('.lens-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLens(btn.dataset.lens);
             });
         });
 
